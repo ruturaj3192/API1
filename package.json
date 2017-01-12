@@ -1,0 +1,14 @@
+{
+  "name": "timestampmicro",
+  "version": "1.0.0",
+  "description": "this service checks wheher the string is in unixepoch/parsetime ",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"hello timestamp\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
