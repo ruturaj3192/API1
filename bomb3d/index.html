@@ -309,6 +309,7 @@ function defaults() { return { unlocked: 1, sel: 1, coins: 0, owned: ['hat:none'
 let save = defaults();
 try { const raw = localStorage.getItem(SAVE_KEY); if (raw) save = Object.assign(defaults(), JSON.parse(raw)); } catch (e) {}
 if (!DICT[save.lang]) save.lang = 'en';
+save.unlocked = 5000; // every level is unlocked
 function persist() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (e) {} }
 const t = (k) => (DICT[save.lang] && DICT[save.lang][k]) || DICT.en[k] || k;
 

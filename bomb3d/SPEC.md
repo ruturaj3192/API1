@@ -25,7 +25,7 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Cloud Kingdom**: cloud islands with golden bridges and little towers. **Floaty jumps.**
 
 ## Levels (5,000)
-- Levels 1–5,000, in pages of 20 in the menu (« ‹ › » buttons). Beat a level to unlock the next one.
+- Levels 1–5,000, in pages of 20 in the menu (« ‹ › » buttons). **All levels are unlocked**: pick any one.
 - It gets harder up to level 50 (more bombs, faster, more of the special bombs), then stays that hard.
 - Every 5th level is a boss level. The boss needs at most 14 hits.
 
@@ -65,7 +65,7 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 
 ## Menu (sketch 2)
 - Title **Bomb 3D Simulator**, big **Start** button, **Exit** button.
-- **Levels** 1–5,000 in pages (unlock one by one) and a **Maps** picker.
+- **Levels** 1–5,000 in pages (all unlocked) and a **Maps** picker.
 - **Volume** slider and **Vibration** on/off.
 - **Languages:** English, Español, Français, Deutsch, Português, हिन्दी, 中文, 日本語.
 - **Mode:** Single player (now); Multiplayer is shown as "coming soon".
