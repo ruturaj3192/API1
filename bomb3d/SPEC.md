@@ -190,7 +190,7 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   Turn it on/off in Settings → Music (it also follows the Volume slider).
 
 ## Map details and the city
-- Every map sits just off the coast of **the city of Boomtopia**: a ring of skyscrapers with windows, rooftop antennas and
+- Every map sits just off the coast of **the city of Boomtopia**: a ring of **90 skyscrapers** with windows, rooftop antennas and
   blinking lights (lit windows on night maps; far below on floating maps).
 - The city stands **on land, never in the water**: a stone quay around the sea, a ring road with yellow lines,
   sidewalks and street lamps. You can walk on the city land (the skyscrapers and pillars are on it, not in the sea).

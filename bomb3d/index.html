@@ -3225,8 +3225,9 @@ function updateCrowd(dt) {
   }
 }
 const cityBlocks = [];
-for (let i = 0; i < (isTouch ? 44 : 70); i++) {
-  const a = (i / (isTouch ? 44 : 70)) * PI * 2 + srand() * 0.06, w = 7 + srand() * 9, d = 7 + srand() * 9, h = 16 + srand() * srand() * 70;
+const CITY_N = 90; // 90 skyscrapers
+for (let i = 0; i < CITY_N; i++) {
+  const a = (i / CITY_N) * PI * 2 + srand() * 0.06, w = 7 + srand() * 9, d = 7 + srand() * 9, h = 16 + srand() * srand() * 70;
   let r = CITY_EDGE + 15 + w / 2 + srand() * 50;
   if (Math.abs(((a - HALL_A + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI) < 0.2) r += 45; // room for City Hall
   for (const pl of pillars) if (Math.hypot(Math.cos(a) * r - pl.position.x, Math.sin(a) * r - pl.position.z) < 6 + Math.max(w, d) / 2) r += 14;
