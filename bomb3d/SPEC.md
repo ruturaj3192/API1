@@ -219,6 +219,49 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   (grass and flowers, snow piles, glowing embers, gumdrops and sprinkles, toy-brick studs, shells and starfish, mushrooms, crystals, rocks…).
 - Floating particles: snowflakes, rising embers, fireflies, pollen or blowing dust, depending on the map.
 
+## Your place, missions, new places and modes
+**Your house** (on the city land, with a fenced yard): the Shop's **My House** section sells furniture: Cozy Bed, Big TV,
+Comfy Sofa, Trophy Shelf (shows your trophies), Lava Lamp, Bomb Rug, Fish Tank, Arcade Machine, Big Plant, Bookshelf.
+The house has an open front so you can see in from the islands. **Your pets** (up to 6) play in the yard.
+With the bed, bedtime shows 🛏️ and you wake up "well rested" with bonus coins.
+
+**Mayor's phone missions:** every minute or two the phone rings (📞) with a timed job, shown in an orange HUD bar and a
+yellow light beam: find the missing cat on a rooftop (120 s), deliver the pizza across the city (60 s, take your car!),
+or catch the runaway balloon (90 s). Finish it for coins, XP, fireworks and cheering.
+
+**City Hall's secret office:** walk into City Hall's front door to visit the Mayor's office (desk, portrait, flags).
+Touch the glowing red book on the bookshelf to open the **secret vault** full of gold; the treasure chest gives a big
+one-time reward. The green door takes you back outside.
+
+**New bombs:** 🧲 **Magnet bomb** (level 9+) pulls everyone nearby toward it while its fuse burns. 🎈 **Balloon bomb**
+(level 6+) floats down slowly on a balloon, drifting around, and pops when it lands.
+
+**The Bomb King's Castle:** every 25th level is a showdown at the castle, a floating fortress with stone walls, towers and
+banners under a purple night sky. The boss is always the Bomb King, twice as tough.
+
+**Game modes** (menu → Game modes):
+- 🏷️ **Tag** (with your bacon-hair buddies): one player gets the bomb (14–20 s fuse that doesn't reset). Pass it by touching
+  someone. Whoever holds it when it blows is out; a new round starts. Last one standing wins.
+- ⏱️ **Survival:** the bombs never stop and keep coming faster. Your time and best time are shown.
+
+**Build Zone** (a checkered plot on the city land): stand in it to get Place / Remove / Color buttons (keys B / N / C).
+Stack up to 10 blocks high, 300 blocks, 8 colors, to make your own parkour course. Blocks are saved and solid.
+
+**Subway** 🚇: three entrances on the city sidewalk lead down to the Boomtopia Metro station. The train comes every
+~16 s; stand inside it when it leaves to ride to the next stop (another entrance). The green door is the exit.
+
+**Underwater world** 🤿: buy the **Diving suit** (600, in My House shop section) and you can swim instead of splashing:
+hold Jump to swim up, jump near the surface to leap out. Explore the sunken city on the seabed: ruins, a statue of the
+first Mayor, seaweed, coral, fish and 4 treasure chests. Underwater the view turns deep blue.
+
+**Snowy Mountain** 🏔️: a big snowy mountain beyond the city. Ride the **ski lift** from the station on the city land to
+the summit, then hop on the **sled** for a zig-zag run all the way back down.
+
+**Small fun things**
+- 🎉 **Dance party** (button or L): everyone dances (you, buddies, the crowd, the Mayor), disco lights and a beat.
+- 📸 **Photo mode** (button or O): hides the buttons (pauses single player); Snap! shows the photo with a Save button.
+- 🎁 **Mystery boxes** float down on parachutes during waves: coins, a power-up, a new pet, or even a locked skin!
+
 ## Skins (18 to unlock)
 Whole new looks, unlocked by playing (not bought). The Shop's **Skins** section shows each one with a 🔒, its challenge
 and a progress bar; unlocked skins have a Wear button ("Classic" = your normal shop look). Unlocking one pops up
