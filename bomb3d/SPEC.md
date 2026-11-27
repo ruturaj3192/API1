@@ -91,7 +91,12 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
   - Sticky (green, drifts toward people while falling) — level 7+
 - **Boss bomb (the Bomb King):** every 5th level ends with a giant boss bomb flying over the islands and
   dropping bombs. Grab bombs and throw them at it (throws auto-aim at the boss) to win.
-- **Power-ups** on the islands: Shield (no damage), Speed boots, Double jump, Heal.
+- **Power-ups** on the islands (11, each with its name floating above it):
+  Shield (no damage) · Speed boots · Double jump · Heal ·
+  **Magnet** (pulls coins to you, 12 s) · **Giant** (you grow big: no knockback, half damage, 10 s) ·
+  **Freeze** (every bomb freezes in place and timers pause, 6 s) · **Super jump** (12 s) ·
+  **Cloud walk** (walk on air over holes, water and lava, 10 s) · **Double coins** (20 s) ·
+  **Force field** (a pink ring that pushes falling bombs away from you, 10 s).
 - **Coins:** spin on the islands (14 per level, 9 more each wave), plus bonuses for passing, popping and throwing bombs,
   each wave, each level, bosses and XP level-ups. **Every coin reward is worth 4×**, so saving up for the shop is quick.
 - **Shop:** spend coins on hats and shirt/hair colours.
