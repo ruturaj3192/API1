@@ -219,6 +219,45 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   (grass and flowers, snow piles, glowing embers, gumdrops and sprinkles, toy-brick studs, shells and starfish, mushrooms, crystals, rocks…).
 - Floating particles: snowflakes, rising embers, fireflies, pollen or blowing dust, depending on the map.
 
+## Fun park and city life
+**Rides**
+- **Ferris wheel** (on the city land): 8 colorful cabins with lights. Walk into the bottom cabin and ride all the way around.
+- **Rocket launch pad:** stand on the glowing pad: "3, 2, 1... BLAST OFF!" shoots you about 120 high ("SPACE!"), then a
+  **parachute** opens and you float back down (you can steer).
+- **Water slide:** climb the ledges up the blue-and-white tower, step to the front edge, and slide down a spiral tube.
+  At the bottom you splash out over the sea and land on an island ("Wheee!").
+- **Speedboats** (3) zoom round the sea with a white wake, and **hot-air balloons** (4) float above the edge of the city.
+  Jump on to ride them.
+- **Ziplines** (4) between tall skyscrapers: walk to the yellow pole on the roof and zoom down the cable to the other roof.
+
+**Drive and fly** (press E / the action button near them; E again to get out)
+- **Your own sports car** (with a spoiler) is parked on the sidewalk near the Mayor. Steer with the joystick / WASD, Shift
+  for turbo, Jump to honk. You can drive anywhere on the city land; buildings stop you.
+- **Your own green helicopter** is parked on City Hall's roof. Move to fly, hold Jump to go up, let go to come down.
+  Jump out high up and a parachute opens.
+
+**Rooftop races:** touch the green 🏁 ring on the sidewalk to start; fly/climb through 6 rings on rooftops in order
+(the next one is gold, with a light beam). Your time and best time are shown; in multiplayer your time is posted in chat.
+
+**Mayor and people**
+- **Medals:** every 100 people rescued, the Mayor gives you a medal (coins + fireworks). Medals hang on a board by City Hall.
+- **Rebuild Boomtopia:** every 25 people rescued, a family house (colored walls, roof, chimney, tree) is built in the city
+  (up to 90). The menu's Mission card shows 🏅 medals and 🏠 houses.
+- **Talking people:** rescued people stroll along the sidewalk and say funny things in speech bubbles when you walk past.
+
+**Bomb fun**
+- **Bomb storm** (sometimes, level 3+): the sky turns red, bombs come twice as fast for 30 seconds, coins are doubled.
+- **The Bomb King's robots** (level 4+, single player): flying robots grab a trapped-people bubble and try to carry it
+  away. Touch a robot (or blow it up) to smash it: the bubble drops back on an island. If it escapes, those people are lost.
+- **Bomb basketball:** a hoop over the sea, about 10 steps from the island edge. Throw a bomb through it: "SWISH! +3",
+  coins, XP and the crowd cheers.
+
+**The world**
+- **Day and night:** a whole day takes about 4 minutes. At night the sky darkens, stars come out, city windows light up and
+  the helicopters' searchlights switch on.
+- **Weather** changes every minute or so: sunny, rain, thunderstorms (lightning flashes and thunder) or snow.
+- **Festival day (every Saturday):** party balloons rise over the city, fireworks, the crowd cheers, and **double XP**.
+
 ## Cool pack
 - **Fancy graphics** (Settings; on for computers, off for phones): glow (bloom) on lava, crystals, fire and explosions, and real shadows.
 - **Gradient sky** that fades from deep colour at the top to light at the horizon, on every map.
