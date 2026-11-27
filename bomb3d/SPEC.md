@@ -168,6 +168,15 @@ Menu → **Pet shop**. Buy pets (120 to 10,000 coins), then pick one to bring al
 - Chiptune music made in code: a menu song, a different song for each of the 20 maps, and a faster boss-fight song.
   Turn it on/off in Settings → Music (it also follows the Volume slider).
 
+## Cool pack
+- **Fancy graphics** (Settings; on for computers, off for phones): glow (bloom) on lava, crystals, fire and explosions, and real shadows.
+- **Gradient sky** that fades from deep colour at the top to light at the horizon, on every map.
+- **Bigger explosions**: a shockwave ring across the ground, smoke puffs that hang in the air, and a flash when one goes off near you.
+- **Slow motion**: when a bomb explodes in someone's hands near you, time slows and the camera zooms in (single player only).
+- **COMBO**: pass, pop or hit the boss again within 3 seconds for COMBO x2, x3… with bonus coins and XP.
+- **Fireworks** for beating a level, beating a boss and levelling up.
+- Dust puffs when landing or running fast, a sparkly trail when flying with a cape, and a camera that widens when you run or fly.
+
 ## Characters
 - You and your friends are blocky characters with **bacon hair**.
 - **Third-person camera** behind you.
@@ -191,5 +200,5 @@ Menu → **Pet shop**. Buy pets (120 to 10,000 coins), then pick one to bring al
 
 
 ## Tech
-- One file: `bomb3d/index.html`, using Three.js (r128 from cdnjs). No build step.
+- One file: `bomb3d/index.html`, using Three.js (r128 from cdnjs) plus its glow (bloom) add-ons (from jsDelivr). No build step.
 - Sounds are made in code (Web Audio), so there are no asset files.
