@@ -624,7 +624,7 @@ function vibrate(ms) { if (!save.vibration) return; try { navigator.vibrate && n
 /* =================== RENDERER / SCENE =================== */
 const canvas = $('#c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isTouch, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isTouch ? 1.5 : 2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); // sharp on every screen
 const scene = new THREE.Scene();
 const SKY = 0x8fd8ff;
 scene.background = new THREE.Color(SKY);
@@ -2844,8 +2844,12 @@ function applyFancy() {
   renderer.shadowMap.enabled = on; renderer.shadowMap.type = THREE.PCFSoftShadowMap; sun.castShadow = on;
   scene.traverse(o => { const ms = o.material ? (Array.isArray(o.material) ? o.material : [o.material]) : []; for (const m of ms) m.needsUpdate = true; });
   if (on && FANCY_OK && !composer) {
-    composer = new THREE.EffectComposer(renderer); composer.addPass(new THREE.RenderPass(scene, camera));
-    bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.55, 0.45, 0.86); composer.addPass(bloomPass);
+    // render through a multisampled target so edges stay smooth and crisp (WebGL2); glow only the brightest things
+    const pr = renderer.getPixelRatio(), MS = renderer.capabilities.isWebGL2 && THREE.WebGLMultisampleRenderTarget;
+    const rt = MS ? new THREE.WebGLMultisampleRenderTarget(innerWidth * pr, innerHeight * pr, { format: THREE.RGBAFormat }) : undefined;
+    if (rt) rt.samples = 4;
+    composer = new THREE.EffectComposer(renderer, rt); composer.setPixelRatio(pr); composer.addPass(new THREE.RenderPass(scene, camera));
+    bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.32, 0.18, 0.96); composer.addPass(bloomPass);
     composer.setSize(innerWidth, innerHeight);
   }
 }
