@@ -70,7 +70,9 @@ button:focus-visible,input:focus-visible{outline:4px solid var(--gold);outline-o
 #unameMake svg{color:var(--ink);}
 .un-saved{font-weight:700;color:var(--grass);}
 .hp-up{display:flex;flex-direction:column;align-items:center;gap:8px;border:3px solid var(--ink);border-radius:14px;background:#fff0f2;padding:12px;}
-.hearts{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;}
+.hearts{display:flex;gap:3px;flex-wrap:wrap;justify-content:center;max-width:330px;}
+.hearts svg{width:17px;height:16px;}
+.hp-lv{color:var(--muted);font-size:.9rem;}
 .hp-now{font-weight:600;font-size:1.05rem;}
 .maxed{color:var(--grass);}
 .menu-hp{margin-left:auto;display:inline-flex;align-items:center;gap:4px;}
@@ -1314,7 +1316,7 @@ function updatePickups(dt, visualOnly) {
 }
 function applyPower(type, c) {
   c = c || player; const me = c === player; if (me) { sfx.power(); addXp(5); }
-  if (type === 'heal') { c.hp = Math.min(c.maxHp, c.hp + 35); if (me) showMsg('+35 ' + t('heal'), 1.2); return; }
+  if (type === 'heal') { const amt = Math.round(Math.max(35, 0.25 * c.maxHp)); c.hp = Math.min(c.maxHp, c.hp + amt); if (me) showMsg('+' + amt + ' ' + t('heal'), 1.2); return; }
   const dur = { shield: 8, speed: 10, dbl: 15 }[type]; c.power[type] = dur;
   if (me) showMsg(t(type) + '!', 1.2);
 }
@@ -1534,7 +1536,7 @@ function waveDone() {
   addCoins(5, true); if (player && player.alive) addXp(20); sfx.wave(); showMsg(t('waveDone') + '<small>+5</small>', 2, true);
   rebuildTiles();
   for (const c of chars) {
-    if (c.alive) { if (c.human) c.hp = Math.min(c.maxHp, c.hp + 20); }
+    if (c.alive) { if (c.human) c.hp = Math.min(c.maxHp, c.hp + Math.max(20, 0.15 * c.maxHp)); }
     else if (!c.isPlayer || isMP()) { c.alive = true; c.hp = c.maxHp; c.group.visible = true; c.koT = 0; if (c.soot > 0) cleanFace(c); if (!c.remote) c.pos.copy(respawnSpot()); c.vel.set(0, 0, 0); }
   }
   spawnPowerups(1 + (Math.random() < 0.5 ? 1 : 0));
@@ -2454,7 +2456,7 @@ function healGround(c, dt, apply) {
   const tl = c.alive && c.group.visible && c.pos.y < 0.3 && c.pos.y > -0.3 ? tileAt(c.pos.x, c.pos.z) : null;
   c.healing = !!(tl && tl.heal);
   if (!c.healing) return;
-  if (apply) c.hp = Math.min(c.maxHp || 100, c.hp + 10 * dt);
+  if (apply) c.hp = Math.min(c.maxHp || 100, c.hp + Math.max(10, 0.06 * (c.maxHp || 100)) * dt);
   if (Math.random() < dt * 7) particle(fxMats.heal, c.pos.clone().add(new V3(rand(-0.6, 0.6), rand(0.3, 1.8), rand(-0.6, 0.6))), new V3(0, rand(1.5, 2.5), 0), rand(0.12, 0.2), 0.8, -1);
   if (c === player && !G.healSeen && G.mode === 'play') { G.healSeen = true; showMsg(t('healGround'), 1.6); tone(660, 0.15, 'sine', 0.1, 990); }
 }
@@ -2589,8 +2591,12 @@ function openFriends(focus) {
   renderOnline();
   if (focus && !full) $('#friendName').focus(); else $('#closeP').focus();
 }
-const HP_PRICES = [30, 60, 100, 150, 220, 300, 400, 500], HP_STEP = 25, HP_MAX = 100 + HP_STEP * HP_PRICES.length;
-function playerMaxHp() { return 100 + HP_STEP * clamp(save.hpLvl || 0, 0, HP_PRICES.length); }
+// 25 health upgrades: the first 8 give +25 (to 300), the next 17 give +100 (to 2,000)
+const HP_UP = [30, 60, 100, 150, 220, 300, 400, 500].map(price => ({ price, add: 25 }))
+  .concat([650, 800, 1000, 1200, 1450, 1700, 2000, 2300, 2650, 3000, 3400, 3800, 4250, 4700, 5200, 5700, 6250].map(price => ({ price, add: 100 })));
+const HP_PRICES = HP_UP.map(u => u.price), HP_MAX = 100 + HP_UP.reduce((n, u) => n + u.add, 0);
+function hpAt(l) { let h = 100; for (let i = 0; i < l; i++) h += HP_UP[i].add; return h; }
+function playerMaxHp() { return hpAt(clamp(save.hpLvl || 0, 0, HP_UP.length)); }
 const HEART = (on) => `<svg viewBox="0 0 24 22" width="22" height="20" aria-hidden="true"><path d="M12 21 C 5 15, 1 11.5, 1 7 A 5.5 5.5 0 0 1 12 4.5 A 5.5 5.5 0 0 1 23 7 C 23 11.5, 19 15, 12 21 Z" fill="${on ? '#ff3557' : '#e6e3f0'}" stroke="#1b1840" stroke-width="2"/></svg>`;
 function openShop() {
   initAudio(); sfx.click(); panelKind = 'shop';
@@ -2598,7 +2604,7 @@ function openShop() {
   let html = `<h2>${esc(t('shop'))}</h2><div class="coinline" style="justify-content:center"><span class="coin-dot"></span>${save.coins}</div>`;
   const lvl = clamp(save.hpLvl || 0, 0, HP_PRICES.length), price = HP_PRICES[lvl];
   html += `<h3>${esc(t('upHealth'))}</h3><div class="hp-up"><div class="hearts">${HP_PRICES.map((_, i) => HEART(i < lvl)).join('')}</div>
-    <div class="hp-now">${esc(t('maxHealth'))}: <b>${playerMaxHp()}</b>${price != null ? ` → <b>${playerMaxHp() + HP_STEP}</b>` : ''}</div>
+    <div class="hp-now">${esc(t('maxHealth'))}: <b>${playerMaxHp()}</b>${price != null ? ` → <b>${hpAt(lvl + 1)}</b>` : ''} <span class="hp-lv">(${lvl}/${HP_UP.length})</span></div>
     ${price != null ? `<button class="btn go" id="hpBuy" ${save.coins < price ? 'disabled' : ''}>${esc(t('upgrade'))} <span class="coin-dot" style="display:inline-block;width:16px;height:16px;border-width:2px;vertical-align:-2px"></span> ${price}</button>` : `<b class="maxed">${esc(t('maxed'))}</b>`}</div>`;
   const capeNow = capeDef();
   html += `<h3>${esc(t('capes'))}</h3><p style="margin:0;font-size:.9rem;color:var(--muted)">${esc(t('capeHint'))}</p><div class="shop-grid">`;

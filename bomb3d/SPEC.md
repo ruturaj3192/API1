@@ -79,8 +79,9 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
   - Mega RPG — 2,500: reload 1 s, strong homing, pops every bomb near the one it hits
   - Golden RPG — 5,000: reload 0.5 s, fires 3 rockets at once, strongest homing
   You always use your best RPG; it shows on your shoulder and its reload bar is in the HUD.
-- **Health upgrades** (top of the Shop): 8 upgrades of +25 max health each, from 100 up to 300.
-  Prices: 30, 60, 100, 150, 220, 300, 400, 500 coins. Hearts show how many you've bought; the health bar shows e.g. 175 / 175.
+- **Health upgrades** (top of the Shop): 25 upgrades, from 100 up to **2,000** max health.
+  The first 8 give +25 each (30–500 coins), the next 17 give +100 each (650–6,250 coins).
+  Healing pads, Heal power-ups and wave breaks heal a share of your max health, so they still help at 2,000.
 
 ## Multiplayer
 - Menu → **Mode → Multiplayer** → **Create game** gives a 4-letter code. Friends tap Multiplayer, type the code and press **Join**.
