@@ -315,7 +315,7 @@ body.touch .prompt{bottom:calc(180px + env(safe-area-inset-bottom,0px));}
       <section class="card">
         <h2 data-t="unTitle">Username</h2>
         <p class="un-hint" data-t="unHint">Type your own or let the game make one</p>
-        <input id="unameIn" class="txt uname" maxlength="16" autocomplete="off" spellcheck="false" aria-label="Username">
+        <input id="unameIn" class="txt uname" maxlength="100" autocomplete="off" spellcheck="false" aria-label="Username">
         <div class="un-row"><button class="btn go" id="unameMake"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="#fff" stroke="currentColor" stroke-width="2.5"/><circle cx="8" cy="8" r="1.8" fill="currentColor"/><circle cx="16" cy="16" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="8" r="1.8" fill="currentColor"/><circle cx="8" cy="16" r="1.8" fill="currentColor"/></svg><span data-t="unMake">Make me one!</span></button><span class="un-saved" id="unameSaved" aria-live="polite"></span></div>
       </section>
       <section class="card">
@@ -405,6 +405,7 @@ for (const k in LANGS) { const parts = LANGS[k][1].split('|'); DICT[k] = {}; KEY
 
 /* =================== SAVE =================== */
 const SAVE_KEY = 'bomb3d-save-v1';
+const NAME_MAX = 100; // no real limit for kids; only keeps multiplayer messages under their size cap
 function defaults() { return { unlocked: 1, sel: 1, coins: 0, owned: ['hat:none', 'shirt:blue', 'hair:bacon'], equip: { hat: 'none', shirt: 'blue', hair: 'bacon' }, volume: 70, vibration: true, lang: 'en', friends: ['Buddy', 'Zoe', 'Max'], map: 'islands', nick: 'Player' }; }
 let save = defaults();
 try { const raw = localStorage.getItem(SAVE_KEY); if (raw) save = Object.assign(defaults(), JSON.parse(raw)); } catch (e) {}
@@ -846,13 +847,16 @@ function buildCharacter(look) {
 }
 const nameTagCache = {};
 function nameTag(text) {
-  const cv = document.createElement('canvas'); cv.width = 256; cv.height = 64; const x = cv.getContext('2d');
-  x.font = '600 34px Fredoka, "Trebuchet MS", sans-serif'; const w = Math.min(240, x.measureText(text).width + 30);
-  x.fillStyle = 'rgba(27,24,64,0.72)'; const l = 128 - w / 2; x.beginPath();
+  const font = '600 34px Fredoka, "Trebuchet MS", sans-serif';
+  const m = document.createElement('canvas').getContext('2d'); m.font = font;
+  const w = Math.min(2000, Math.ceil(m.measureText(text).width) + 36), W = Math.max(256, w + 16);
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = 64; const x = cv.getContext('2d');
+  x.font = font; x.fillStyle = 'rgba(27,24,64,0.72)'; const l = W / 2 - w / 2; x.beginPath();
   if (x.roundRect) x.roundRect(l, 8, w, 48, 24); else x.rect(l, 8, w, 48);
-  x.fill(); x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, 128, 33, 220);
-  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), depthTest: false, transparent: true }));
-  sp.scale.set(2.8, 0.7, 1); sp.renderOrder = 10; return sp;
+  x.fill(); x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, W / 2, 33, w - 20);
+  const tex = new THREE.CanvasTexture(cv); tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, depthTest: false, transparent: true }));
+  sp.scale.set(2.8 * W / 256, 0.7, 1); sp.renderOrder = 10; return sp;
 }
 const chars = []; let player = null;
 function makeChar(opts) {
@@ -1548,7 +1552,7 @@ const isGuest = () => NET.role === 'guest' && !!NET.game;
 const num = (v, d) => { v = Number(v); return Number.isFinite(v) ? v : (d || 0); };
 const r10 = (v) => Math.round(v * 10);
 const enc = new TextEncoder();
-function cleanNick(s) { return String(s == null ? '' : s).replace(/[\u0000-\u001f\u007f-\u009f­​-‏‪-‮⁠-⁯﻿]/g, '').trim().slice(0, 16) || 'Player'; }
+function cleanNick(s) { return String(s == null ? '' : s).replace(/[\u0000-\u001f\u007f-\u009f­​-‏‪-‮⁠-⁯﻿]/g, '').trim().slice(0, NAME_MAX) || 'Player'; }
 function myLook() { return [save.equip.shirt, save.equip.hair, save.equip.hat]; }
 function lookFrom(a) {
   a = Array.isArray(a) ? a : [];
@@ -1602,7 +1606,7 @@ function hostSend(now) {
   const order = chars.slice().sort((a, b) => (b.human ? 1 : 0) - (a.human ? 1 : 0)).slice(0, 12);
   const snap = {
     nick: cleanNick(save.nick), look: myLook(), h: 1, st: G.phase === 'done' ? 'done' : 'play', res: G.res ? 1 : 0, rid: NET.rid,
-    L: G.level, map: MAP.id, w: G.wave, ws: G.waves, ph: G.phase, rb: NET.rb, ex: NET.ex, bn: save.friends,
+    L: G.level, map: MAP.id, w: G.wave, ws: G.waves, ph: G.phase, rb: NET.rb, ex: NET.ex, bn: save.friends.map(f => String(f).slice(0, 24)),
     c: order.map(ch => [ch.key, r10(ch.pos.x), r10(ch.pos.y), r10(ch.pos.z), Math.round(ch.yaw * 100), Math.ceil(ch.hp), (ch.alive ? 1 : 0) | (ch.soot > 0 ? 2 : 0), r10(ch.vel.x), r10(ch.vel.z), r10(ch.power.shield), r10(ch.power.speed), r10(ch.power.dbl), ch.coinsEarned || 0]),
     b: bombs.slice(0, 30).map(x => { const e = [x.id, BT.indexOf(x.type), r10(x.pos.x), r10(x.pos.y), r10(x.pos.z), ST.indexOf(x.state), r10(Math.max(0, x.fuse)), x.holder ? x.holder.key : 0]; if (x.ring) e.push(r10(x.ring.position.x), r10(x.ring.position.z)); return e; }),
     pk: pickups.slice(0, 16).map(p => [p.id, PK.indexOf(p.kind === 'coin' ? 'coin' : p.type), r10(p.obj.position.x), r10(p.obj.position.z)]),
@@ -2014,11 +2018,11 @@ function openFriends(focus) {
       ${save.friends.map((f, i) => `<li><span class="dot"></span>${esc(f)}<span class="st">${esc(t('withYou'))}</span><button data-rm="${i}" aria-label="Remove ${esc(f)}">✕</button></li>`).join('')}
     </ul>
     ${NET.room ? `<h3>${esc(t('mpOnline'))}</h3><ul class="friend-list" id="onlineList"></ul>` : `<p style="font-size:.95rem;color:var(--muted)">${esc(t('mpOff'))}</p>`}
-    <form class="addform" id="addForm"><input id="friendName" maxlength="12" placeholder="${esc(t('friendName'))}" autocomplete="off" ${full ? 'disabled' : ''}><button class="btn go" type="submit" ${full ? 'disabled' : ''}>${esc(t('add'))}</button></form>
+    <form class="addform" id="addForm"><input id="friendName" maxlength="100" placeholder="${esc(t('friendName'))}" autocomplete="off" ${full ? 'disabled' : ''}><button class="btn go" type="submit" ${full ? 'disabled' : ''}>${esc(t('add'))}</button></form>
     <div class="actions"><button class="btn" id="closeP">${esc(t('close'))}</button></div>`;
   panel.hidden = false;
   pbody.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { save.friends.splice(+b.dataset.rm, 1); persist(); openFriends(false); });
-  $('#addForm').onsubmit = (e) => { e.preventDefault(); const v = $('#friendName').value.trim(); if (!v || save.friends.length >= 7) return; save.friends.push(v.slice(0, 12)); persist(); sfx.power(); openFriends(true); };
+  $('#addForm').onsubmit = (e) => { e.preventDefault(); const v = $('#friendName').value.trim(); if (!v || save.friends.length >= 7) return; save.friends.push(v.slice(0, NAME_MAX)); persist(); sfx.power(); openFriends(true); };
   $('#closeP').onclick = closePanel;
   renderOnline();
   if (focus && !full) $('#friendName').focus(); else $('#closeP').focus();
@@ -2100,7 +2104,7 @@ function openMulti(note) {
   if (note) html += `<p style="color:var(--danger)">${esc(note)}</p>`;
   if (!NET.room) html += `<p>${esc(t('mpOff'))}</p>`;
   else {
-    html += `<div class="row"><label for="mpNick">${esc(t('mpName'))}</label><input id="mpNick" class="txt" maxlength="16" autocomplete="off" value="${esc(cleanNick(save.nick))}"></div>`;
+    html += `<div class="row"><label for="mpNick">${esc(t('mpName'))}</label><input id="mpNick" class="txt" maxlength="100" autocomplete="off" value="${esc(cleanNick(save.nick))}"></div>`;
     if (!NET.game) {
       html += `<div class="actions"><button class="btn go" id="mpCreate">${esc(t('mpCreate'))}</button></div>
         <form class="addform" id="mpJoinForm"><input id="mpCodeIn" maxlength="4" placeholder="${esc(t('mpCode'))}" autocomplete="off" autocapitalize="characters"><button class="btn blue" type="submit">${esc(t('mpJoin'))}</button></form>`;
