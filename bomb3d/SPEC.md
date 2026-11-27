@@ -15,8 +15,8 @@ Designed by the kid (two pencil sketches + Q&A), built with Claude.
 - **Health bar:** 100 health. Bombs hurt. 0 health = game over (try again).
 - **Bombs fall from the sky in waves.** A red circle shows where each one will land.
 - **Hot potato!** Go near a bomb that has landed and you **grab it automatically**. A countdown
-  (starting at about 4.5 seconds) shows above it. **Touch someone else to pass it** (you get +1 coin);
-  passing doesn't reset the timer. If the timer runs out while you hold it,
+  (starting at 7 seconds) shows above it. **Touch someone else to pass it** (you get +1 coin);
+  passing doesn't reset the timer, but whoever gets it always has at least 2 seconds. If the timer runs out while you hold it,
   **it explodes in your face** (extra damage). You can also press E to throw it away.
 - Buddies play hot potato too: a buddy with a bomb **chases the nearest person** (you too!)
   to pass it, and the others run away from them.

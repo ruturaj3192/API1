@@ -799,7 +799,7 @@ function playerAction() {
 }
 
 /* =================== HOT POTATO: auto-grab, pass by touching =================== */
-const GRAB_R = 1.7, PASS_R = 1.9, HOLD_FUSE = 4.5;
+const GRAB_R = 1.7, PASS_R = 1.9, HOLD_FUSE = 7;
 function timerTag(b) {
   if (!b.tt) {
     const cv = document.createElement('canvas'); cv.width = cv.height = 128;
@@ -827,7 +827,7 @@ function grabBomb(c, b) {
 }
 function passBomb(from, to) {
   const b = from.holding; from.holding = null; b.holder = to; to.holding = b;
-  b.fuse = Math.max(b.fuse, 1.2); from.passCD = 1.0; to.passCD = 0.6;
+  b.fuse = Math.max(b.fuse, 2); from.passCD = 1.0; to.passCD = 0.6;
   tone(880, 0.08, 'square', 0.07, 1320);
   if (to.isPlayer) { showMsg(t('passIt'), 1.2); vibrate(60); }
   if (from.isPlayer) addCoins(1, true);
