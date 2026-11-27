@@ -336,6 +336,55 @@ trapped-people bubble and pop it. Their rescues count for your mission (people, 
   **trampolines** that launch you high), then zig-zag **ledges** up the wall to the roof. You can jump up through blocks from below.
 - Each new roof you reach in a level: "Rooftop!" with its height, plus coins and XP.
 
+## Big pack 3: modes, pets, worlds, city life, powers and makers
+**New ways to play** (menu → Game modes)
+- 🏆 **Tournament:** an 8-player bracket (you + 7 named players). Each match is 1-on-1 bomb tag; win the quarterfinal,
+  semifinal and final to become CHAMPION and win a gold trophy (big coins + XP, confetti).
+- 🧟 **Zombie night:** on night maps (and at Halloween), slow bomb-zombies walk toward you each wave and hurt on touch.
+  Blow them up with bombs or RPGs for coins.
+- 🙈 **Hide and seek:** 20 seconds to hide anywhere (islands, city, rooftops), then 60 seconds of seekers walking the
+  islands and the city. If one gets close it chases you; caught = game over, last the 60 seconds = you win.
+- 🎯 **Target practice:** a shooting range on the city land with 5 moving bullseye targets. Hit them with RPG rockets or
+  thrown bombs (bombs now explode when they land on the city). BULLSEYE = +25.
+
+**Pets and friends**
+- 🐎 **Ride your pet** (M / 🐎 button): you sit on your pet (shown twice as big) and go 1.7× faster; flying pets let you
+  fly like a cape.
+- 🥚 **Pet eggs** appear on the islands now and then. Pick one up and it hatches after 60 s of play into a new pet
+  (rarer pets are more likely).
+- 🤝 **Trading** (multiplayer, 🤝 button): pick a friend in the game and send them a pet (it leaves your collection) or
+  a skin you've unlocked; they get a gift message.
+
+**New worlds**
+- 🌕 **Moon base:** the rocket now flies you all the way to the moon: craters, a glass dome, a flag, Earth in the black
+  sky and super low gravity. Stand on the blue pad for 2 s to fly home (with a parachute).
+- 🌋 **Volcano island:** a huge volcano far behind the city erupts every 15–25 s, shooting lava bombs.
+- 🏜️ **Desert pyramid:** a pyramid in the far desert. Take the 🐪 Desert bus kiosk on the sidewalk into its tunnel:
+  dodge spike traps lit by torches to reach the golden statue and the pharaoh's treasure.
+- 🎢 **Theme park** (city land): a roller coaster with a hill, a loop-de-loop and a cart; a bumper-car arena (walk in to
+  get a car, crash into the others: WHAM!; E to get out); and a haunted house full of flickering light and ghosts (BOO!).
+
+**City life**
+- 🍕 **Your own shop** (a striped stall on the sidewalk): stand behind it and serve customers the 🍕 🍦 🥤 🍔 they ask for.
+- 💼 **Jobs** (job board near the Mayor): 🚒 firefighter (spray the fire on a rooftop), 🚓 police (catch the running
+  robber) or 📦 delivery (take the package to the marker).
+- 🏫 **School** (kiosk on the sidewalk): a classroom with a teacher; a 5-question quiz (sums, times tables, counting
+  emojis) for XP.
+- 🎃 **Holidays** (Settings → Holiday: Auto/Halloween/Christmas/Easter/Off): Halloween pumpkins, bats and zombies;
+  Christmas tree with a daily present, Santa hats and snow; Easter egg hunt (10 eggs).
+
+**Super powers**
+- ⚡ **Power shop** (Shop): Super Speed, Shrink Ray (half damage), Teleport, Invisibility (bombs don't aim at you,
+  nobody passes to you), Ice Breath (freezes bombs). Equip one; G / ⚡ to use, with a cooldown.
+- 🌀 **Ultimate move:** a meter fills as you play (faster when you pass bombs and rescue people). When it's full,
+  U / 🌀: a TORNADO blows away every bomb near you and a dome shield protects you for 8 seconds.
+
+**Make it yours**
+- 🎨 **Skin maker** (Shop): pick colors for shirt, pants, skin, hair and stripe, plus a hat, and wear "My Skin".
+- 🏠 **Bigger house** (Shop → My House): Second Floor (stairs, bedroom, taller house), Swimming Pool and Flower Garden.
+- 🗺️ **Map maker** (menu → Maps): paint a 22×22 grid of land, center, bridges and water, then play "My Map". Copy a map
+  code to share with friends, or load one they send you.
+
 ## The 10,000x cooler pack
 - **Cinematic intro:** every level starts with the camera swooping down from the sky around you.
 - **Comic-book explosions:** BOOM! KAPOW! BLAM! WHAM! words pop out of explosions near you.
