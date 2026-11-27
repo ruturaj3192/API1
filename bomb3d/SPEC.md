@@ -32,6 +32,11 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Spooky Graveyard**: night time, tombstones, open graves (holes) and green slime.
 - **Cloud Kingdom**: cloud islands with golden bridges and little towers. **Floaty jumps.**
 
+## Healing ground
+- Every map has **3 healing pads**: glowing aqua ground with a light beam and a spinning green **+** above it.
+- Stand on one to heal about **10 health per second** (green sparkles; your health bar glows). Buddies and multiplayer friends heal too.
+- Bombs can break the pads like any ground; they rebuild between waves. "Healing ground!" shows the first time you step on one in a level.
+
 ## Levels (5,000)
 - Levels 1–5,000, in pages of 20 in the menu (« ‹ › » buttons). **All levels are unlocked**: pick any one.
 - It gets harder up to level 50 (more bombs, faster, more of the special bombs), then stays that hard.
