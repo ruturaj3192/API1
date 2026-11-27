@@ -14,7 +14,12 @@ Designed by the kid (two pencil sketches + Q&A), built with Claude.
 - **Goal:** survive **all the waves** of a level. Level 1 has 3 waves; later levels have more (up to 8).
 - **Health bar:** 100 health. Bombs hurt. 0 health = game over (try again).
 - **Bombs fall from the sky in waves.** A red circle shows where each one will land.
-  A landed bomb's fuse burns for a moment, so you can **grab it and throw it back**.
+- **Hot potato!** Go near a bomb that has landed and you **grab it automatically**. A countdown
+  (starting at about 4.5 seconds) shows above it. **Touch someone else to pass it** (you get +1 coin);
+  passing doesn't reset the timer. If the timer runs out while you hold it,
+  **it explodes in your face** (extra damage). You can also press E to throw it away.
+- Buddies play hot potato too: a buddy with a bomb **chases the nearest person** (you too!)
+  to pass it, and the others run away from them.
 - **Bomb types** (unlock as levels go up):
   - Normal (black) — level 1+
   - Mega (red, huge blast) — level 3+
