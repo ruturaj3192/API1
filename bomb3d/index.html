@@ -271,6 +271,7 @@ body.touch .prompt{bottom:calc(180px + env(safe-area-inset-bottom,0px));}
 .mission-count{margin:0;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;}
 .people-pill{background:#1fb5b0;}
 .mayor-pill{background:#5b3fa8;font-size:.85em;}
+.race-pill{background:#26a35b;font-variant-numeric:tabular-nums;}
 .rescuepop{color:#9ff7ff;top:calc(140px + env(safe-area-inset-top,0px));}
 .combo{position:absolute;right:8%;top:38%;font-family:var(--display);font-size:clamp(1.8rem,6vw,3rem);color:var(--fuse);text-shadow:0 4px 0 var(--ink),2px 0 0 var(--ink),-2px 0 0 var(--ink);transform:rotate(-8deg);opacity:0;transition:opacity .4s;pointer-events:none;}
 .combo.show{opacity:1;animation:pop .3s ease-out;}
@@ -363,6 +364,7 @@ body.touch .prompt{bottom:calc(180px + env(safe-area-inset-bottom,0px));}
       <div class="xp" id="xpBar"><span class="xp-lvl" id="xpLvl">1</span><div class="xp-track"><div class="xp-fill" id="xpFill"></div><span id="xpText"></span></div></div>
       <div class="pill people-pill" id="hPeople" hidden></div>
       <div class="pill mayor-pill" id="hMayor" hidden></div>
+      <div class="pill race-pill" id="hRace" hidden></div>
       <div class="chips" id="chips"></div>
       <div class="rpg-hud" id="rpgHud" hidden><span id="rpgName"></span><div class="rpg-bar"><div id="rpgFill"></div></div></div>
     </div>
@@ -534,16 +536,16 @@ const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 /* =================== LANGUAGES =================== */
-const KEYS = 'start levels moreSoon volume vibration languages mode single multi soon server addFriends makeFriend settings shop exit wave level grab throw jump paused resume menu gameOver tryAgain levelDone next waveDone boss bye play friendName add buy equip equipped hats shirts hair withYou you shield speed dbl heal splash ready close help survivors on off pressE friends passIt maps hot whoosh mpCreate mpJoin mpCode mpName mpWait mpLeave mpPlayers mpHost mpShare mpHostLeft mpOnline mpInGame mpOff mpOut tutorial tMove tLook tJump tBomb tPass tThrow tOut tPower tDone tSkip tNext tPlay hJoy hDrag hDragT hJumpBtn hThrowBtn hE coach loading unTitle unMake unHint unSaved upHealth maxHealth upgrade maxed rpgs reload homing using fire rpgReady xp xpLevel levelUp petShop petNone pd1 pd2 pd3 pd4 pd5 pd6 abFetch abHeal abWarn abBlock abFire abXp abSpeed abCoins abJump evolve canEvolve evolved rk0 rk1 rk2 rk3 rk4 rk5 healGround capes glide flyWord capeHint noCape story storyTitle s1 s2 s3 s4 s5 s6 sNext sBack sSkip chat chatSay send q1 q2 q3 q4 q5 q6 q7 q8 daily day claim comeBack mystery achievements achUnlocked aPass aPop aKing aWave aLevel aCoin aPet aOut aXp iceKing rocketQueen frozen emotes eWave eDance eSpin eCheer leaderboard lbNote levelsBeaten music more fancy lavaLord ghostBomb roboBomber thunderBomb emperor mission missionText rescued savedAll people aRescue magnet giant freezeP sjump walk coins2 repel parkour carSurf trainSurf mayor mayorTask mt1 mt2 mt3 mt4 mayorDone mayorThanks mayorHi cityHall heliSurf'.split(' ');
+const KEYS = 'start levels moreSoon volume vibration languages mode single multi soon server addFriends makeFriend settings shop exit wave level grab throw jump paused resume menu gameOver tryAgain levelDone next waveDone boss bye play friendName add buy equip equipped hats shirts hair withYou you shield speed dbl heal splash ready close help survivors on off pressE friends passIt maps hot whoosh mpCreate mpJoin mpCode mpName mpWait mpLeave mpPlayers mpHost mpShare mpHostLeft mpOnline mpInGame mpOff mpOut tutorial tMove tLook tJump tBomb tPass tThrow tOut tPower tDone tSkip tNext tPlay hJoy hDrag hDragT hJumpBtn hThrowBtn hE coach loading unTitle unMake unHint unSaved upHealth maxHealth upgrade maxed rpgs reload homing using fire rpgReady xp xpLevel levelUp petShop petNone pd1 pd2 pd3 pd4 pd5 pd6 abFetch abHeal abWarn abBlock abFire abXp abSpeed abCoins abJump evolve canEvolve evolved rk0 rk1 rk2 rk3 rk4 rk5 healGround capes glide flyWord capeHint noCape story storyTitle s1 s2 s3 s4 s5 s6 sNext sBack sSkip chat chatSay send q1 q2 q3 q4 q5 q6 q7 q8 daily day claim comeBack mystery achievements achUnlocked aPass aPop aKing aWave aLevel aCoin aPet aOut aXp iceKing rocketQueen frozen emotes eWave eDance eSpin eCheer leaderboard lbNote levelsBeaten music more fancy lavaLord ghostBomb roboBomber thunderBomb emperor mission missionText rescued savedAll people aRescue magnet giant freezeP sjump walk coins2 repel parkour carSurf trainSurf mayor mayorTask mt1 mt2 mt3 mt4 mayorDone mayorThanks mayorHi cityHall heliSurf blastOff space wheee drive fly getOut raceHud raceGo raceDone raceBest'.split(' ');
 const LANGS = {
-  en: ['English', "Start|Levels|...and more soon|Volume|Vibration|Languages|Mode|Single player|Multiplayer|coming soon|Check who's in the server|Add friends|Make a friend|Settings|Shop|Exit|Wave|Level|Grab|Throw|Jump|Paused|Resume|Menu|You got blown up!|Try again|Level complete!|Next level|Wave complete!|BOMB KING!|Bye! Come back soon!|Play again|Friend's name|Add|Buy|Wear|Wearing|Hats|Shirts|Hair|with you|You|Shield|Speed|Double jump|Heal|Splash!|Get ready!|Close|WASD move · Space jump · Shift run · drag to look · E throw|Friends still standing|On|Off|Press E to grab!|Friends|Pass it!|Maps|Too hot!|Whoosh!|Create game|Join|Game code|Your name|Waiting for the host to start...|Leave game|Players|host|Friends can join when this game's link is shared with them (Share menu) and they open it.|The host left the game|Online now|in game|Open this game on claude.ai to play together|You're out! Back next wave|Tutorial|Walk around!|Look around!|Jump two times!|A bomb is falling! When it lands, walk into it to grab it.|Quick! Run into Coach to pass the bomb before the timer runs out.|Grab this bomb, then throw it far away!|Watch Coach: if the timer runs out while you hold a bomb, your face goes black and you're OUT!|Grab the coin and the shield!|You're ready! Survive all the waves to win. Good luck!|Skip tutorial|Got it!|Let's play!|Use the joystick|Drag with the mouse|Drag on the right side of the screen|Press Jump|Press Throw|Press E|Coach|Loading...|Username|Make me one!|Type your own or let the game make one|Saved!|Health upgrades|Max health|Upgrade|Fully upgraded!|RPGs|Reload|Homing|Using|Fire|RPG ready!|XP|XP level|LEVEL UP!|Pet shop|No pet|Fetches coins near you|Heals you a little all the time|Warns you when a bomb will land near you|Blocks one hit every 20 seconds|Breathes fire to pop bombs|Doubles your XP|Pulls coins to you|Heals you over time|Warns you about bombs landing near you|Blocks hits now and then|Breathes fire to pop bombs|Gives you extra XP|Makes you run faster|Sometimes doubles coins|Lets you double jump|Evolve!|can evolve!|EVOLVED!|Common|Uncommon|Rare|Epic|Legendary|Mythic|Healing ground!|Flying capes|Glide|Fly|Hold Jump in the air to glide or fly!|No cape|Story|The Story of Boomtopia|Long ago, Boomtopia was a happy land of floating islands. Kids with bacon hair played there every day.|Then the Bomb King woke up inside the volcano. He was grumpy, his fuse was always lit, and he hated fun.|He trapped the people of Boomtopia in bubbles, scattered them across the islands, and made bombs rain from the sky.|But the kids found a trick: a bomb only explodes when its timer runs out. Pass it fast, like a hot potato! Hold it too long and your face goes black, and you're out!|The islands fought back too. Healing grounds started to glow, brave pets joined the team, and the shop began selling capes and RPGs.|Now it's your turn! Pop the bubbles to free the people, beat the Bomb King and his friends, and bring everyone back to Boomtopia!|Next|Back|Skip|Chat|Say something...|Send|Hi!|Pass it to me!|Run!|Help!|Nice!|Good game!|Follow me!|Haha!|Daily reward|Day {n}|Claim!|Come back tomorrow for more!|Mystery gift|Achievements|Achievement unlocked!|Pass {n} bombs|Pop {n} bombs with an RPG|Beat {n} bosses|Survive {n} waves|Beat {n} levels|Pick up {n} coins|Own {n} pets|Get a black face {n} times|Reach XP level {n}|ICE KING!|ROCKET QUEEN!|Frozen!|Emotes|Wave|Dance|Spin|Cheer|Leaderboard|Shows everyone who has the game open right now.|Levels beaten|Music|More fun|Fancy graphics|LAVA LORD!|GHOST BOMB!|ROBO BOMBER!|THUNDER BOMB!|BOMB EMPEROR!|Mission|Bring back all the people of Boomtopia!|rescued|You saved Boomtopia!|People|Rescue {n} people|Magnet|Giant|Freeze|Super jump|Cloud walk|Double coins|Force field|Rooftop!|Car surfing!|Train surfing!|Mayor|Mayor's task|Rescue {n} people|Ride on a car|Ride on a train|Climb to a rooftop|The Mayor says: Thank you, hero!|Thank you, hero!|Welcome, hero!|City Hall|Helicopter ride!"],
-  es: ['Español', "Jugar|Niveles|...y más pronto|Volumen|Vibración|Idiomas|Modo|Un jugador|Multijugador|muy pronto|Ver quién está en el servidor|Añadir amigos|Crear un amigo|Ajustes|Tienda|Salir|Oleada|Nivel|Agarrar|Lanzar|Saltar|Pausa|Seguir|Menú|¡Te explotaron!|Otra vez|¡Nivel completado!|Siguiente nivel|¡Oleada superada!|¡REY BOMBA!|¡Adiós! ¡Vuelve pronto!|Jugar otra vez|Nombre del amigo|Añadir|Comprar|Poner|Puesto|Gorros|Camisetas|Pelo|contigo|Tú|Escudo|Velocidad|Doble salto|Curar|¡Splash!|¡Prepárate!|Cerrar|WASD mover · Espacio saltar · Shift correr · arrastra para mirar · E lanzar|Amigos en pie|Sí|No|¡Pulsa E para agarrar!|Amigos|¡Pásala!|Mapas|¡Quema!|¡Fiuuu!|Crear partida|Unirse|Código de partida|Tu nombre|Esperando a que el anfitrión empiece...|Salir de la partida|Jugadores|anfitrión|Tus amigos pueden unirse si compartes el enlace de este juego con ellos (menú Compartir) y lo abren.|El anfitrión salió de la partida|En línea ahora|en partida|Abre este juego en claude.ai para jugar juntos|¡Estás fuera! Vuelves en la próxima oleada|Tutorial|¡Camina!|¡Mira alrededor!|¡Salta dos veces!|¡Cae una bomba! Cuando aterrice, camina hacia ella para agarrarla.|¡Rápido! Corre hacia el Entrenador para pasarle la bomba antes de que se acabe el tiempo.|¡Agarra esta bomba y lánzala lejos!|Mira al Entrenador: si el tiempo se acaba mientras tienes una bomba, ¡tu cara se pone negra y quedas FUERA!|¡Agarra la moneda y el escudo!|¡Estás listo! Sobrevive a todas las oleadas para ganar. ¡Suerte!|Saltar tutorial|¡Entendido!|¡A jugar!|Usa el joystick|Arrastra con el ratón|Arrastra en el lado derecho de la pantalla|Pulsa Saltar|Pulsa Lanzar|Pulsa E|Entrenador|Cargando...|Nombre de usuario|¡Hazme uno!|Escribe el tuyo o deja que el juego invente uno|¡Guardado!|Mejoras de vida|Vida máxima|Mejorar|¡Al máximo!|Lanzacohetes|Recarga|Teledirigido|Usando|Disparar|¡Lanzacohetes listo!|XP|Nivel de XP|¡SUBES DE NIVEL!|Tienda de mascotas|Sin mascota|Trae las monedas cercanas|Te cura un poquito todo el tiempo|Te avisa cuando una bomba va a caer cerca|Bloquea un golpe cada 20 segundos|Escupe fuego para reventar bombas|Duplica tu XP|Te trae las monedas|Te cura con el tiempo|Te avisa de bombas que caen cerca|Bloquea golpes de vez en cuando|Escupe fuego para reventar bombas|Te da XP extra|Te hace correr más rápido|A veces duplica las monedas|Te deja hacer doble salto|¡Evolucionar!|¡puede evolucionar!|¡EVOLUCIONÓ!|Común|Poco común|Raro|Épico|Legendario|Mítico|¡Suelo curativo!|Capas voladoras|Planear|Volar|¡Mantén Saltar en el aire para planear o volar!|Sin capa|Historia|La historia de Boomtopia|Hace mucho tiempo, Boomtopia era una tierra feliz de islas flotantes. Los niños con pelo de tocino jugaban allí todos los días.|Entonces el Rey Bomba despertó dentro del volcán. Era gruñón, su mecha siempre estaba encendida y odiaba la diversión.|Atrapó a la gente de Boomtopia en burbujas, la esparció por las islas e hizo llover bombas del cielo.|Pero los niños descubrieron un truco: una bomba solo explota cuando se acaba su tiempo. ¡Pásala rápido, como una papa caliente! Si la tienes demasiado, tu cara se pone negra y quedas fuera.|Las islas también se defendieron. Brillaron suelos curativos, llegaron mascotas valientes y la tienda empezó a vender capas y lanzacohetes.|¡Ahora es tu turno! Revienta las burbujas para liberar a la gente, vence al Rey Bomba y a sus amigos, ¡y trae a todos de vuelta a Boomtopia!|Siguiente|Atrás|Saltar|Chat|Escribe algo...|Enviar|¡Hola!|¡Pásamela!|¡Corre!|¡Ayuda!|¡Genial!|¡Buen juego!|¡Sígueme!|¡Jaja!|Premio diario|Día {n}|¡Reclamar!|¡Vuelve mañana por más!|Regalo sorpresa|Logros|¡Logro desbloqueado!|Pasa {n} bombas|Revienta {n} bombas con un lanzacohetes|Vence a {n} jefes|Sobrevive {n} oleadas|Supera {n} niveles|Recoge {n} monedas|Ten {n} mascotas|Pon tu cara negra {n} veces|Llega al nivel de XP {n}|¡REY DE HIELO!|¡REINA COHETE!|¡Congelado!|Gestos|Saludar|Bailar|Girar|Celebrar|Clasificación|Muestra a todos los que tienen el juego abierto ahora.|Niveles superados|Música|Más diversión|Gráficos geniales|¡SEÑOR DE LAVA!|¡BOMBA FANTASMA!|¡ROBO BOMBARDERO!|¡BOMBA TRUENO!|¡EMPERADOR BOMBA!|Misión|¡Trae de vuelta a toda la gente de Boomtopia!|rescatados|¡Salvaste Boomtopia!|Gente|Rescata a {n} personas|Imán|Gigante|Congelar|Supersalto|Paso de nube|Monedas dobles|Campo de fuerza|¡Azotea!|¡Surf en coche!|¡Surf en tren!|Alcalde|Tarea del alcalde|Rescata a {n} personas|Súbete a un coche|Súbete a un tren|Sube a una azotea|El alcalde dice: ¡Gracias, héroe!|¡Gracias, héroe!|¡Bienvenido, héroe!|Ayuntamiento|¡Viaje en helicóptero!"],
-  fr: ['Français', "Jouer|Niveaux|...et bientôt plus|Volume|Vibration|Langues|Mode|Solo|Multijoueur|bientôt|Voir qui est sur le serveur|Ajouter des amis|Créer un ami|Réglages|Boutique|Quitter|Vague|Niveau|Attraper|Lancer|Sauter|Pause|Reprendre|Menu|Tu as explosé !|Réessayer|Niveau terminé !|Niveau suivant|Vague terminée !|ROI BOMBE !|Au revoir ! À bientôt !|Rejouer|Nom de l'ami|Ajouter|Acheter|Porter|Porté|Chapeaux|T-shirts|Cheveux|avec toi|Toi|Bouclier|Vitesse|Double saut|Soin|Plouf !|Prépare-toi !|Fermer|WASD bouger · Espace sauter · Shift courir · glisser pour regarder · E lancer|Amis encore debout|Oui|Non|Appuie sur E pour attraper !|Amis|Passe-la !|Cartes|Ça brûle !|Wouuuh !|Créer une partie|Rejoindre|Code de partie|Ton nom|On attend que l'hôte lance la partie...|Quitter la partie|Joueurs|hôte|Tes amis peuvent rejoindre si le lien du jeu est partagé avec eux (menu Partager) et qu'ils l'ouvrent.|L'hôte a quitté la partie|En ligne|en partie|Ouvre ce jeu sur claude.ai pour jouer ensemble|Tu es éliminé ! Retour à la prochaine vague|Tutoriel|Marche un peu !|Regarde autour de toi !|Saute deux fois !|Une bombe tombe ! Quand elle atterrit, marche dessus pour l'attraper.|Vite ! Cours vers le Coach pour lui passer la bombe avant la fin du compte à rebours.|Attrape cette bombe, puis lance-la loin !|Regarde le Coach : si le temps est écoulé pendant que tu tiens une bombe, ton visage devient noir et tu es ÉLIMINÉ !|Attrape la pièce et le bouclier !|Tu es prêt ! Survis à toutes les vagues pour gagner. Bonne chance !|Passer le tutoriel|Compris !|On joue !|Utilise le joystick|Fais glisser avec la souris|Fais glisser sur le côté droit de l'écran|Appuie sur Sauter|Appuie sur Lancer|Appuie sur E|Coach|Chargement...|Pseudo|Invente-m'en un !|Écris le tien ou laisse le jeu en inventer un|Enregistré !|Améliorations de vie|Vie max|Améliorer|Au maximum !|Lance-roquettes|Recharge|Tête chercheuse|Équipé|Tirer|Lance-roquettes prêt !|XP|Niveau XP|NIVEAU SUPÉRIEUR !|Animalerie|Pas d'animal|Rapporte les pièces proches|Te soigne un peu tout le temps|T'avertit quand une bombe va tomber près de toi|Bloque un coup toutes les 20 secondes|Crache du feu pour éclater les bombes|Double ton XP|Attire les pièces vers toi|Te soigne avec le temps|T'avertit des bombes qui tombent près de toi|Bloque des coups de temps en temps|Crache du feu pour éclater les bombes|Te donne plus d'XP|Te fait courir plus vite|Double parfois les pièces|Te permet de faire un double saut|Évoluer !|peut évoluer !|ÉVOLUÉ !|Commun|Peu commun|Rare|Épique|Légendaire|Mythique|Sol de soin !|Capes volantes|Planer|Voler|Maintiens Sauter en l'air pour planer ou voler !|Pas de cape|Histoire|L'histoire de Boomtopia|Il y a longtemps, Boomtopia était un pays joyeux d'îles flottantes. Les enfants aux cheveux bacon y jouaient tous les jours.|Puis le Roi Bombe s'est réveillé dans le volcan. Il était grognon, sa mèche toujours allumée, et il détestait s'amuser.|Il a enfermé les habitants de Boomtopia dans des bulles, les a dispersés sur les îles et a fait pleuvoir des bombes du ciel.|Mais les enfants ont trouvé une astuce : une bombe n'explose que quand son compte à rebours est fini. Passe-la vite, comme une patate chaude ! Si tu la gardes trop longtemps, ton visage devient noir et tu es éliminé !|Les îles se sont défendues aussi : des sols de soin se sont mis à briller, des animaux courageux sont arrivés et la boutique a vendu des capes et des lance-roquettes.|À toi de jouer ! Éclate les bulles pour libérer les habitants, bats le Roi Bombe et ses amis, et ramène tout le monde à Boomtopia !|Suivant|Retour|Passer|Chat|Écris quelque chose...|Envoyer|Salut !|Passe-la-moi !|Cours !|À l'aide !|Bien joué !|Bonne partie !|Suis-moi !|Haha !|Récompense du jour|Jour {n}|Récupérer !|Reviens demain pour plus !|Cadeau mystère|Succès|Succès débloqué !|Passe {n} bombes|Éclate {n} bombes au lance-roquettes|Bats {n} boss|Survis à {n} vagues|Termine {n} niveaux|Ramasse {n} pièces|Aie {n} animaux|Aie le visage noir {n} fois|Atteins le niveau XP {n}|ROI DE GLACE !|REINE FUSÉE !|Gelé !|Emotes|Saluer|Danser|Tourner|Applaudir|Classement|Montre tous ceux qui ont le jeu ouvert en ce moment.|Niveaux réussis|Musique|Encore plus|Graphismes de luxe|SEIGNEUR DE LAVE !|BOMBE FANTÔME !|ROBO-BOMBARDIER !|BOMBE TONNERRE !|EMPEREUR BOMBE !|Mission|Ramène tous les habitants de Boomtopia !|sauvés|Tu as sauvé Boomtopia !|Habitants|Sauve {n} habitants|Aimant|Géant|Gel|Super saut|Marche nuage|Pièces doublées|Champ de force|Sur le toit !|Surf sur voiture !|Surf sur le train !|Maire|Mission du maire|Sauve {n} habitants|Monte sur une voiture|Monte sur un train|Grimpe sur un toit|Le maire dit : Merci, héros !|Merci, héros !|Bienvenue, héros !|Mairie|Balade en hélico !"],
-  de: ['Deutsch', "Start|Level|...und bald mehr|Lautstärke|Vibration|Sprachen|Modus|Einzelspieler|Mehrspieler|bald|Wer ist auf dem Server?|Freunde hinzufügen|Freund erstellen|Einstellungen|Shop|Beenden|Welle|Level|Greifen|Werfen|Springen|Pause|Weiter|Menü|Du wurdest weggesprengt!|Nochmal|Level geschafft!|Nächstes Level|Welle geschafft!|BOMBENKÖNIG!|Tschüss! Bis bald!|Nochmal spielen|Name des Freundes|Hinzufügen|Kaufen|Anziehen|Angezogen|Hüte|Shirts|Haare|bei dir|Du|Schild|Tempo|Doppelsprung|Heilen|Platsch!|Mach dich bereit!|Schließen|WASD laufen · Leertaste springen · Shift rennen · ziehen zum Umsehen · E werfen|Freunde noch dabei|An|Aus|Drück E zum Greifen!|Freunde|Gib sie weiter!|Karten|Zu heiß!|Wuuusch!|Spiel erstellen|Beitreten|Spielcode|Dein Name|Warte, bis der Host startet...|Spiel verlassen|Spieler|Host|Freunde können mitspielen, wenn der Link zu diesem Spiel mit ihnen geteilt wird (Teilen-Menü) und sie ihn öffnen.|Der Host hat das Spiel verlassen|Gerade online|im Spiel|Öffne dieses Spiel auf claude.ai, um zusammen zu spielen|Du bist raus! Nächste Welle bist du zurück|Tutorial|Lauf herum!|Schau dich um!|Spring zweimal!|Eine Bombe fällt! Wenn sie landet, lauf hin, um sie zu greifen.|Schnell! Lauf zum Trainer und gib ihm die Bombe, bevor die Zeit abläuft.|Greif diese Bombe und wirf sie weit weg!|Schau zum Trainer: Wenn die Zeit abläuft, während du eine Bombe hältst, wird dein Gesicht schwarz und du bist RAUS!|Schnapp dir die Münze und das Schild!|Du bist bereit! Überlebe alle Wellen, um zu gewinnen. Viel Glück!|Tutorial überspringen|Verstanden!|Los geht's!|Benutze den Joystick|Mit der Maus ziehen|Auf der rechten Bildschirmseite ziehen|Drück Springen|Drück Werfen|Drück E|Trainer|Lädt...|Benutzername|Mach mir einen!|Schreib deinen eigenen oder lass das Spiel einen erfinden|Gespeichert!|Lebens-Upgrades|Max. Leben|Verbessern|Voll aufgerüstet!|Raketenwerfer|Nachladen|Zielsuchend|Ausgerüstet|Feuer|Raketenwerfer bereit!|XP|XP-Stufe|STUFE AUFGESTIEGEN!|Tierladen|Kein Haustier|Holt Münzen in deiner Nähe|Heilt dich ständig ein bisschen|Warnt dich, wenn eine Bombe neben dir landet|Blockt alle 20 Sekunden einen Treffer|Speit Feuer und zerplatzt Bomben|Verdoppelt deine XP|Zieht Münzen zu dir|Heilt dich mit der Zeit|Warnt dich vor Bomben in deiner Nähe|Blockt ab und zu Treffer|Speit Feuer und zerplatzt Bomben|Gibt dir extra XP|Lässt dich schneller rennen|Verdoppelt manchmal Münzen|Gibt dir einen Doppelsprung|Entwickeln!|kann sich entwickeln!|ENTWICKELT!|Gewöhnlich|Ungewöhnlich|Selten|Episch|Legendär|Mythisch|Heilboden!|Flug-Umhänge|Gleiten|Fliegen|Halte Springen in der Luft zum Gleiten oder Fliegen!|Kein Umhang|Geschichte|Die Geschichte von Boomtopia|Vor langer Zeit war Boomtopia ein fröhliches Land aus schwebenden Inseln. Kinder mit Speckhaaren spielten dort jeden Tag.|Dann wachte der Bombenkönig im Vulkan auf. Er war grummelig, seine Lunte brannte immer, und er hasste Spaß.|Er sperrte die Leute von Boomtopia in Blasen, verstreute sie über die Inseln und ließ Bomben vom Himmel regnen.|Aber die Kinder fanden einen Trick: Eine Bombe explodiert erst, wenn ihr Timer abläuft. Gib sie schnell weiter, wie eine heiße Kartoffel! Hältst du sie zu lange, wird dein Gesicht schwarz und du bist raus!|Auch die Inseln wehrten sich: Heilböden leuchteten auf, mutige Haustiere halfen mit, und der Shop verkaufte Umhänge und Raketenwerfer.|Jetzt bist du dran! Lass die Blasen platzen, um die Leute zu befreien, besiege den Bombenkönig und seine Freunde und bring alle nach Boomtopia zurück!|Weiter|Zurück|Überspringen|Chat|Schreib etwas...|Senden|Hallo!|Gib sie mir!|Lauf!|Hilfe!|Super!|Gutes Spiel!|Folge mir!|Haha!|Tägliche Belohnung|Tag {n}|Abholen!|Komm morgen wieder für mehr!|Überraschungsgeschenk|Erfolge|Erfolg freigeschaltet!|Gib {n} Bomben weiter|Zerplatze {n} Bomben mit dem Raketenwerfer|Besiege {n} Bosse|Überlebe {n} Wellen|Schaffe {n} Level|Sammle {n} Münzen|Besitze {n} Haustiere|Bekomme {n}-mal ein schwarzes Gesicht|Erreiche XP-Stufe {n}|EISKÖNIG!|RAKETENKÖNIGIN!|Eingefroren!|Emotes|Winken|Tanzen|Drehen|Jubeln|Bestenliste|Zeigt alle, die das Spiel gerade offen haben.|Geschaffte Level|Musik|Mehr Spaß|Schicke Grafik|LAVALORD!|GEISTERBOMBE!|ROBO-BOMBER!|DONNERBOMBE!|BOMBENKAISER!|Mission|Bring alle Leute von Boomtopia zurück!|gerettet|Du hast Boomtopia gerettet!|Leute|Rette {n} Leute|Magnet|Riese|Einfrieren|Supersprung|Wolkenlauf|Doppelte Münzen|Kraftfeld|Auf dem Dach!|Auto-Surfen!|Zug-Surfen!|Bürgermeister|Auftrag des Bürgermeisters|Rette {n} Leute|Fahr auf einem Auto mit|Fahr auf einem Zug mit|Kletter auf ein Dach|Der Bürgermeister sagt: Danke, Held!|Danke, Held!|Willkommen, Held!|Rathaus|Hubschrauberflug!"],
-  pt: ['Português', "Jogar|Níveis|...e mais em breve|Volume|Vibração|Idiomas|Modo|Um jogador|Multijogador|em breve|Ver quem está no servidor|Adicionar amigos|Criar um amigo|Configurações|Loja|Sair|Onda|Nível|Pegar|Arremessar|Pular|Pausado|Continuar|Menu|Você explodiu!|Tentar de novo|Nível completo!|Próximo nível|Onda completa!|REI BOMBA!|Tchau! Volte logo!|Jogar de novo|Nome do amigo|Adicionar|Comprar|Usar|Usando|Chapéus|Camisetas|Cabelo|com você|Você|Escudo|Velocidade|Pulo duplo|Curar|Splash!|Prepare-se!|Fechar|WASD mover · Espaço pular · Shift correr · arraste para olhar · E arremessar|Amigos de pé|Sim|Não|Aperte E para pegar!|Amigos|Passa ela!|Mapas|Muito quente!|Fiuuu!|Criar jogo|Entrar|Código do jogo|Seu nome|Esperando o anfitrião começar...|Sair do jogo|Jogadores|anfitrião|Seus amigos podem entrar se o link deste jogo for compartilhado com eles (menu Compartilhar) e eles o abrirem.|O anfitrião saiu do jogo|Online agora|no jogo|Abra este jogo no claude.ai para jogar junto|Você está fora! Volta na próxima onda|Tutorial|Ande por aí!|Olhe em volta!|Pule duas vezes!|Uma bomba está caindo! Quando ela cair, ande até ela para pegá-la.|Rápido! Corra até o Treinador para passar a bomba antes que o tempo acabe.|Pegue esta bomba e arremesse bem longe!|Olhe o Treinador: se o tempo acabar enquanto você segura uma bomba, seu rosto fica preto e você está FORA!|Pegue a moeda e o escudo!|Você está pronto! Sobreviva a todas as ondas para vencer. Boa sorte!|Pular tutorial|Entendi!|Vamos jogar!|Use o joystick|Arraste com o mouse|Arraste no lado direito da tela|Aperte Pular|Aperte Arremessar|Aperte E|Treinador|Carregando...|Nome de usuário|Crie um pra mim!|Digite o seu ou deixe o jogo criar um|Salvo!|Melhorias de vida|Vida máxima|Melhorar|No máximo!|Lança-foguetes|Recarga|Teleguiado|Usando|Atirar|Lança-foguetes pronto!|XP|Nível de XP|SUBIU DE NÍVEL!|Pet shop|Sem pet|Busca moedas perto de você|Cura você um pouquinho o tempo todo|Avisa quando uma bomba vai cair perto de você|Bloqueia um golpe a cada 20 segundos|Cospe fogo para estourar bombas|Dobra seu XP|Puxa as moedas até você|Cura você com o tempo|Avisa de bombas caindo perto|Bloqueia golpes de vez em quando|Cospe fogo para estourar bombas|Dá XP extra|Faz você correr mais rápido|Às vezes dobra as moedas|Deixa você dar pulo duplo|Evoluir!|pode evoluir!|EVOLUIU!|Comum|Incomum|Raro|Épico|Lendário|Mítico|Chão de cura!|Capas voadoras|Planar|Voar|Segure Pular no ar para planar ou voar!|Sem capa|História|A história de Boomtopia|Há muito tempo, Boomtopia era uma terra feliz de ilhas flutuantes. Crianças com cabelo de bacon brincavam lá todos os dias.|Então o Rei Bomba acordou dentro do vulcão. Ele era rabugento, seu pavio estava sempre aceso e ele odiava diversão.|Ele prendeu o povo de Boomtopia em bolhas, espalhou todos pelas ilhas e fez chover bombas do céu.|Mas as crianças descobriram um truque: uma bomba só explode quando o tempo acaba. Passe rápido, como batata quente! Se segurar demais, seu rosto fica preto e você está fora!|As ilhas também lutaram: chãos de cura brilharam, pets corajosos chegaram e a loja começou a vender capas e lança-foguetes.|Agora é a sua vez! Estoure as bolhas para libertar o povo, vença o Rei Bomba e seus amigos e traga todos de volta a Boomtopia!|Próximo|Voltar|Pular|Chat|Diga algo...|Enviar|Oi!|Passa pra mim!|Corre!|Socorro!|Boa!|Bom jogo!|Me segue!|Haha!|Prêmio diário|Dia {n}|Pegar!|Volte amanhã para mais!|Presente surpresa|Conquistas|Conquista desbloqueada!|Passe {n} bombas|Estoure {n} bombas com o lança-foguetes|Vença {n} chefes|Sobreviva a {n} ondas|Vença {n} níveis|Pegue {n} moedas|Tenha {n} pets|Fique com o rosto preto {n} vezes|Chegue ao nível de XP {n}|REI DO GELO!|RAINHA FOGUETE!|Congelado!|Emotes|Acenar|Dançar|Girar|Comemorar|Ranking|Mostra todos que estão com o jogo aberto agora.|Níveis vencidos|Música|Mais diversão|Gráficos incríveis|SENHOR DA LAVA!|BOMBA FANTASMA!|ROBÔ BOMBARDEIRO!|BOMBA TROVÃO!|IMPERADOR BOMBA!|Missão|Traga de volta todo o povo de Boomtopia!|resgatados|Você salvou Boomtopia!|Pessoas|Resgate {n} pessoas|Ímã|Gigante|Congelar|Superpulo|Passo de nuvem|Moedas em dobro|Campo de força|No telhado!|Surfando no carro!|Surfando no trem!|Prefeito|Tarefa do prefeito|Resgate {n} pessoas|Ande em cima de um carro|Ande em cima de um trem|Suba num telhado|O prefeito diz: Obrigado, herói!|Obrigado, herói!|Bem-vindo, herói!|Prefeitura|Passeio de helicóptero!"],
-  hi: ['हिन्दी', "शुरू करो|लेवल|...और जल्द आएँगे|आवाज़|कंपन|भाषाएँ|मोड|अकेले खेलो|मल्टीप्लेयर|जल्द आ रहा है|देखो सर्वर में कौन है|दोस्त जोड़ो|दोस्त बनाओ|सेटिंग्स|दुकान|बाहर निकलो|लहर|लेवल|पकड़ो|फेंको|कूदो|रुका हुआ|जारी रखो|मेनू|तुम उड़ गए!|फिर से कोशिश करो|लेवल पूरा!|अगला लेवल|लहर पूरी!|बम राजा!|बाय! जल्दी वापस आना!|फिर से खेलो|दोस्त का नाम|जोड़ो|खरीदो|पहनो|पहना है|टोपियाँ|शर्ट|बाल|तुम्हारे साथ|तुम|ढाल|तेज़ी|डबल जंप|इलाज|छपाक!|तैयार हो जाओ!|बंद करो|WASD चलो · Space कूदो · Shift दौड़ो · खींचकर देखो · E फेंको|खड़े दोस्त|चालू|बंद|पकड़ने के लिए E दबाओ!|दोस्त|आगे दो!|नक्शे|बहुत गरम!|सर्र्र!|गेम बनाओ|जुड़ो|गेम कोड|तुम्हारा नाम|होस्ट के शुरू करने का इंतज़ार...|गेम छोड़ो|खिलाड़ी|होस्ट|दोस्त तब जुड़ सकते हैं जब इस गेम का लिंक उनके साथ शेयर हो (Share मेनू) और वे उसे खोलें।|होस्ट गेम छोड़ गया|अभी ऑनलाइन|गेम में|साथ खेलने के लिए यह गेम claude.ai पर खोलो|तुम आउट हो! अगली लहर में वापस|ट्यूटोरियल|घूमो!|चारों ओर देखो!|दो बार कूदो!|बम गिर रहा है! जब वह ज़मीन पर गिरे, उसे पकड़ने के लिए उसके पास चलो।|जल्दी! टाइमर खत्म होने से पहले कोच के पास दौड़कर बम दे दो।|यह बम पकड़ो, फिर उसे दूर फेंको!|कोच को देखो: अगर बम पकड़े हुए टाइमर खत्म हो गया, तो तुम्हारा चेहरा काला हो जाएगा और तुम आउट!|सिक्का और ढाल पकड़ो!|तुम तैयार हो! जीतने के लिए सारी लहरों से बचो। शुभकामनाएँ!|ट्यूटोरियल छोड़ो|समझ गया!|चलो खेलें!|जॉयस्टिक इस्तेमाल करो|माउस से खींचो|स्क्रीन के दाईं ओर खींचो|कूदो दबाओ|फेंको दबाओ|E दबाओ|कोच|लोड हो रहा है...|यूज़रनेम|मेरे लिए एक बनाओ!|अपना खुद लिखो या गेम से एक बनवाओ|सेव हो गया!|हेल्थ अपग्रेड|अधिकतम हेल्थ|अपग्रेड करो|पूरा अपग्रेड!|रॉकेट लॉन्चर|रीलोड|निशाना ढूँढने वाला|इस्तेमाल में|फायर|रॉकेट तैयार!|XP|XP लेवल|लेवल अप!|पेट शॉप|कोई पेट नहीं|पास के सिक्के ले आता है|हमेशा थोड़ा-थोड़ा ठीक करता है|बम पास गिरने वाला हो तो चेतावनी देता है|हर 20 सेकंड में एक वार रोकता है|आग से बम फोड़ता है|तुम्हारा XP दोगुना करता है|सिक्के तुम्हारे पास लाता है|धीरे-धीरे ठीक करता है|पास गिरते बम की चेतावनी देता है|कभी-कभी वार रोकता है|आग से बम फोड़ता है|ज़्यादा XP देता है|तुम्हें तेज़ दौड़ाता है|कभी-कभी सिक्के दोगुने करता है|डबल जंप करने देता है|विकसित करो!|विकसित हो सकता है!|विकसित हो गया!|आम|कम आम|दुर्लभ|महाकाव्य|पौराणिक|मिथकीय|हीलिंग ज़मीन!|उड़ने वाले केप|ग्लाइड|उड़ो|हवा में कूदो दबाए रखो, ग्लाइड करो या उड़ो!|कोई केप नहीं|कहानी|बूमटोपिया की कहानी|बहुत समय पहले बूमटोपिया तैरते द्वीपों का एक खुशहाल देश था। बेकन बालों वाले बच्चे वहाँ रोज़ खेलते थे।|फिर ज्वालामुखी के अंदर बम राजा जाग गया। वह चिड़चिड़ा था, उसकी बत्ती हमेशा जलती रहती थी, और उसे मज़ा बिल्कुल पसंद नहीं था।|उसने बूमटोपिया के लोगों को बुलबुलों में कैद करके द्वीपों पर बिखेर दिया, और आसमान से बम बरसाए।|लेकिन बच्चों ने एक तरकीब ढूँढी: बम तभी फटता है जब उसका टाइमर खत्म होता है। गरम आलू की तरह जल्दी आगे दो! ज़्यादा देर पकड़ा तो चेहरा काला और तुम आउट!|द्वीपों ने भी मुकाबला किया: हीलिंग ज़मीन चमकने लगी, बहादुर पेट साथ आए, और दुकान में केप और रॉकेट लॉन्चर मिलने लगे।|अब तुम्हारी बारी! बुलबुले फोड़कर लोगों को आज़ाद करो, बम राजा और उसके दोस्तों को हराओ, और सबको बूमटोपिया वापस लाओ!|आगे|पीछे|छोड़ो|चैट|कुछ लिखो...|भेजो|हाय!|मुझे दो!|भागो!|मदद!|बढ़िया!|अच्छा खेल!|मेरे पीछे आओ!|हाहा!|रोज़ का इनाम|दिन {n}|लो!|कल फिर आना, और इनाम मिलेगा!|रहस्य उपहार|उपलब्धियाँ|उपलब्धि मिली!|{n} बम आगे दो|रॉकेट से {n} बम फोड़ो|{n} बॉस हराओ|{n} लहरें बचो|{n} लेवल जीतो|{n} सिक्के उठाओ|{n} पेट रखो|{n} बार चेहरा काला करवाओ|XP लेवल {n} तक पहुँचो|बर्फ़ का राजा!|रॉकेट रानी!|जम गए!|इमोट|हाथ हिलाओ|नाचो|घूमो|खुशी मनाओ|लीडरबोर्ड|अभी गेम खोले हुए सभी लोग दिखाता है।|जीते लेवल|संगीत|और मज़ा|शानदार ग्राफ़िक्स|लावा लॉर्ड!|भूत बम!|रोबो बॉम्बर!|बिजली बम!|बम सम्राट!|मिशन|बूमटोपिया के सभी लोगों को वापस लाओ!|बचाए गए|तुमने बूमटोपिया बचा लिया!|लोग|{n} लोगों को बचाओ|चुंबक|दानव|जमाओ|सुपर जंप|बादल चाल|डबल सिक्के|शक्ति कवच|छत पर!|कार पर सवारी!|ट्रेन पर सवारी!|मेयर|मेयर का काम|{n} लोगों को बचाओ|कार पर सवारी करो|ट्रेन पर सवारी करो|किसी छत पर चढ़ो|मेयर कहते हैं: धन्यवाद, हीरो!|धन्यवाद, हीरो!|स्वागत है, हीरो!|नगर भवन|हेलीकॉप्टर की सवारी!"],
-  zh: ['中文', "开始|关卡|……更多即将推出|音量|振动|语言|模式|单人游戏|多人游戏|即将推出|看看谁在服务器里|添加好友|创建好友|设置|商店|退出|波次|关卡|抓起|扔出|跳|已暂停|继续|菜单|你被炸飞了！|再试一次|过关！|下一关|这波完成！|炸弹国王！|再见！快回来！|再玩一次|好友名字|添加|购买|穿上|已穿上|帽子|衣服|头发|和你一起|你|护盾|加速|二段跳|治疗|扑通！|准备好！|关闭|WASD 移动 · 空格 跳 · Shift 跑 · 拖动看 · E 扔|还站着的朋友|开|关|按 E 抓起！|好友|快传出去！|地图|好烫！|嗖！|创建游戏|加入|游戏代码|你的名字|等待房主开始……|离开游戏|玩家|房主|把这个游戏的链接分享给朋友（分享菜单），他们打开后就能加入。|房主离开了游戏|现在在线|游戏中|在 claude.ai 上打开这个游戏才能一起玩|你出局了！下一波回来|教程|走一走！|看看四周！|跳两次！|有炸弹掉下来了！落地后走过去就能抓起它。|快！在倒计时结束前跑到教练身边把炸弹传给他。|抓起这个炸弹，然后把它扔远！|看教练：如果你拿着炸弹时倒计时结束，你的脸会变黑，你就出局了！|拿到金币和护盾！|你准备好了！撑过所有波次就能赢。祝你好运！|跳过教程|知道了！|开始玩！|用摇杆|用鼠标拖动|在屏幕右侧拖动|按「跳」|按「扔出」|按 E|教练|加载中……|用户名|帮我起一个！|自己输入，或者让游戏帮你起一个|已保存！|生命升级|最大生命|升级|已满级！|火箭筒|装填|追踪|使用中|发射|火箭筒就绪！|经验|经验等级|升级啦！|宠物店|不带宠物|帮你捡附近的金币|一直慢慢给你回血|炸弹要落在你附近时提醒你|每20秒挡住一次伤害|喷火打爆炸弹|经验翻倍|把金币吸过来|慢慢给你回血|提醒你附近要落下的炸弹|时不时挡住伤害|喷火打爆炸弹|给你额外经验|让你跑得更快|有时金币翻倍|让你二段跳|进化！|可以进化了！|进化成功！|普通|少见|稀有|史诗|传说|神话|治疗地面！|飞行披风|滑翔|飞行|在空中按住跳跃键就能滑翔或飞行！|不穿披风|故事|爆炸乐园的故事|很久以前，爆炸乐园是一片快乐的浮岛之地。培根头发的孩子们每天都在那里玩。|后来，炸弹国王在火山里醒了。他脾气很坏，引信一直在燃烧，而且他讨厌欢乐。|他把爆炸乐园的居民困在泡泡里，撒在各个岛上，还让炸弹从天上掉下来。|可是孩子们发现了一个诀窍：炸弹只有倒计时结束才会爆炸。像传烫手山芋一样快快传出去！拿太久，脸会变黑，你就出局了！|岛屿也开始反击：治疗地面发出光芒，勇敢的宠物加入队伍，商店里还卖起了披风和火箭筒。|现在轮到你了！戳破泡泡救出居民，打败炸弹国王和他的伙伴们，把大家都带回爆炸乐园！|下一页|上一页|跳过|聊天|说点什么……|发送|你好！|传给我！|快跑！|救命！|好样的！|打得好！|跟我来！|哈哈！|每日奖励|第{n}天|领取！|明天再来领更多！|神秘礼物|成就|成就解锁！|传递{n}个炸弹|用火箭筒打爆{n}个炸弹|打败{n}个首领|撑过{n}波|通过{n}关|捡起{n}个金币|拥有{n}只宠物|脸变黑{n}次|达到经验等级{n}|冰雪国王！|火箭女王！|被冻住了！|表情动作|挥手|跳舞|转圈|欢呼|排行榜|显示现在打开游戏的所有人。|通过的关卡|音乐|更多乐趣|炫酷画质|熔岩领主！|幽灵炸弹！|机器人轰炸机！|雷霆炸弹！|炸弹皇帝！|任务|把爆炸乐园的所有居民都带回来！|已救出|你拯救了爆炸乐园！|居民|救出{n}位居民|磁铁|巨人|冻结|超级跳|踏云|双倍金币|力场|登上屋顶！|车顶冲浪！|火车冲浪！|市长|市长的任务|救出{n}个人|站在汽车上兜风|站在火车上兜风|爬上一个屋顶|市长说：谢谢你，英雄！|谢谢你，英雄！|欢迎你，英雄！|市政厅|坐直升机啦！"],
-  ja: ['日本語', "スタート|レベル|……もうすぐ追加|音量|振動|言語|モード|ひとりで遊ぶ|マルチプレイ|近日公開|サーバーにいる人を見る|フレンド追加|フレンドを作る|設定|ショップ|終了|ウェーブ|レベル|つかむ|投げる|ジャンプ|一時停止|つづける|メニュー|ふっとばされた！|もう一回|レベルクリア！|次のレベル|ウェーブクリア！|ボムキング！|バイバイ！またね！|もう一回遊ぶ|フレンドの名前|追加|買う|着る|着ている|ぼうし|シャツ|かみ|いっしょ|きみ|シールド|スピード|二段ジャンプ|回復|ザブン！|じゅんびして！|閉じる|WASD 移動 · スペース ジャンプ · Shift 走る · ドラッグで見る · E 投げる|残っているフレンド|オン|オフ|E でつかもう！|フレンド|わたして！|マップ|あつい！|ヒューン！|ゲームを作る|参加|ゲームコード|きみの名前|ホストのスタートを待っています……|ゲームをぬける|プレイヤー|ホスト|このゲームのリンクを友だちと共有（共有メニュー）して開いてもらうと参加できます。|ホストがゲームをぬけました|オンライン中|ゲーム中|いっしょに遊ぶには claude.ai でこのゲームを開いてね|アウト！次のウェーブで復活|チュートリアル|歩いてみよう！|まわりを見てみよう！|2回ジャンプしよう！|ばくだんが落ちてくる！着地したら歩いて近づくとつかめるよ。|急いで！タイマーが終わる前にコーチにさわってばくだんをわたそう。|このばくだんをつかんで、遠くに投げよう！|コーチを見て：ばくだんを持ったままタイマーが終わると、顔がまっ黒になってアウト！|コインとシールドをとろう！|じゅんびOK！全部のウェーブを生きのこれば勝ち。がんばって！|チュートリアルをとばす|わかった！|遊ぼう！|ジョイスティックを使おう|マウスでドラッグ|画面の右側をドラッグ|ジャンプをおす|投げるをおす|E をおす|コーチ|よみこみ中……|ユーザー名|作って！|自分で書くか、ゲームに作ってもらおう|保存したよ！|ライフアップグレード|さいだいライフ|アップグレード|MAXだよ！|ロケットランチャー|リロード|ホーミング|そうび中|発射|ロケット準備OK！|XP|XPレベル|レベルアップ！|ペットショップ|ペットなし|近くのコインを集めてくれる|いつも少しずつ回復してくれる|近くにばくだんが落ちる時に教えてくれる|20秒ごとに1回ダメージを防ぐ|火をはいてばくだんを割る|XPが2倍になる|コインを引きよせる|少しずつ回復してくれる|近くに落ちるばくだんを教えてくれる|ときどきダメージを防ぐ|火をはいてばくだんを割る|XPがふえる|足が速くなる|ときどきコインが2倍|二段ジャンプできる|進化させる！|進化できるよ！|進化した！|コモン|アンコモン|レア|エピック|レジェンド|ミシック|回復ゾーン！|空飛ぶマント|グライド|飛ぶ|空中でジャンプをおしっぱなしでグライド・飛行！|マントなし|ストーリー|ボムトピアの物語|むかしむかし、ボムトピアは空にうかぶ島々の楽しい国でした。ベーコンヘアの子どもたちが毎日あそんでいました。|ところが、火山の中でボムキングが目をさましました。いつも不きげんで、導火線はずっと燃えていて、楽しいことが大きらいでした。|ボムキングはボムトピアの人々をあわの中にとじこめて島じゅうにばらまき、空からばくだんをふらせました。|でも子どもたちはひみつを見つけました。ばくだんはタイマーが0になるまで爆発しない！熱々のポテトみたいにすぐわたそう！持ちすぎると顔がまっ黒でアウト！|島たちも力をかしてくれました。回復ゾーンが光り、勇かんなペットが仲間になり、ショップではマントやロケットランチャーが売られるようになりました。|さあ、きみの番だ！あわを割ってみんなを助け、ボムキングとなかまたちをたおして、全員をボムトピアに連れもどそう！|つぎへ|もどる|スキップ|チャット|なにか書いてね…|送る|やあ！|こっちにパス！|にげて！|たすけて！|ナイス！|いい試合！|ついてきて！|ハハ！|毎日のごほうび|{n}日目|受け取る！|また明日来てね！|ひみつのプレゼント|実績|実績解除！|ばくだんを{n}回パスする|ロケットでばくだんを{n}個割る|ボスを{n}回たおす|{n}ウェーブ生きのこる|{n}レベルクリアする|コインを{n}枚ひろう|ペットを{n}匹持つ|顔がまっ黒になるのを{n}回|XPレベル{n}になる|こおりの王！|ロケット女王！|こおった！|エモート|手をふる|ダンス|スピン|よろこぶ|ランキング|いまゲームを開いている全員を表示します。|クリアしたレベル|音楽|もっと楽しく|すごいグラフィック|マグマロード！|おばけボム！|ロボボマー！|カミナリボム！|ボムエンペラー！|ミッション|ボムトピアのみんなを連れもどそう！|救出|ボムトピアを救った！|住民|{n}人を救出する|マグネット|きょじん|ストップ|スーパージャンプ|くも歩き|コイン2倍|バリア|屋上だ！|車の上に乗った！|電車の上に乗った！|市長|市長のおねがい|{n}人を助けよう|車の上に乗ろう|電車の上に乗ろう|屋上にのぼろう|市長「ありがとう、ヒーロー！」|ありがとう、ヒーロー！|ようこそ、ヒーロー！|市役所|ヘリコプターに乗った！"]
+  en: ['English', "Start|Levels|...and more soon|Volume|Vibration|Languages|Mode|Single player|Multiplayer|coming soon|Check who's in the server|Add friends|Make a friend|Settings|Shop|Exit|Wave|Level|Grab|Throw|Jump|Paused|Resume|Menu|You got blown up!|Try again|Level complete!|Next level|Wave complete!|BOMB KING!|Bye! Come back soon!|Play again|Friend's name|Add|Buy|Wear|Wearing|Hats|Shirts|Hair|with you|You|Shield|Speed|Double jump|Heal|Splash!|Get ready!|Close|WASD move · Space jump · Shift run · drag to look · E throw|Friends still standing|On|Off|Press E to grab!|Friends|Pass it!|Maps|Too hot!|Whoosh!|Create game|Join|Game code|Your name|Waiting for the host to start...|Leave game|Players|host|Friends can join when this game's link is shared with them (Share menu) and they open it.|The host left the game|Online now|in game|Open this game on claude.ai to play together|You're out! Back next wave|Tutorial|Walk around!|Look around!|Jump two times!|A bomb is falling! When it lands, walk into it to grab it.|Quick! Run into Coach to pass the bomb before the timer runs out.|Grab this bomb, then throw it far away!|Watch Coach: if the timer runs out while you hold a bomb, your face goes black and you're OUT!|Grab the coin and the shield!|You're ready! Survive all the waves to win. Good luck!|Skip tutorial|Got it!|Let's play!|Use the joystick|Drag with the mouse|Drag on the right side of the screen|Press Jump|Press Throw|Press E|Coach|Loading...|Username|Make me one!|Type your own or let the game make one|Saved!|Health upgrades|Max health|Upgrade|Fully upgraded!|RPGs|Reload|Homing|Using|Fire|RPG ready!|XP|XP level|LEVEL UP!|Pet shop|No pet|Fetches coins near you|Heals you a little all the time|Warns you when a bomb will land near you|Blocks one hit every 20 seconds|Breathes fire to pop bombs|Doubles your XP|Pulls coins to you|Heals you over time|Warns you about bombs landing near you|Blocks hits now and then|Breathes fire to pop bombs|Gives you extra XP|Makes you run faster|Sometimes doubles coins|Lets you double jump|Evolve!|can evolve!|EVOLVED!|Common|Uncommon|Rare|Epic|Legendary|Mythic|Healing ground!|Flying capes|Glide|Fly|Hold Jump in the air to glide or fly!|No cape|Story|The Story of Boomtopia|Long ago, Boomtopia was a happy land of floating islands. Kids with bacon hair played there every day.|Then the Bomb King woke up inside the volcano. He was grumpy, his fuse was always lit, and he hated fun.|He trapped the people of Boomtopia in bubbles, scattered them across the islands, and made bombs rain from the sky.|But the kids found a trick: a bomb only explodes when its timer runs out. Pass it fast, like a hot potato! Hold it too long and your face goes black, and you're out!|The islands fought back too. Healing grounds started to glow, brave pets joined the team, and the shop began selling capes and RPGs.|Now it's your turn! Pop the bubbles to free the people, beat the Bomb King and his friends, and bring everyone back to Boomtopia!|Next|Back|Skip|Chat|Say something...|Send|Hi!|Pass it to me!|Run!|Help!|Nice!|Good game!|Follow me!|Haha!|Daily reward|Day {n}|Claim!|Come back tomorrow for more!|Mystery gift|Achievements|Achievement unlocked!|Pass {n} bombs|Pop {n} bombs with an RPG|Beat {n} bosses|Survive {n} waves|Beat {n} levels|Pick up {n} coins|Own {n} pets|Get a black face {n} times|Reach XP level {n}|ICE KING!|ROCKET QUEEN!|Frozen!|Emotes|Wave|Dance|Spin|Cheer|Leaderboard|Shows everyone who has the game open right now.|Levels beaten|Music|More fun|Fancy graphics|LAVA LORD!|GHOST BOMB!|ROBO BOMBER!|THUNDER BOMB!|BOMB EMPEROR!|Mission|Bring back all the people of Boomtopia!|rescued|You saved Boomtopia!|People|Rescue {n} people|Magnet|Giant|Freeze|Super jump|Cloud walk|Double coins|Force field|Rooftop!|Car surfing!|Train surfing!|Mayor|Mayor's task|Rescue {n} people|Ride on a car|Ride on a train|Climb to a rooftop|The Mayor says: Thank you, hero!|Thank you, hero!|Welcome, hero!|City Hall|Helicopter ride!|BLAST OFF!|SPACE!|Wheee!|Drive|Fly|Get out|Race|Race! Go through all the rings!|Finished!|Best"],
+  es: ['Español', "Jugar|Niveles|...y más pronto|Volumen|Vibración|Idiomas|Modo|Un jugador|Multijugador|muy pronto|Ver quién está en el servidor|Añadir amigos|Crear un amigo|Ajustes|Tienda|Salir|Oleada|Nivel|Agarrar|Lanzar|Saltar|Pausa|Seguir|Menú|¡Te explotaron!|Otra vez|¡Nivel completado!|Siguiente nivel|¡Oleada superada!|¡REY BOMBA!|¡Adiós! ¡Vuelve pronto!|Jugar otra vez|Nombre del amigo|Añadir|Comprar|Poner|Puesto|Gorros|Camisetas|Pelo|contigo|Tú|Escudo|Velocidad|Doble salto|Curar|¡Splash!|¡Prepárate!|Cerrar|WASD mover · Espacio saltar · Shift correr · arrastra para mirar · E lanzar|Amigos en pie|Sí|No|¡Pulsa E para agarrar!|Amigos|¡Pásala!|Mapas|¡Quema!|¡Fiuuu!|Crear partida|Unirse|Código de partida|Tu nombre|Esperando a que el anfitrión empiece...|Salir de la partida|Jugadores|anfitrión|Tus amigos pueden unirse si compartes el enlace de este juego con ellos (menú Compartir) y lo abren.|El anfitrión salió de la partida|En línea ahora|en partida|Abre este juego en claude.ai para jugar juntos|¡Estás fuera! Vuelves en la próxima oleada|Tutorial|¡Camina!|¡Mira alrededor!|¡Salta dos veces!|¡Cae una bomba! Cuando aterrice, camina hacia ella para agarrarla.|¡Rápido! Corre hacia el Entrenador para pasarle la bomba antes de que se acabe el tiempo.|¡Agarra esta bomba y lánzala lejos!|Mira al Entrenador: si el tiempo se acaba mientras tienes una bomba, ¡tu cara se pone negra y quedas FUERA!|¡Agarra la moneda y el escudo!|¡Estás listo! Sobrevive a todas las oleadas para ganar. ¡Suerte!|Saltar tutorial|¡Entendido!|¡A jugar!|Usa el joystick|Arrastra con el ratón|Arrastra en el lado derecho de la pantalla|Pulsa Saltar|Pulsa Lanzar|Pulsa E|Entrenador|Cargando...|Nombre de usuario|¡Hazme uno!|Escribe el tuyo o deja que el juego invente uno|¡Guardado!|Mejoras de vida|Vida máxima|Mejorar|¡Al máximo!|Lanzacohetes|Recarga|Teledirigido|Usando|Disparar|¡Lanzacohetes listo!|XP|Nivel de XP|¡SUBES DE NIVEL!|Tienda de mascotas|Sin mascota|Trae las monedas cercanas|Te cura un poquito todo el tiempo|Te avisa cuando una bomba va a caer cerca|Bloquea un golpe cada 20 segundos|Escupe fuego para reventar bombas|Duplica tu XP|Te trae las monedas|Te cura con el tiempo|Te avisa de bombas que caen cerca|Bloquea golpes de vez en cuando|Escupe fuego para reventar bombas|Te da XP extra|Te hace correr más rápido|A veces duplica las monedas|Te deja hacer doble salto|¡Evolucionar!|¡puede evolucionar!|¡EVOLUCIONÓ!|Común|Poco común|Raro|Épico|Legendario|Mítico|¡Suelo curativo!|Capas voladoras|Planear|Volar|¡Mantén Saltar en el aire para planear o volar!|Sin capa|Historia|La historia de Boomtopia|Hace mucho tiempo, Boomtopia era una tierra feliz de islas flotantes. Los niños con pelo de tocino jugaban allí todos los días.|Entonces el Rey Bomba despertó dentro del volcán. Era gruñón, su mecha siempre estaba encendida y odiaba la diversión.|Atrapó a la gente de Boomtopia en burbujas, la esparció por las islas e hizo llover bombas del cielo.|Pero los niños descubrieron un truco: una bomba solo explota cuando se acaba su tiempo. ¡Pásala rápido, como una papa caliente! Si la tienes demasiado, tu cara se pone negra y quedas fuera.|Las islas también se defendieron. Brillaron suelos curativos, llegaron mascotas valientes y la tienda empezó a vender capas y lanzacohetes.|¡Ahora es tu turno! Revienta las burbujas para liberar a la gente, vence al Rey Bomba y a sus amigos, ¡y trae a todos de vuelta a Boomtopia!|Siguiente|Atrás|Saltar|Chat|Escribe algo...|Enviar|¡Hola!|¡Pásamela!|¡Corre!|¡Ayuda!|¡Genial!|¡Buen juego!|¡Sígueme!|¡Jaja!|Premio diario|Día {n}|¡Reclamar!|¡Vuelve mañana por más!|Regalo sorpresa|Logros|¡Logro desbloqueado!|Pasa {n} bombas|Revienta {n} bombas con un lanzacohetes|Vence a {n} jefes|Sobrevive {n} oleadas|Supera {n} niveles|Recoge {n} monedas|Ten {n} mascotas|Pon tu cara negra {n} veces|Llega al nivel de XP {n}|¡REY DE HIELO!|¡REINA COHETE!|¡Congelado!|Gestos|Saludar|Bailar|Girar|Celebrar|Clasificación|Muestra a todos los que tienen el juego abierto ahora.|Niveles superados|Música|Más diversión|Gráficos geniales|¡SEÑOR DE LAVA!|¡BOMBA FANTASMA!|¡ROBO BOMBARDERO!|¡BOMBA TRUENO!|¡EMPERADOR BOMBA!|Misión|¡Trae de vuelta a toda la gente de Boomtopia!|rescatados|¡Salvaste Boomtopia!|Gente|Rescata a {n} personas|Imán|Gigante|Congelar|Supersalto|Paso de nube|Monedas dobles|Campo de fuerza|¡Azotea!|¡Surf en coche!|¡Surf en tren!|Alcalde|Tarea del alcalde|Rescata a {n} personas|Súbete a un coche|Súbete a un tren|Sube a una azotea|El alcalde dice: ¡Gracias, héroe!|¡Gracias, héroe!|¡Bienvenido, héroe!|Ayuntamiento|¡Viaje en helicóptero!|¡DESPEGUE!|¡ESPACIO!|¡Yujuuu!|Conducir|Volar|Bajar|Carrera|¡Carrera! ¡Pasa por todos los aros!|¡Terminado!|Récord"],
+  fr: ['Français', "Jouer|Niveaux|...et bientôt plus|Volume|Vibration|Langues|Mode|Solo|Multijoueur|bientôt|Voir qui est sur le serveur|Ajouter des amis|Créer un ami|Réglages|Boutique|Quitter|Vague|Niveau|Attraper|Lancer|Sauter|Pause|Reprendre|Menu|Tu as explosé !|Réessayer|Niveau terminé !|Niveau suivant|Vague terminée !|ROI BOMBE !|Au revoir ! À bientôt !|Rejouer|Nom de l'ami|Ajouter|Acheter|Porter|Porté|Chapeaux|T-shirts|Cheveux|avec toi|Toi|Bouclier|Vitesse|Double saut|Soin|Plouf !|Prépare-toi !|Fermer|WASD bouger · Espace sauter · Shift courir · glisser pour regarder · E lancer|Amis encore debout|Oui|Non|Appuie sur E pour attraper !|Amis|Passe-la !|Cartes|Ça brûle !|Wouuuh !|Créer une partie|Rejoindre|Code de partie|Ton nom|On attend que l'hôte lance la partie...|Quitter la partie|Joueurs|hôte|Tes amis peuvent rejoindre si le lien du jeu est partagé avec eux (menu Partager) et qu'ils l'ouvrent.|L'hôte a quitté la partie|En ligne|en partie|Ouvre ce jeu sur claude.ai pour jouer ensemble|Tu es éliminé ! Retour à la prochaine vague|Tutoriel|Marche un peu !|Regarde autour de toi !|Saute deux fois !|Une bombe tombe ! Quand elle atterrit, marche dessus pour l'attraper.|Vite ! Cours vers le Coach pour lui passer la bombe avant la fin du compte à rebours.|Attrape cette bombe, puis lance-la loin !|Regarde le Coach : si le temps est écoulé pendant que tu tiens une bombe, ton visage devient noir et tu es ÉLIMINÉ !|Attrape la pièce et le bouclier !|Tu es prêt ! Survis à toutes les vagues pour gagner. Bonne chance !|Passer le tutoriel|Compris !|On joue !|Utilise le joystick|Fais glisser avec la souris|Fais glisser sur le côté droit de l'écran|Appuie sur Sauter|Appuie sur Lancer|Appuie sur E|Coach|Chargement...|Pseudo|Invente-m'en un !|Écris le tien ou laisse le jeu en inventer un|Enregistré !|Améliorations de vie|Vie max|Améliorer|Au maximum !|Lance-roquettes|Recharge|Tête chercheuse|Équipé|Tirer|Lance-roquettes prêt !|XP|Niveau XP|NIVEAU SUPÉRIEUR !|Animalerie|Pas d'animal|Rapporte les pièces proches|Te soigne un peu tout le temps|T'avertit quand une bombe va tomber près de toi|Bloque un coup toutes les 20 secondes|Crache du feu pour éclater les bombes|Double ton XP|Attire les pièces vers toi|Te soigne avec le temps|T'avertit des bombes qui tombent près de toi|Bloque des coups de temps en temps|Crache du feu pour éclater les bombes|Te donne plus d'XP|Te fait courir plus vite|Double parfois les pièces|Te permet de faire un double saut|Évoluer !|peut évoluer !|ÉVOLUÉ !|Commun|Peu commun|Rare|Épique|Légendaire|Mythique|Sol de soin !|Capes volantes|Planer|Voler|Maintiens Sauter en l'air pour planer ou voler !|Pas de cape|Histoire|L'histoire de Boomtopia|Il y a longtemps, Boomtopia était un pays joyeux d'îles flottantes. Les enfants aux cheveux bacon y jouaient tous les jours.|Puis le Roi Bombe s'est réveillé dans le volcan. Il était grognon, sa mèche toujours allumée, et il détestait s'amuser.|Il a enfermé les habitants de Boomtopia dans des bulles, les a dispersés sur les îles et a fait pleuvoir des bombes du ciel.|Mais les enfants ont trouvé une astuce : une bombe n'explose que quand son compte à rebours est fini. Passe-la vite, comme une patate chaude ! Si tu la gardes trop longtemps, ton visage devient noir et tu es éliminé !|Les îles se sont défendues aussi : des sols de soin se sont mis à briller, des animaux courageux sont arrivés et la boutique a vendu des capes et des lance-roquettes.|À toi de jouer ! Éclate les bulles pour libérer les habitants, bats le Roi Bombe et ses amis, et ramène tout le monde à Boomtopia !|Suivant|Retour|Passer|Chat|Écris quelque chose...|Envoyer|Salut !|Passe-la-moi !|Cours !|À l'aide !|Bien joué !|Bonne partie !|Suis-moi !|Haha !|Récompense du jour|Jour {n}|Récupérer !|Reviens demain pour plus !|Cadeau mystère|Succès|Succès débloqué !|Passe {n} bombes|Éclate {n} bombes au lance-roquettes|Bats {n} boss|Survis à {n} vagues|Termine {n} niveaux|Ramasse {n} pièces|Aie {n} animaux|Aie le visage noir {n} fois|Atteins le niveau XP {n}|ROI DE GLACE !|REINE FUSÉE !|Gelé !|Emotes|Saluer|Danser|Tourner|Applaudir|Classement|Montre tous ceux qui ont le jeu ouvert en ce moment.|Niveaux réussis|Musique|Encore plus|Graphismes de luxe|SEIGNEUR DE LAVE !|BOMBE FANTÔME !|ROBO-BOMBARDIER !|BOMBE TONNERRE !|EMPEREUR BOMBE !|Mission|Ramène tous les habitants de Boomtopia !|sauvés|Tu as sauvé Boomtopia !|Habitants|Sauve {n} habitants|Aimant|Géant|Gel|Super saut|Marche nuage|Pièces doublées|Champ de force|Sur le toit !|Surf sur voiture !|Surf sur le train !|Maire|Mission du maire|Sauve {n} habitants|Monte sur une voiture|Monte sur un train|Grimpe sur un toit|Le maire dit : Merci, héros !|Merci, héros !|Bienvenue, héros !|Mairie|Balade en hélico !|DÉCOLLAGE !|L’ESPACE !|Youhou !|Conduire|Voler|Sortir|Course|Course ! Passe dans tous les anneaux !|Terminé !|Record"],
+  de: ['Deutsch', "Start|Level|...und bald mehr|Lautstärke|Vibration|Sprachen|Modus|Einzelspieler|Mehrspieler|bald|Wer ist auf dem Server?|Freunde hinzufügen|Freund erstellen|Einstellungen|Shop|Beenden|Welle|Level|Greifen|Werfen|Springen|Pause|Weiter|Menü|Du wurdest weggesprengt!|Nochmal|Level geschafft!|Nächstes Level|Welle geschafft!|BOMBENKÖNIG!|Tschüss! Bis bald!|Nochmal spielen|Name des Freundes|Hinzufügen|Kaufen|Anziehen|Angezogen|Hüte|Shirts|Haare|bei dir|Du|Schild|Tempo|Doppelsprung|Heilen|Platsch!|Mach dich bereit!|Schließen|WASD laufen · Leertaste springen · Shift rennen · ziehen zum Umsehen · E werfen|Freunde noch dabei|An|Aus|Drück E zum Greifen!|Freunde|Gib sie weiter!|Karten|Zu heiß!|Wuuusch!|Spiel erstellen|Beitreten|Spielcode|Dein Name|Warte, bis der Host startet...|Spiel verlassen|Spieler|Host|Freunde können mitspielen, wenn der Link zu diesem Spiel mit ihnen geteilt wird (Teilen-Menü) und sie ihn öffnen.|Der Host hat das Spiel verlassen|Gerade online|im Spiel|Öffne dieses Spiel auf claude.ai, um zusammen zu spielen|Du bist raus! Nächste Welle bist du zurück|Tutorial|Lauf herum!|Schau dich um!|Spring zweimal!|Eine Bombe fällt! Wenn sie landet, lauf hin, um sie zu greifen.|Schnell! Lauf zum Trainer und gib ihm die Bombe, bevor die Zeit abläuft.|Greif diese Bombe und wirf sie weit weg!|Schau zum Trainer: Wenn die Zeit abläuft, während du eine Bombe hältst, wird dein Gesicht schwarz und du bist RAUS!|Schnapp dir die Münze und das Schild!|Du bist bereit! Überlebe alle Wellen, um zu gewinnen. Viel Glück!|Tutorial überspringen|Verstanden!|Los geht's!|Benutze den Joystick|Mit der Maus ziehen|Auf der rechten Bildschirmseite ziehen|Drück Springen|Drück Werfen|Drück E|Trainer|Lädt...|Benutzername|Mach mir einen!|Schreib deinen eigenen oder lass das Spiel einen erfinden|Gespeichert!|Lebens-Upgrades|Max. Leben|Verbessern|Voll aufgerüstet!|Raketenwerfer|Nachladen|Zielsuchend|Ausgerüstet|Feuer|Raketenwerfer bereit!|XP|XP-Stufe|STUFE AUFGESTIEGEN!|Tierladen|Kein Haustier|Holt Münzen in deiner Nähe|Heilt dich ständig ein bisschen|Warnt dich, wenn eine Bombe neben dir landet|Blockt alle 20 Sekunden einen Treffer|Speit Feuer und zerplatzt Bomben|Verdoppelt deine XP|Zieht Münzen zu dir|Heilt dich mit der Zeit|Warnt dich vor Bomben in deiner Nähe|Blockt ab und zu Treffer|Speit Feuer und zerplatzt Bomben|Gibt dir extra XP|Lässt dich schneller rennen|Verdoppelt manchmal Münzen|Gibt dir einen Doppelsprung|Entwickeln!|kann sich entwickeln!|ENTWICKELT!|Gewöhnlich|Ungewöhnlich|Selten|Episch|Legendär|Mythisch|Heilboden!|Flug-Umhänge|Gleiten|Fliegen|Halte Springen in der Luft zum Gleiten oder Fliegen!|Kein Umhang|Geschichte|Die Geschichte von Boomtopia|Vor langer Zeit war Boomtopia ein fröhliches Land aus schwebenden Inseln. Kinder mit Speckhaaren spielten dort jeden Tag.|Dann wachte der Bombenkönig im Vulkan auf. Er war grummelig, seine Lunte brannte immer, und er hasste Spaß.|Er sperrte die Leute von Boomtopia in Blasen, verstreute sie über die Inseln und ließ Bomben vom Himmel regnen.|Aber die Kinder fanden einen Trick: Eine Bombe explodiert erst, wenn ihr Timer abläuft. Gib sie schnell weiter, wie eine heiße Kartoffel! Hältst du sie zu lange, wird dein Gesicht schwarz und du bist raus!|Auch die Inseln wehrten sich: Heilböden leuchteten auf, mutige Haustiere halfen mit, und der Shop verkaufte Umhänge und Raketenwerfer.|Jetzt bist du dran! Lass die Blasen platzen, um die Leute zu befreien, besiege den Bombenkönig und seine Freunde und bring alle nach Boomtopia zurück!|Weiter|Zurück|Überspringen|Chat|Schreib etwas...|Senden|Hallo!|Gib sie mir!|Lauf!|Hilfe!|Super!|Gutes Spiel!|Folge mir!|Haha!|Tägliche Belohnung|Tag {n}|Abholen!|Komm morgen wieder für mehr!|Überraschungsgeschenk|Erfolge|Erfolg freigeschaltet!|Gib {n} Bomben weiter|Zerplatze {n} Bomben mit dem Raketenwerfer|Besiege {n} Bosse|Überlebe {n} Wellen|Schaffe {n} Level|Sammle {n} Münzen|Besitze {n} Haustiere|Bekomme {n}-mal ein schwarzes Gesicht|Erreiche XP-Stufe {n}|EISKÖNIG!|RAKETENKÖNIGIN!|Eingefroren!|Emotes|Winken|Tanzen|Drehen|Jubeln|Bestenliste|Zeigt alle, die das Spiel gerade offen haben.|Geschaffte Level|Musik|Mehr Spaß|Schicke Grafik|LAVALORD!|GEISTERBOMBE!|ROBO-BOMBER!|DONNERBOMBE!|BOMBENKAISER!|Mission|Bring alle Leute von Boomtopia zurück!|gerettet|Du hast Boomtopia gerettet!|Leute|Rette {n} Leute|Magnet|Riese|Einfrieren|Supersprung|Wolkenlauf|Doppelte Münzen|Kraftfeld|Auf dem Dach!|Auto-Surfen!|Zug-Surfen!|Bürgermeister|Auftrag des Bürgermeisters|Rette {n} Leute|Fahr auf einem Auto mit|Fahr auf einem Zug mit|Kletter auf ein Dach|Der Bürgermeister sagt: Danke, Held!|Danke, Held!|Willkommen, Held!|Rathaus|Hubschrauberflug!|ABHEBEN!|WELTRAUM!|Juhuu!|Fahren|Fliegen|Aussteigen|Rennen|Rennen! Flieg durch alle Ringe!|Geschafft!|Rekord"],
+  pt: ['Português', "Jogar|Níveis|...e mais em breve|Volume|Vibração|Idiomas|Modo|Um jogador|Multijogador|em breve|Ver quem está no servidor|Adicionar amigos|Criar um amigo|Configurações|Loja|Sair|Onda|Nível|Pegar|Arremessar|Pular|Pausado|Continuar|Menu|Você explodiu!|Tentar de novo|Nível completo!|Próximo nível|Onda completa!|REI BOMBA!|Tchau! Volte logo!|Jogar de novo|Nome do amigo|Adicionar|Comprar|Usar|Usando|Chapéus|Camisetas|Cabelo|com você|Você|Escudo|Velocidade|Pulo duplo|Curar|Splash!|Prepare-se!|Fechar|WASD mover · Espaço pular · Shift correr · arraste para olhar · E arremessar|Amigos de pé|Sim|Não|Aperte E para pegar!|Amigos|Passa ela!|Mapas|Muito quente!|Fiuuu!|Criar jogo|Entrar|Código do jogo|Seu nome|Esperando o anfitrião começar...|Sair do jogo|Jogadores|anfitrião|Seus amigos podem entrar se o link deste jogo for compartilhado com eles (menu Compartilhar) e eles o abrirem.|O anfitrião saiu do jogo|Online agora|no jogo|Abra este jogo no claude.ai para jogar junto|Você está fora! Volta na próxima onda|Tutorial|Ande por aí!|Olhe em volta!|Pule duas vezes!|Uma bomba está caindo! Quando ela cair, ande até ela para pegá-la.|Rápido! Corra até o Treinador para passar a bomba antes que o tempo acabe.|Pegue esta bomba e arremesse bem longe!|Olhe o Treinador: se o tempo acabar enquanto você segura uma bomba, seu rosto fica preto e você está FORA!|Pegue a moeda e o escudo!|Você está pronto! Sobreviva a todas as ondas para vencer. Boa sorte!|Pular tutorial|Entendi!|Vamos jogar!|Use o joystick|Arraste com o mouse|Arraste no lado direito da tela|Aperte Pular|Aperte Arremessar|Aperte E|Treinador|Carregando...|Nome de usuário|Crie um pra mim!|Digite o seu ou deixe o jogo criar um|Salvo!|Melhorias de vida|Vida máxima|Melhorar|No máximo!|Lança-foguetes|Recarga|Teleguiado|Usando|Atirar|Lança-foguetes pronto!|XP|Nível de XP|SUBIU DE NÍVEL!|Pet shop|Sem pet|Busca moedas perto de você|Cura você um pouquinho o tempo todo|Avisa quando uma bomba vai cair perto de você|Bloqueia um golpe a cada 20 segundos|Cospe fogo para estourar bombas|Dobra seu XP|Puxa as moedas até você|Cura você com o tempo|Avisa de bombas caindo perto|Bloqueia golpes de vez em quando|Cospe fogo para estourar bombas|Dá XP extra|Faz você correr mais rápido|Às vezes dobra as moedas|Deixa você dar pulo duplo|Evoluir!|pode evoluir!|EVOLUIU!|Comum|Incomum|Raro|Épico|Lendário|Mítico|Chão de cura!|Capas voadoras|Planar|Voar|Segure Pular no ar para planar ou voar!|Sem capa|História|A história de Boomtopia|Há muito tempo, Boomtopia era uma terra feliz de ilhas flutuantes. Crianças com cabelo de bacon brincavam lá todos os dias.|Então o Rei Bomba acordou dentro do vulcão. Ele era rabugento, seu pavio estava sempre aceso e ele odiava diversão.|Ele prendeu o povo de Boomtopia em bolhas, espalhou todos pelas ilhas e fez chover bombas do céu.|Mas as crianças descobriram um truque: uma bomba só explode quando o tempo acaba. Passe rápido, como batata quente! Se segurar demais, seu rosto fica preto e você está fora!|As ilhas também lutaram: chãos de cura brilharam, pets corajosos chegaram e a loja começou a vender capas e lança-foguetes.|Agora é a sua vez! Estoure as bolhas para libertar o povo, vença o Rei Bomba e seus amigos e traga todos de volta a Boomtopia!|Próximo|Voltar|Pular|Chat|Diga algo...|Enviar|Oi!|Passa pra mim!|Corre!|Socorro!|Boa!|Bom jogo!|Me segue!|Haha!|Prêmio diário|Dia {n}|Pegar!|Volte amanhã para mais!|Presente surpresa|Conquistas|Conquista desbloqueada!|Passe {n} bombas|Estoure {n} bombas com o lança-foguetes|Vença {n} chefes|Sobreviva a {n} ondas|Vença {n} níveis|Pegue {n} moedas|Tenha {n} pets|Fique com o rosto preto {n} vezes|Chegue ao nível de XP {n}|REI DO GELO!|RAINHA FOGUETE!|Congelado!|Emotes|Acenar|Dançar|Girar|Comemorar|Ranking|Mostra todos que estão com o jogo aberto agora.|Níveis vencidos|Música|Mais diversão|Gráficos incríveis|SENHOR DA LAVA!|BOMBA FANTASMA!|ROBÔ BOMBARDEIRO!|BOMBA TROVÃO!|IMPERADOR BOMBA!|Missão|Traga de volta todo o povo de Boomtopia!|resgatados|Você salvou Boomtopia!|Pessoas|Resgate {n} pessoas|Ímã|Gigante|Congelar|Superpulo|Passo de nuvem|Moedas em dobro|Campo de força|No telhado!|Surfando no carro!|Surfando no trem!|Prefeito|Tarefa do prefeito|Resgate {n} pessoas|Ande em cima de um carro|Ande em cima de um trem|Suba num telhado|O prefeito diz: Obrigado, herói!|Obrigado, herói!|Bem-vindo, herói!|Prefeitura|Passeio de helicóptero!|DECOLAR!|ESPAÇO!|Uhuuu!|Dirigir|Voar|Sair|Corrida|Corrida! Passe por todos os anéis!|Terminou!|Recorde"],
+  hi: ['हिन्दी', "शुरू करो|लेवल|...और जल्द आएँगे|आवाज़|कंपन|भाषाएँ|मोड|अकेले खेलो|मल्टीप्लेयर|जल्द आ रहा है|देखो सर्वर में कौन है|दोस्त जोड़ो|दोस्त बनाओ|सेटिंग्स|दुकान|बाहर निकलो|लहर|लेवल|पकड़ो|फेंको|कूदो|रुका हुआ|जारी रखो|मेनू|तुम उड़ गए!|फिर से कोशिश करो|लेवल पूरा!|अगला लेवल|लहर पूरी!|बम राजा!|बाय! जल्दी वापस आना!|फिर से खेलो|दोस्त का नाम|जोड़ो|खरीदो|पहनो|पहना है|टोपियाँ|शर्ट|बाल|तुम्हारे साथ|तुम|ढाल|तेज़ी|डबल जंप|इलाज|छपाक!|तैयार हो जाओ!|बंद करो|WASD चलो · Space कूदो · Shift दौड़ो · खींचकर देखो · E फेंको|खड़े दोस्त|चालू|बंद|पकड़ने के लिए E दबाओ!|दोस्त|आगे दो!|नक्शे|बहुत गरम!|सर्र्र!|गेम बनाओ|जुड़ो|गेम कोड|तुम्हारा नाम|होस्ट के शुरू करने का इंतज़ार...|गेम छोड़ो|खिलाड़ी|होस्ट|दोस्त तब जुड़ सकते हैं जब इस गेम का लिंक उनके साथ शेयर हो (Share मेनू) और वे उसे खोलें।|होस्ट गेम छोड़ गया|अभी ऑनलाइन|गेम में|साथ खेलने के लिए यह गेम claude.ai पर खोलो|तुम आउट हो! अगली लहर में वापस|ट्यूटोरियल|घूमो!|चारों ओर देखो!|दो बार कूदो!|बम गिर रहा है! जब वह ज़मीन पर गिरे, उसे पकड़ने के लिए उसके पास चलो।|जल्दी! टाइमर खत्म होने से पहले कोच के पास दौड़कर बम दे दो।|यह बम पकड़ो, फिर उसे दूर फेंको!|कोच को देखो: अगर बम पकड़े हुए टाइमर खत्म हो गया, तो तुम्हारा चेहरा काला हो जाएगा और तुम आउट!|सिक्का और ढाल पकड़ो!|तुम तैयार हो! जीतने के लिए सारी लहरों से बचो। शुभकामनाएँ!|ट्यूटोरियल छोड़ो|समझ गया!|चलो खेलें!|जॉयस्टिक इस्तेमाल करो|माउस से खींचो|स्क्रीन के दाईं ओर खींचो|कूदो दबाओ|फेंको दबाओ|E दबाओ|कोच|लोड हो रहा है...|यूज़रनेम|मेरे लिए एक बनाओ!|अपना खुद लिखो या गेम से एक बनवाओ|सेव हो गया!|हेल्थ अपग्रेड|अधिकतम हेल्थ|अपग्रेड करो|पूरा अपग्रेड!|रॉकेट लॉन्चर|रीलोड|निशाना ढूँढने वाला|इस्तेमाल में|फायर|रॉकेट तैयार!|XP|XP लेवल|लेवल अप!|पेट शॉप|कोई पेट नहीं|पास के सिक्के ले आता है|हमेशा थोड़ा-थोड़ा ठीक करता है|बम पास गिरने वाला हो तो चेतावनी देता है|हर 20 सेकंड में एक वार रोकता है|आग से बम फोड़ता है|तुम्हारा XP दोगुना करता है|सिक्के तुम्हारे पास लाता है|धीरे-धीरे ठीक करता है|पास गिरते बम की चेतावनी देता है|कभी-कभी वार रोकता है|आग से बम फोड़ता है|ज़्यादा XP देता है|तुम्हें तेज़ दौड़ाता है|कभी-कभी सिक्के दोगुने करता है|डबल जंप करने देता है|विकसित करो!|विकसित हो सकता है!|विकसित हो गया!|आम|कम आम|दुर्लभ|महाकाव्य|पौराणिक|मिथकीय|हीलिंग ज़मीन!|उड़ने वाले केप|ग्लाइड|उड़ो|हवा में कूदो दबाए रखो, ग्लाइड करो या उड़ो!|कोई केप नहीं|कहानी|बूमटोपिया की कहानी|बहुत समय पहले बूमटोपिया तैरते द्वीपों का एक खुशहाल देश था। बेकन बालों वाले बच्चे वहाँ रोज़ खेलते थे।|फिर ज्वालामुखी के अंदर बम राजा जाग गया। वह चिड़चिड़ा था, उसकी बत्ती हमेशा जलती रहती थी, और उसे मज़ा बिल्कुल पसंद नहीं था।|उसने बूमटोपिया के लोगों को बुलबुलों में कैद करके द्वीपों पर बिखेर दिया, और आसमान से बम बरसाए।|लेकिन बच्चों ने एक तरकीब ढूँढी: बम तभी फटता है जब उसका टाइमर खत्म होता है। गरम आलू की तरह जल्दी आगे दो! ज़्यादा देर पकड़ा तो चेहरा काला और तुम आउट!|द्वीपों ने भी मुकाबला किया: हीलिंग ज़मीन चमकने लगी, बहादुर पेट साथ आए, और दुकान में केप और रॉकेट लॉन्चर मिलने लगे।|अब तुम्हारी बारी! बुलबुले फोड़कर लोगों को आज़ाद करो, बम राजा और उसके दोस्तों को हराओ, और सबको बूमटोपिया वापस लाओ!|आगे|पीछे|छोड़ो|चैट|कुछ लिखो...|भेजो|हाय!|मुझे दो!|भागो!|मदद!|बढ़िया!|अच्छा खेल!|मेरे पीछे आओ!|हाहा!|रोज़ का इनाम|दिन {n}|लो!|कल फिर आना, और इनाम मिलेगा!|रहस्य उपहार|उपलब्धियाँ|उपलब्धि मिली!|{n} बम आगे दो|रॉकेट से {n} बम फोड़ो|{n} बॉस हराओ|{n} लहरें बचो|{n} लेवल जीतो|{n} सिक्के उठाओ|{n} पेट रखो|{n} बार चेहरा काला करवाओ|XP लेवल {n} तक पहुँचो|बर्फ़ का राजा!|रॉकेट रानी!|जम गए!|इमोट|हाथ हिलाओ|नाचो|घूमो|खुशी मनाओ|लीडरबोर्ड|अभी गेम खोले हुए सभी लोग दिखाता है।|जीते लेवल|संगीत|और मज़ा|शानदार ग्राफ़िक्स|लावा लॉर्ड!|भूत बम!|रोबो बॉम्बर!|बिजली बम!|बम सम्राट!|मिशन|बूमटोपिया के सभी लोगों को वापस लाओ!|बचाए गए|तुमने बूमटोपिया बचा लिया!|लोग|{n} लोगों को बचाओ|चुंबक|दानव|जमाओ|सुपर जंप|बादल चाल|डबल सिक्के|शक्ति कवच|छत पर!|कार पर सवारी!|ट्रेन पर सवारी!|मेयर|मेयर का काम|{n} लोगों को बचाओ|कार पर सवारी करो|ट्रेन पर सवारी करो|किसी छत पर चढ़ो|मेयर कहते हैं: धन्यवाद, हीरो!|धन्यवाद, हीरो!|स्वागत है, हीरो!|नगर भवन|हेलीकॉप्टर की सवारी!|उड़ान भरो!|अंतरिक्ष!|वाह्ह!|चलाओ|उड़ाओ|बाहर निकलो|रेस|रेस! सारे छल्लों से निकलो!|पूरा हुआ!|सबसे तेज़"],
+  zh: ['中文', "开始|关卡|……更多即将推出|音量|振动|语言|模式|单人游戏|多人游戏|即将推出|看看谁在服务器里|添加好友|创建好友|设置|商店|退出|波次|关卡|抓起|扔出|跳|已暂停|继续|菜单|你被炸飞了！|再试一次|过关！|下一关|这波完成！|炸弹国王！|再见！快回来！|再玩一次|好友名字|添加|购买|穿上|已穿上|帽子|衣服|头发|和你一起|你|护盾|加速|二段跳|治疗|扑通！|准备好！|关闭|WASD 移动 · 空格 跳 · Shift 跑 · 拖动看 · E 扔|还站着的朋友|开|关|按 E 抓起！|好友|快传出去！|地图|好烫！|嗖！|创建游戏|加入|游戏代码|你的名字|等待房主开始……|离开游戏|玩家|房主|把这个游戏的链接分享给朋友（分享菜单），他们打开后就能加入。|房主离开了游戏|现在在线|游戏中|在 claude.ai 上打开这个游戏才能一起玩|你出局了！下一波回来|教程|走一走！|看看四周！|跳两次！|有炸弹掉下来了！落地后走过去就能抓起它。|快！在倒计时结束前跑到教练身边把炸弹传给他。|抓起这个炸弹，然后把它扔远！|看教练：如果你拿着炸弹时倒计时结束，你的脸会变黑，你就出局了！|拿到金币和护盾！|你准备好了！撑过所有波次就能赢。祝你好运！|跳过教程|知道了！|开始玩！|用摇杆|用鼠标拖动|在屏幕右侧拖动|按「跳」|按「扔出」|按 E|教练|加载中……|用户名|帮我起一个！|自己输入，或者让游戏帮你起一个|已保存！|生命升级|最大生命|升级|已满级！|火箭筒|装填|追踪|使用中|发射|火箭筒就绪！|经验|经验等级|升级啦！|宠物店|不带宠物|帮你捡附近的金币|一直慢慢给你回血|炸弹要落在你附近时提醒你|每20秒挡住一次伤害|喷火打爆炸弹|经验翻倍|把金币吸过来|慢慢给你回血|提醒你附近要落下的炸弹|时不时挡住伤害|喷火打爆炸弹|给你额外经验|让你跑得更快|有时金币翻倍|让你二段跳|进化！|可以进化了！|进化成功！|普通|少见|稀有|史诗|传说|神话|治疗地面！|飞行披风|滑翔|飞行|在空中按住跳跃键就能滑翔或飞行！|不穿披风|故事|爆炸乐园的故事|很久以前，爆炸乐园是一片快乐的浮岛之地。培根头发的孩子们每天都在那里玩。|后来，炸弹国王在火山里醒了。他脾气很坏，引信一直在燃烧，而且他讨厌欢乐。|他把爆炸乐园的居民困在泡泡里，撒在各个岛上，还让炸弹从天上掉下来。|可是孩子们发现了一个诀窍：炸弹只有倒计时结束才会爆炸。像传烫手山芋一样快快传出去！拿太久，脸会变黑，你就出局了！|岛屿也开始反击：治疗地面发出光芒，勇敢的宠物加入队伍，商店里还卖起了披风和火箭筒。|现在轮到你了！戳破泡泡救出居民，打败炸弹国王和他的伙伴们，把大家都带回爆炸乐园！|下一页|上一页|跳过|聊天|说点什么……|发送|你好！|传给我！|快跑！|救命！|好样的！|打得好！|跟我来！|哈哈！|每日奖励|第{n}天|领取！|明天再来领更多！|神秘礼物|成就|成就解锁！|传递{n}个炸弹|用火箭筒打爆{n}个炸弹|打败{n}个首领|撑过{n}波|通过{n}关|捡起{n}个金币|拥有{n}只宠物|脸变黑{n}次|达到经验等级{n}|冰雪国王！|火箭女王！|被冻住了！|表情动作|挥手|跳舞|转圈|欢呼|排行榜|显示现在打开游戏的所有人。|通过的关卡|音乐|更多乐趣|炫酷画质|熔岩领主！|幽灵炸弹！|机器人轰炸机！|雷霆炸弹！|炸弹皇帝！|任务|把爆炸乐园的所有居民都带回来！|已救出|你拯救了爆炸乐园！|居民|救出{n}位居民|磁铁|巨人|冻结|超级跳|踏云|双倍金币|力场|登上屋顶！|车顶冲浪！|火车冲浪！|市长|市长的任务|救出{n}个人|站在汽车上兜风|站在火车上兜风|爬上一个屋顶|市长说：谢谢你，英雄！|谢谢你，英雄！|欢迎你，英雄！|市政厅|坐直升机啦！|发射！|太空！|呜呼！|开车|驾驶|下来|比赛|比赛！穿过所有的圆环！|完成！|最佳"],
+  ja: ['日本語', "スタート|レベル|……もうすぐ追加|音量|振動|言語|モード|ひとりで遊ぶ|マルチプレイ|近日公開|サーバーにいる人を見る|フレンド追加|フレンドを作る|設定|ショップ|終了|ウェーブ|レベル|つかむ|投げる|ジャンプ|一時停止|つづける|メニュー|ふっとばされた！|もう一回|レベルクリア！|次のレベル|ウェーブクリア！|ボムキング！|バイバイ！またね！|もう一回遊ぶ|フレンドの名前|追加|買う|着る|着ている|ぼうし|シャツ|かみ|いっしょ|きみ|シールド|スピード|二段ジャンプ|回復|ザブン！|じゅんびして！|閉じる|WASD 移動 · スペース ジャンプ · Shift 走る · ドラッグで見る · E 投げる|残っているフレンド|オン|オフ|E でつかもう！|フレンド|わたして！|マップ|あつい！|ヒューン！|ゲームを作る|参加|ゲームコード|きみの名前|ホストのスタートを待っています……|ゲームをぬける|プレイヤー|ホスト|このゲームのリンクを友だちと共有（共有メニュー）して開いてもらうと参加できます。|ホストがゲームをぬけました|オンライン中|ゲーム中|いっしょに遊ぶには claude.ai でこのゲームを開いてね|アウト！次のウェーブで復活|チュートリアル|歩いてみよう！|まわりを見てみよう！|2回ジャンプしよう！|ばくだんが落ちてくる！着地したら歩いて近づくとつかめるよ。|急いで！タイマーが終わる前にコーチにさわってばくだんをわたそう。|このばくだんをつかんで、遠くに投げよう！|コーチを見て：ばくだんを持ったままタイマーが終わると、顔がまっ黒になってアウト！|コインとシールドをとろう！|じゅんびOK！全部のウェーブを生きのこれば勝ち。がんばって！|チュートリアルをとばす|わかった！|遊ぼう！|ジョイスティックを使おう|マウスでドラッグ|画面の右側をドラッグ|ジャンプをおす|投げるをおす|E をおす|コーチ|よみこみ中……|ユーザー名|作って！|自分で書くか、ゲームに作ってもらおう|保存したよ！|ライフアップグレード|さいだいライフ|アップグレード|MAXだよ！|ロケットランチャー|リロード|ホーミング|そうび中|発射|ロケット準備OK！|XP|XPレベル|レベルアップ！|ペットショップ|ペットなし|近くのコインを集めてくれる|いつも少しずつ回復してくれる|近くにばくだんが落ちる時に教えてくれる|20秒ごとに1回ダメージを防ぐ|火をはいてばくだんを割る|XPが2倍になる|コインを引きよせる|少しずつ回復してくれる|近くに落ちるばくだんを教えてくれる|ときどきダメージを防ぐ|火をはいてばくだんを割る|XPがふえる|足が速くなる|ときどきコインが2倍|二段ジャンプできる|進化させる！|進化できるよ！|進化した！|コモン|アンコモン|レア|エピック|レジェンド|ミシック|回復ゾーン！|空飛ぶマント|グライド|飛ぶ|空中でジャンプをおしっぱなしでグライド・飛行！|マントなし|ストーリー|ボムトピアの物語|むかしむかし、ボムトピアは空にうかぶ島々の楽しい国でした。ベーコンヘアの子どもたちが毎日あそんでいました。|ところが、火山の中でボムキングが目をさましました。いつも不きげんで、導火線はずっと燃えていて、楽しいことが大きらいでした。|ボムキングはボムトピアの人々をあわの中にとじこめて島じゅうにばらまき、空からばくだんをふらせました。|でも子どもたちはひみつを見つけました。ばくだんはタイマーが0になるまで爆発しない！熱々のポテトみたいにすぐわたそう！持ちすぎると顔がまっ黒でアウト！|島たちも力をかしてくれました。回復ゾーンが光り、勇かんなペットが仲間になり、ショップではマントやロケットランチャーが売られるようになりました。|さあ、きみの番だ！あわを割ってみんなを助け、ボムキングとなかまたちをたおして、全員をボムトピアに連れもどそう！|つぎへ|もどる|スキップ|チャット|なにか書いてね…|送る|やあ！|こっちにパス！|にげて！|たすけて！|ナイス！|いい試合！|ついてきて！|ハハ！|毎日のごほうび|{n}日目|受け取る！|また明日来てね！|ひみつのプレゼント|実績|実績解除！|ばくだんを{n}回パスする|ロケットでばくだんを{n}個割る|ボスを{n}回たおす|{n}ウェーブ生きのこる|{n}レベルクリアする|コインを{n}枚ひろう|ペットを{n}匹持つ|顔がまっ黒になるのを{n}回|XPレベル{n}になる|こおりの王！|ロケット女王！|こおった！|エモート|手をふる|ダンス|スピン|よろこぶ|ランキング|いまゲームを開いている全員を表示します。|クリアしたレベル|音楽|もっと楽しく|すごいグラフィック|マグマロード！|おばけボム！|ロボボマー！|カミナリボム！|ボムエンペラー！|ミッション|ボムトピアのみんなを連れもどそう！|救出|ボムトピアを救った！|住民|{n}人を救出する|マグネット|きょじん|ストップ|スーパージャンプ|くも歩き|コイン2倍|バリア|屋上だ！|車の上に乗った！|電車の上に乗った！|市長|市長のおねがい|{n}人を助けよう|車の上に乗ろう|電車の上に乗ろう|屋上にのぼろう|市長「ありがとう、ヒーロー！」|ありがとう、ヒーロー！|ようこそ、ヒーロー！|市役所|ヘリコプターに乗った！|発射！|宇宙だ！|ヒャッホー！|運転|飛ぶ|降りる|レース|レース！全部のリングをくぐろう！|ゴール！|ベスト"]
 };
 const DICT = {};
 for (const k in LANGS) { const parts = LANGS[k][1].split('|'); DICT[k] = {}; KEYS.forEach((key, i) => DICT[k][key] = parts[i] || DICT.en?.[key] || key); }
@@ -1160,7 +1162,8 @@ function lerpAngle(a, b, k) { let d = ((b - a + PI) % (2 * PI) + 2 * PI) % (2 * 
 
 function stepChar(c, dt, mx, mz, jump, run) {
   const sp = (c.slowT > 0 ? 0.5 : 1) * 8 * (run ? 1.4 : 1) * (c.power.speed > 0 ? 1.6 : 1) * (c.isPlayer ? petSpeedMult() * capeAirMult(c) : 1);
-  const acc = Math.min(1, (c.onGround ? (MAP.slip ? 2.2 : 14) : 5) * dt);
+  if (c.launchT > 0) c.launchT -= dt; // launched (water slide): keep flying, no air steering for a moment
+  const acc = c.launchT > 0 && !c.onGround ? 0 : Math.min(1, (c.onGround ? (MAP.slip ? 2.2 : 14) : 5) * dt);
   c.vel.x += (mx * sp - c.vel.x) * acc; c.vel.z += (mz * sp - c.vel.z) * acc;
   if (jump && c.alive) {
     if (c.onGround) { c.vel.y = c.power.sjump > 0 ? 19 : 12.5; c.onGround = false; c.jumpsLeft = (c.power.dbl > 0 || petCanDbl(c) || capeDbl(c)) ? 1 : 0; if (c.isPlayer) sfx.jump(1); }
@@ -1385,6 +1388,7 @@ function explodeBomb(b) {
   if (by) { const th = b.thrower; if (th === player) { if (player.pos.distanceTo(p) > 5) { addCoins(1, true); addXp(2); } } else giveCoins(th, 1); }
 }
 function playerAction() {
+  if (!G.paused && G.mode === 'play' && funAction()) return;
   const p = player; if (!p || !p.alive || G.phase === 'done' || G.paused || !p.holding) return;
   if (isGuest()) { netAct('throw', Math.round(cam.yaw * 100) / 100); sfx.throwIt(); return; }
   throwBomb(p, cam.yaw);
@@ -1683,6 +1687,7 @@ function playerInput(dt) {
   const fx_ = -Math.sin(cam.yaw), fz = -Math.cos(cam.yaw), rx = Math.cos(cam.yaw), rz = -Math.sin(cam.yaw);
   const mx = fx_ * iy + rx * ix, mz = fz * iy + rz * ix;
   const run = !!(keys.ShiftLeft || keys.ShiftRight) || (stick.id !== null && Math.hypot(stick.x, stick.y) > 0.92);
+  if (pathRideStep(dt) || vehicleInput(dt, mx, mz, run, jumpQueued)) { jumpQueued = false; return; }
   stepChar(p, dt, p.alive ? mx : 0, p.alive ? mz : 0, jumpQueued, run);
   jumpQueued = false;
 }
@@ -1781,6 +1786,7 @@ function startLevel(L, opts) {
     const tl = near[Math.min(near.length - 1, 4 + i * 3)]; b.pos.set(tl.x, 0, tl.z); b.yaw = Math.atan2(spawn.x - tl.x, spawn.z - tl.z); b.key = 'b:' + i; b.buddy = true;
   });
   G.peopleTotal = 0; G.peopleFreed = 0; G.roofs = new Set(); G.carSurf = false; G.trainSurf = false; G.heliSurf = false;
+  if (G.vehicle && player) { player.group.visible = true; } G.vehicle = null; G.pathRide = null; G.race = null; G.rocketUp = false; G.chute = false; parachute.visible = false; if (race.rings) race.rings.forEach(r => r.visible = false); if (wheel.cabins.length) parkVehicles();
   G.mayorTask = tut || (MAP && MAP.liquid === 'void' && L % 4 !== 0) ? null : (k => ({ kind: k, n: k === 'rescue' ? 4 : 1, prog: 0, done: false }))(['rescue', 'car', 'train', 'roof'][L % 4]);
   if (!guest && !tut) { for (let i = 0; i < 14; i++) spawnPickup('coin'); spawnPowerups(2); spawnPeople(6); }
   if (tut) { G.phase = 'tutorial'; G.waves = 1; }
@@ -1902,8 +1908,9 @@ function updateHUD(dt) {
   const ch = $('#chips'); if (ch._v !== chips) { ch._v = chips; ch.innerHTML = chips; }
   const pr = $('#prompt'); const hb = player.alive ? player.holding : null;
   if (hb && G.phase !== 'done') { pr.hidden = false; setText(pr, `${t('passIt')} ${Math.max(0, hb.fuse).toFixed(1)}` + (isTouch ? '' : ` · E: ${t('throw')}`)); pr.classList.toggle('urgent', hb.fuse < 1.5); }
-  else pr.hidden = true;
-  const ta = $('#tAct'); setText(ta, t('throw')); ta.classList.toggle('ready', !!hb);
+  else { const vp = vehiclePrompt(); pr.hidden = !vp; if (vp) { setText(pr, (isTouch ? '' : 'E: ') + vp); pr.classList.remove('urgent'); } }
+  const ta = $('#tAct'), vp2 = hb ? '' : vehiclePrompt(); setText(ta, vp2 || t('throw')); ta.classList.toggle('ready', !!hb || !!vp2);
+  { const hr = $('#hRace'); hr.hidden = !G.race; if (G.race) setText(hr, `🏁 ${t('raceHud')}: ${G.race.t.toFixed(1)}s · ${G.race.i}/${race.rings.length}`); }
   setText($('#tJump'), t('jump'));
   if (combo.t > 0) { combo.t -= dt; if (combo.t <= 0) $('#combo').classList.remove('show'); }
   const tier = rpgTier(), rh = $('#rpgHud');
@@ -2984,7 +2991,9 @@ const roofMat = mat(0x55595f), blinkMat2 = new THREE.MeshBasicMaterial({ color: 
 const city = new THREE.Group(); scene.add(city);
 // the city stands on land: a stone quay all around the sea, a ring road, sidewalks and street lamps
 const CITY_EDGE = 62;
-const HALL_A = 1.65, HALL_R = CITY_EDGE + 26; // where City Hall and the Mayor are // islands go out to about 40; the sea is between them and the city
+const HALL_A = 1.65, HALL_R = CITY_EDGE + 26; // where City Hall and the Mayor are
+const WHEEL_A = 2.55, WHEEL_R = 90, ROCKET_A = 3.45, ROCKET_R = 84, SLIDE_A = 4.35, SLIDE_R = 84;
+const RESERVED = [[HALL_A, 0.2], [WHEEL_A, 0.22], [ROCKET_A, 0.13], [SLIDE_A, 0.14]]; // places kept free of skyscrapers // islands go out to about 40; the sea is between them and the city
 {
   const top = new THREE.Mesh(new THREE.RingGeometry(CITY_EDGE, 400, 96, 1), mat(0xb9bcc4)); top.rotation.x = -PI / 2; city.add(top);
   const wall = new THREE.Mesh(new THREE.CylinderGeometry(CITY_EDGE, CITY_EDGE, 4, 96, 1, true), new THREE.MeshLambertMaterial({ color: 0x8a8f9a, side: THREE.BackSide })); wall.position.y = -2; city.add(wall);
@@ -3115,7 +3124,7 @@ function buildCars() {
     c.lane = lane; c.r = CITY_EDGE + (lane ? 10.2 : 6.8); c.dir = lane ? -1 : 1; c.speed = 9 + (lane ? 2 : 0);
     c.a = (i / n) * PI * 2 + Math.random() * 0.1; city.add(c.group); cars.push(c);
   }
-  buildTrains(); buildHelis();
+  buildTrains(); buildHelis(); buildBoatsAndBalloons();
 }
 // TRAINS: an elevated railway on columns above the middle of the ring road. Two steam trains go round and round;
 // you can stand on the track and ride on top of the trains.
@@ -3225,7 +3234,7 @@ function updateCars(dt) {
         if (ch.isPlayer && c.heli && !G.heliSurf) { G.heliSurf = true; showMsg(t('heliSurf') + ' 🚁', 1.5); addCoins(25, true); }
         else if (ch.isPlayer && c.heli) {}
         else if (ch.isPlayer && c.train && !G.trainSurf) { G.trainSurf = true; showMsg(t('trainSurf') + ' 🚂', 1.5); addCoins(15, true); mayorProgress('train'); }
-        else if (ch.isPlayer && !c.train && !G.carSurf) { G.carSurf = true; showMsg(t('carSurf') + ' 🚗', 1.5); addCoins(10, true); mayorProgress('car'); }
+        else if (ch.isPlayer && !c.train && !c.boat && !c.balloon && !G.carSurf) { G.carSurf = true; showMsg(t('carSurf') + ' 🚗', 1.5); addCoins(10, true); mayorProgress('car'); }
       }
     }
     for (const w of c.wheels) w.rotation.x += c.speed * dt / 0.42;
@@ -3244,6 +3253,372 @@ function updateCars(dt) {
     }
   }
 }
+/* =================== FUN PARK: rides, vehicles, races and ziplines =================== */
+const angDiff = (a, b) => Math.abs(((a - b + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI);
+const cityPt = (a, r, y) => new V3(Math.cos(a) * r, y || 0, Math.sin(a) * r);
+// local (radial x, up y, tangential z) offsets around a spot on the city ring -> city-local position
+function ringLocal(a, r, lx, ly, lz) { return new V3(Math.cos(a) * (r + lx) - Math.sin(a) * lz, ly, Math.sin(a) * (r + lx) + Math.cos(a) * lz); }
+// move a solid and carry whoever stands on it (sideways, up and down)
+function moveSolidTo(b, x, z, top, ang) {
+  if (!b) return;
+  const ox = b.x, oz = b.z, ot = b.top, h = b.top - b.bot;
+  b.x = x; b.z = z; b.top = top; b.bot = top - h; if (ang !== undefined) { b.c = Math.cos(ang); b.s = Math.sin(ang); }
+  for (const ch of chars) if (ch.onSolid === b && ch.alive) { ch.pos.x += x - ox; ch.pos.z += z - oz; ch.pos.y += top - ot; }
+}
+const funOn = () => MAP && MAP.liquid !== 'void' && G.mode === 'play' && player;
+
+// ---------- Ferris wheel ----------
+const WHEEL_H = 17, WHEEL_RAD = 13, CABINS = 8;
+const wheel = { group: new THREE.Group(), spin: new THREE.Group(), cabins: [], ang: 0 };
+function buildWheel() {
+  const g = wheel.group; g.position.copy(cityPt(WHEEL_A, WHEEL_R)); g.rotation.y = -WHEEL_A; city.add(g);
+  for (const sx of [-1.6, 1.6]) for (const sz of [-1, 1]) { const leg = mesh(box(0.5, WHEEL_H + 2, 0.5), mat(0xffffff), sx, WHEEL_H / 2, sz * 4.6); leg.rotation.x = -sz * 0.27; g.add(leg); }
+  g.add(mesh(box(4, 0.8, 0.8), mat(0xe8363d), 0, WHEEL_H, 0));
+  const sp = wheel.spin; sp.position.y = WHEEL_H; g.add(sp);
+  for (const off of [-0.9, 0.9]) { const rim = new THREE.Mesh(new THREE.TorusGeometry(WHEEL_RAD, 0.28, 8, 48), mat(0xff5fc8)); rim.rotation.y = PI / 2; rim.position.x = off; sp.add(rim); }
+  for (let i = 0; i < CABINS; i++) { const sk = mesh(box(0.25, WHEEL_RAD * 2, 0.25), mat(0xffffff)); sk.rotation.x = i * PI / CABINS; sp.add(sk); }
+  const bulbs = new THREE.MeshBasicMaterial({ color: 0xfff1a0 });
+  for (let i = 0; i < 24; i++) { const a = i / 24 * PI * 2; sp.add(mesh(new THREE.SphereGeometry(0.22, 6, 4), bulbs, 1.1, Math.sin(a) * WHEEL_RAD, Math.cos(a) * WHEEL_RAD)); }
+  const cols = [0xe8363d, 0x2f7cf6, 0xffc62a, 0x26c26b, 0x7b5cff, 0xff8a1a, 0x2ec4b6, 0xff5fc8];
+  for (let i = 0; i < CABINS; i++) {
+    const c = new THREE.Group(); g.add(c);
+    c.add(mesh(box(2.4, 0.3, 2.4), mat(cols[i]), 0, 0.15, 0));
+    for (const [x, z, w, d] of [[1.15, 0, 0.1, 2.4], [-1.15, 0, 0.1, 2.4], [0, 1.15, 2.4, 0.1], [0, -1.15, 2.4, 0.1]]) c.add(mesh(box(w, 0.9, d), mat(cols[i]), x, 0.75, z));
+    c.add(mesh(box(0.15, 3.4, 0.15), mat(0xffffff), 0, 2, 0));
+    c.add(mesh(box(2.6, 0.2, 2.6), mat(0xffffff), 0, 3.6, 0));
+    wheel.cabins.push({ g: c, solid: null });
+  }
+}
+function updateWheel(dt) {
+  if (!wheel.cabins.length) return;
+  wheel.ang += dt * 0.12; wheel.spin.rotation.x = wheel.ang;
+  for (let i = 0; i < CABINS; i++) {
+    const th = wheel.ang + i / CABINS * PI * 2, ly = WHEEL_H + Math.sin(th) * WHEEL_RAD - 3.7, lz = Math.cos(th) * WHEEL_RAD;
+    const cb = wheel.cabins[i]; cb.g.position.set(0, ly, -lz);
+    const w = ringLocal(WHEEL_A, WHEEL_R, 0, ly, -lz);
+    moveSolidTo(cb.solid, w.x, w.z, city.position.y + ly + 0.3);
+  }
+}
+
+// ---------- Rocket launch pad (with a parachute to float back down) ----------
+const rocketPad = new THREE.Group();
+const parachute = new THREE.Group();
+function buildRocketPad() {
+  rocketPad.position.copy(cityPt(ROCKET_A, ROCKET_R)); rocketPad.rotation.y = -ROCKET_A; city.add(rocketPad);
+  rocketPad.add(mesh(new THREE.CylinderGeometry(2.8, 3.1, 0.4, 24), mat(0x3b3f48), 0, 0.2, 0));
+  const glow = mesh(new THREE.CylinderGeometry(2.2, 2.2, 0.06, 24), new THREE.MeshBasicMaterial({ color: 0xff7a1a }), 0, 0.43, 0); rocketPad.add(glow); rocketPad.userData.glow = glow;
+  for (let i = 0; i < 4; i++) { const st = mesh(box(0.5, 0.07, 4.6), new THREE.MeshBasicMaterial({ color: 0xffd23a }), 0, 0.47, 0); st.rotation.y = i * PI / 4; rocketPad.add(st); }
+  // a big rocket standing next to the pad
+  const rk = new THREE.Group(); rk.position.set(2, 0, 7); rocketPad.add(rk);
+  rk.add(mesh(new THREE.CylinderGeometry(1.4, 1.4, 9, 16), mat(0xf4f1ea), 0, 5.5, 0));
+  rk.add(mesh(new THREE.ConeGeometry(1.4, 3, 16), mat(0xe8363d), 0, 11.5, 0));
+  rk.add(mesh(new THREE.CylinderGeometry(0.6, 0.6, 0.1, 16), glassMat, 0, 8, 1.38)).children.slice(-1)[0].rotation.x = PI / 2;
+  for (let i = 0; i < 3; i++) { const fin = mesh(box(0.2, 2.6, 1.8), mat(0xe8363d), 0, 1.6, 0); fin.position.set(Math.cos(i * 2.09) * 1.5, 1.6, Math.sin(i * 2.09) * 1.5); fin.rotation.y = -i * 2.09; rk.add(fin); }
+  // parachute (worn by the player after a rocket jump or a jump out of a helicopter)
+  const dome = new THREE.Mesh(new THREE.SphereGeometry(2.6, 16, 8, 0, PI * 2, 0, PI / 2.2), new THREE.MeshLambertMaterial({ color: 0xff5a5f, side: THREE.DoubleSide }));
+  dome.position.y = 5.2; parachute.add(dome);
+  const dome2 = new THREE.Mesh(new THREE.SphereGeometry(2.62, 16, 8, 0, PI / 2, 0, PI / 2.2), new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide })); dome2.position.y = 5.2; parachute.add(dome2);
+  for (const [x, z] of [[1.8, 0], [-1.8, 0], [0, 1.8], [0, -1.8]]) { const s = mesh(box(0.05, 3.4, 0.05), mat(0xffffff), x * 0.5, 4.4, z * 0.5); s.rotation.set(z * 0.28, 0, -x * 0.28); parachute.add(s); }
+  parachute.visible = false;
+}
+let rocketCount = 0, rocketCool = 0;
+function chuteOn(on) {
+  G.chute = on; if (!player) return;
+  if (on && parachute.parent !== player.group) player.group.add(parachute);
+  parachute.visible = on;
+}
+function updateRocket(dt) {
+  if (rocketPad.userData.glow) rocketPad.userData.glow.material.color.setHSL(0.07 + 0.05 * Math.sin(performance.now() / 200), 1, 0.55);
+  rocketCool = Math.max(0, rocketCool - dt);
+  if (!funOn() || !player.alive || G.vehicle || G.pathRide) { rocketCount = 0; return; }
+  const pp = cityPt(ROCKET_A, ROCKET_R), on = Math.hypot(player.pos.x - pp.x, player.pos.z - pp.z) < 2.6 && Math.abs(player.pos.y - (city.position.y + 0.4)) < 0.6;
+  if (on && rocketCool <= 0) {
+    const before = Math.ceil(rocketCount || 0); rocketCount = (rocketCount || 3.01) - dt;
+    const now = Math.ceil(rocketCount);
+    if (now !== before && now > 0) { showMsg(String(now), 0.8); tone(440 + (3 - now) * 110, 0.15, 'square', 0.07); }
+    if (rocketCount <= 0) {
+      rocketCount = 0; rocketCool = 3; player.vel.y = 88; player.onGround = false; G.rocketUp = true; chuteOn(false);
+      showMsg('🚀 ' + t('blastOff'), 1.6); noise(1.4, 0.25, 1800, 60); tone(110, 1.2, 'sawtooth', 0.08, 420); shake = Math.max(shake, 0.6);
+    }
+  } else rocketCount = 0;
+  if (G.rocketUp) {
+    if (player.vel.y > 0) { if (Math.random() < 0.8) particle(fxMats.fire, player.pos.clone().add(new V3(rand(-0.3, 0.3), -0.2, rand(-0.3, 0.3))), new V3(rand(-1, 1), -8, rand(-1, 1)), 0.5, 0.5, 0); if (player.pos.y > 100 && !G.spaceSaid) { G.spaceSaid = true; showMsg('🌌 ' + t('space'), 1.6); } }
+    else { G.rocketUp = false; G.spaceSaid = false; chuteOn(true); }
+  }
+}
+function updateChute() {
+  if (!G.chute || !player) return;
+  if (player.onGround || !player.alive || G.vehicle || G.pathRide) { chuteOn(false); return; }
+  if (player.vel.y < -6.5) player.vel.y = -6.5;
+  parachute.rotation.z = Math.sin(performance.now() / 400) * 0.08;
+}
+
+// ---------- Water slide: climb the tower, slide down the spiral, and splash back to the islands ----------
+const SLIDE_TOWER_H = 28;
+const slide = { curve: null, startW: null };
+function buildSlide() {
+  const tw = new THREE.Group(); tw.position.copy(cityPt(SLIDE_A, SLIDE_R)); tw.rotation.y = -SLIDE_A; city.add(tw);
+  for (let y = 0; y < SLIDE_TOWER_H; y += 4) tw.add(mesh(box(5, 4, 5), mat(y / 4 % 2 ? 0xffffff : 0x3aa0ff), 0, y + 2, 0));
+  tw.add(mesh(box(5.6, 0.5, 5.6), mat(0xffd23a), 0, SLIDE_TOWER_H + 0.25, 0));
+  // the slide spirals down around the tower twice, then runs to the sea
+  const pts = [], c = cityPt(SLIDE_A, SLIDE_R), turns = 2.1, R = 5.6;
+  const a0 = SLIDE_A + PI; // start on the side that faces the islands
+  for (let i = 0; i <= 60; i++) { const k = i / 60, a = a0 + k * turns * PI * 2; pts.push(new V3(c.x + Math.cos(a) * R, SLIDE_TOWER_H + 0.2 - k * (SLIDE_TOWER_H - 3), c.z + Math.sin(a) * R)); }
+  const last = pts[pts.length - 1], endP = cityPt(SLIDE_A, CITY_EDGE + 0.4, 1.4);
+  for (let i = 1; i <= 8; i++) pts.push(last.clone().lerp(endP, i / 8));
+  slide.curve = new THREE.CatmullRomCurve3(pts); slide.len = slide.curve.getLength();
+  const tube = new THREE.Mesh(new THREE.TubeGeometry(slide.curve, 240, 0.75, 8, false), new THREE.MeshLambertMaterial({ color: 0x2ec4b6 }));
+  city.add(tube);
+  const stripe = new THREE.Mesh(new THREE.TubeGeometry(slide.curve, 240, 0.78, 8, false), new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.35 })); stripe.scale.set(1, 1, 1); city.add(stripe);
+}
+function slideStartCheck() {
+  if (!slide.curve || G.pathRide || G.vehicle || !player.alive) return;
+  const s = slide.curve.getPointAt(0), y = city.position.y;
+  if (Math.hypot(player.pos.x - s.x, player.pos.z - s.z) < 3.4 && Math.abs(player.pos.y - (y + SLIDE_TOWER_H + 0.5)) < 1.6) {
+    G.pathRide = { kind: 'slide', u: 0, v: 9, vmax: 24, acc: 5, len: slide.len, at: (u) => slide.curve.getPointAt(u).add(new V3(0, y + 0.55, 0)), end: () => {
+      const dir = cityPt(SLIDE_A, 1).normalize(); let best = null, bd = 1e9; // aim the splash-jump at a real island tile
+      for (const tl of tiles) if (tl.alive) { const d = Math.hypot(tl.x - dir.x * 30, tl.z - dir.z * 30); if (d < bd) { bd = d; best = tl; } }
+      const T = 1.15, gv = 32 * MAP.grav, tx = best ? best.x : dir.x * 30, tz = best ? best.z : dir.z * 30;
+      player.vel.set((tx - player.pos.x) / T, (0.2 - player.pos.y + 0.5 * gv * T * T) / T, (tz - player.pos.z) / T); player.onGround = false; player.launchT = T + 0.15;
+      splashFx(player.pos.clone(), true); showMsg('💦 ' + t('wheee'), 1.2);
+    } };
+    tone(500, 0.6, 'sine', 0.06, 900);
+  }
+}
+
+// ---------- Speedboats and hot-air balloons (they use the traffic system) ----------
+const wakeMat = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+function buildBoat(color) {
+  const g = new THREE.Group();
+  g.add(mesh(box(2.1, 0.8, 4.4), mat(color), 0, 0.4, -0.2));
+  const nose = new THREE.Mesh(new THREE.ConeGeometry(1.48, 1.8, 4), mat(color)); nose.rotation.set(PI / 2, PI / 4, 0); nose.scale.set(1, 1, 0.38); nose.position.set(0, 0.42, 2.9); g.add(nose);
+  g.add(mesh(box(2.15, 0.18, 4.45), mat(0xffffff), 0, 0.6, -0.2));
+  const ws = mesh(box(1.9, 0.6, 0.08), glassMat, 0, 1.1, 0.9); ws.rotation.x = -0.4; g.add(ws);
+  g.add(mesh(box(0.7, 0.5, 0.7), mat(0x26262e), 0, 1.05, -0.4));
+  g.add(mesh(box(0.6, 0.9, 0.5), mat(0x3a3f4a), 0, 0.5, -2.55));
+  return { group: g, wheels: [], len: 5, hw: 1.05, hl: 2.4, top: 0.8, boat: true };
+}
+const balloonTex = (c1, c2) => canvasTex(64, (x, n) => { for (let i = 0; i < 8; i++) { x.fillStyle = i % 2 ? c1 : c2; x.fillRect(i * n / 8, 0, n / 8 + 1, n); } });
+function buildBalloon(c1, c2) {
+  const g = new THREE.Group();
+  g.add(mesh(box(2.2, 0.25, 2.2), mat(0x8a5a3a), 0, 0.12, 0));
+  for (const [x, z, w, d] of [[1.05, 0, 0.12, 2.2], [-1.05, 0, 0.12, 2.2], [0, 1.05, 2.2, 0.12], [0, -1.05, 2.2, 0.12]]) g.add(mesh(box(w, 1.1, d), mat(0xb07a4a), x, 0.65, z));
+  for (const [x, z] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) { const r = mesh(box(0.06, 4.6, 0.06), mat(0x6b4226), x * 1.25, 3.5, z * 1.25); r.rotation.set(-z * 0.12, 0, x * 0.12); g.add(r); }
+  const env = new THREE.Mesh(new THREE.SphereGeometry(4.3, 20, 14), new THREE.MeshLambertMaterial({ map: balloonTex(c1, c2) })); env.scale.set(1, 1.18, 1); env.position.y = 9.6; g.add(env);
+  const flame = mesh(new THREE.ConeGeometry(0.35, 1, 8), new THREE.MeshBasicMaterial({ color: 0xffa23a }), 0, 4.5, 0); g.add(flame);
+  return { group: g, wheels: [], len: 2.2, hw: 1.0, hl: 1.0, top: 0.25, balloon: true, flame };
+}
+function buildBoatsAndBalloons() {
+  [[0xe8363d, 1, 0], [0xffc62a, -1, 2.1], [0x2ec4b6, 1, 4.2]].forEach(([col, dir, a], i) => {
+    const c = buildBoat(col); c.r = 50 + i * 2.5; c.dir = dir; c.speed = 11; c.a = a; c.elev = WATER_Y - 0.3; c.baseElev = c.elev; c.ph = i;
+    city.add(c.group); cars.push(c);
+  });
+  [['#ff5a5f', '#ffd23a', 0.4, 34], ['#2f7cf6', '#ffffff', 2, 38], ['#26c26b', '#ffd23a', 3.6, 36], ['#7b5cff', '#ff9ccf', 5.2, 40]].forEach(([c1, c2, a, h], i) => {
+    const c = buildBalloon(c1, c2); c.r = 56 + (i % 2) * 3; c.dir = i % 2 ? -1 : 1; c.speed = 2.6; c.a = a; c.elev = h; c.baseElev = h; c.ph = i * 1.7;
+    city.add(c.group); cars.push(c);
+  });
+}
+let wakeT = 0;
+function updateBoatsAndBalloons(dt) {
+  const tm = performance.now() / 1000; wakeT -= dt; const wake = wakeT <= 0 && MAP && MAP.liquid === 'water';
+  if (wakeT <= 0) wakeT = 0.09;
+  for (const c of cars) {
+    if (c.boat) { c.elev = c.baseElev + Math.sin(tm * 2 + c.ph) * 0.1; c.group.visible = MAP && MAP.liquid !== 'void'; if (wake && c.group.visible) particle(wakeMat, c.group.localToWorld(new V3(rand(-0.6, 0.6), 0.3, -2.8)), new V3(rand(-1, 1), 1.5, rand(-1, 1)), 0.35, 0.7, 5); }
+    else if (c.balloon) { c.elev = c.baseElev + Math.sin(tm * 0.4 + c.ph) * 2; c.flame.scale.setScalar(0.8 + Math.random() * 0.5); }
+  }
+}
+
+// ---------- Drive a car / fly a helicopter ----------
+const myCar = buildCar('car'); myCar.group.add(mesh(box(2.1, 0.12, 0.5), mat(0x26262e), 0, 1.75, -2)); // a spoiler: it's a sports car!
+const myHeli = buildHeli(0x26c26b, 0xffffff);
+myHeli.group.add(mesh(box(3.6, 0.04, 3.6), new THREE.MeshBasicMaterial({ color: 0xffd23a }), 0, -0.02, 0)); // landing marker
+const CAR_HOME = { a: 1.42, r: CITY_EDGE + 4.7 };
+function parkVehicles() {
+  const p = cityPt(CAR_HOME.a, CAR_HOME.r); myCar.group.position.copy(p); myCar.group.rotation.y = Math.atan2(-Math.sin(CAR_HOME.a), Math.cos(CAR_HOME.a));
+  myCar.heading = myCar.group.rotation.y; myCar.speed = 0;
+  const h = ringLocal(HALL_A, HALL_R, 0.5, 10.8, 0); myHeli.group.position.copy(h); myHeli.group.rotation.set(0, -HALL_A - PI / 2, 0); myHeli.vy = 0; myHeli.on = false;
+}
+function buildMyVehicles() { city.add(myCar.group); city.add(myHeli.group); parkVehicles(); }
+function vehicleWorld(v) { return v.group.position.clone().add(new V3(0, city.position.y, 0)); }
+function nearVehicle() {
+  if (!funOn() || !player.alive || G.pathRide) return null;
+  for (const v of [myCar, myHeli]) { const w = vehicleWorld(v); if (Math.hypot(player.pos.x - w.x, player.pos.z - w.z) < (v === myHeli ? 4 : 3.4) && Math.abs(player.pos.y - w.y) < 3) return v; }
+  return null;
+}
+function vehiclePrompt() {
+  if (G.vehicle) return t('getOut');
+  const v = player && !player.holding ? nearVehicle() : null; return v ? (v === myHeli ? t('fly') : t('drive')) : '';
+}
+function funAction() { // E / action button: get in or out of a vehicle
+  if (!player || !player.alive) return false;
+  if (G.vehicle) { exitVehicle(); return true; }
+  if (player.holding) return false;
+  const v = nearVehicle(); if (!v) return false;
+  G.vehicle = v; player.group.visible = false; player.shadow.visible = false; chuteOn(false);
+  if (v === myHeli) { myHeli.on = true; tone(200, 0.5, 'sawtooth', 0.05, 400); }
+  else { tone(150, 0.35, 'sawtooth', 0.06, 260); }
+  return true;
+}
+function exitVehicle() {
+  const v = G.vehicle; if (!v) return; G.vehicle = null;
+  const w = vehicleWorld(v), side = new V3(Math.cos(v.group.rotation.y), 0, -Math.sin(v.group.rotation.y)).multiplyScalar(v === myHeli ? 2.6 : 2.4);
+  player.pos.set(w.x + side.x, w.y + 0.3, w.z + side.z); player.vel.set(0, 0, 0); player.group.visible = true; player.shadow.visible = true;
+  if (v === myHeli && w.y - floorBelow(w) > 5) chuteOn(true);
+}
+function floorBelow(p) { // highest thing to stand on under a point (or the sea)
+  let fy = (tileAt(p.x, p.z) || onCityLand(p.x, p.z)) ? 0 : (MAP && MAP.liquid === 'void' ? -30 : WATER_Y + 1.2);
+  for (const b of SOLIDS) { if (b.top > p.y + 0.5 || b.top <= fy) continue; const dx = p.x - b.x, dz = p.z - b.z; if (Math.abs(dx * b.c + dz * b.s) < b.hw && Math.abs(-dx * b.s + dz * b.c) < b.hd) fy = b.top; }
+  return fy;
+}
+function vehicleInput(dt, mx, mz, run, jump) {
+  const v = G.vehicle; if (!v) return false;
+  if (!player.alive) { exitVehicle(); return false; }
+  const cy = city.position.y, L = Math.hypot(mx, mz);
+  if (v === myCar) {
+    if (L > 0.1) { const want = Math.atan2(mx, mz); v.heading = lerpAngle(v.heading, want, Math.min(1, dt * 3.2 * Math.min(1, Math.abs(v.speed) / 6 + 0.35))); }
+    const target = L * (run ? 30 : 21); v.speed += (target - v.speed) * Math.min(1, dt * (L > 0.1 ? 1.6 : 2.5));
+    const fx = Math.sin(v.heading), fz = Math.cos(v.heading), g = v.group.position, ox = g.x, oz = g.z;
+    g.x += fx * v.speed * dt; g.z += fz * v.speed * dt;
+    let blocked = Math.hypot(g.x, g.z) < CITY_EDGE + 1.3 || Math.hypot(g.x, g.z) > 360;
+    if (!blocked) for (const b of SOLIDS) { if (!b.roof) continue; const dx = g.x - b.x, dz = g.z + 0 - b.z; if (Math.abs(dx) > b.rad + 2 || Math.abs(dz) > b.rad + 2) continue; if (Math.abs(dx * b.c + dz * b.s) < b.hw + 1.1 && Math.abs(-dx * b.s + dz * b.c) < b.hd + 1.1 && b.bot < cy + 1.5) { blocked = true; break; } }
+    if (blocked) { g.x = ox; g.z = oz; if (Math.abs(v.speed) > 6) { tone(330, 0.15, 'square', 0.06); shake = Math.max(shake, 0.25); } v.speed *= -0.25; }
+    v.group.rotation.y = v.heading; for (const w of v.wheels) w.rotation.x += v.speed * dt / 0.42;
+    if (jump) { tone(392, 0.18, 'square', 0.07); tone(330, 0.22, 'square', 0.07, null, 0.2); } // honk!
+    player.pos.set(g.x, cy + 0.6, g.z); player.vel.set(0, 0, 0); player.onGround = true;
+    if (Math.abs(v.speed) > 4) for (const ch of chars) if (!ch.isPlayer && ch.alive && Math.hypot(ch.pos.x - g.x, ch.pos.z - g.z) < 2.2 && ch.pos.y < cy + 2) { ch.vel.set((ch.pos.x - g.x) * 4, 8, (ch.pos.z - g.z) * 4); ch.onGround = false; }
+  } else {
+    const g = v.group.position, sp = run ? 26 : 18;
+    v.vx = (v.vx || 0) + (mx * sp - (v.vx || 0)) * Math.min(1, dt * 2.5); v.vz = (v.vz || 0) + (mz * sp - (v.vz || 0)) * Math.min(1, dt * 2.5);
+    const up = jumpHeld() ? 11 : -4; v.vy += (up - v.vy) * Math.min(1, dt * 3);
+    g.x += v.vx * dt; g.z += v.vz * dt; g.y += v.vy * dt;
+    const fl = floorBelow(new V3(g.x, g.y + cy + 0.2, g.z)) - cy; if (g.y < fl) { g.y = fl; v.vy = Math.max(0, v.vy); }
+    if (Math.hypot(v.vx, v.vz) > 1.5) v.group.rotation.y = lerpAngle(v.group.rotation.y, Math.atan2(v.vx, v.vz), Math.min(1, dt * 3));
+    v.group.rotation.x = clamp(Math.hypot(v.vx, v.vz) / sp, 0, 1) * 0.18;
+    player.pos.set(g.x, g.y + cy + 0.6, g.z); player.vel.set(0, 0, 0); player.onGround = true;
+  }
+  return true;
+}
+let myHeliSound = 0;
+function updateMyVehicles(dt) {
+  myHeli.rotor.rotation.y += dt * (myHeli.on ? 30 : 0); myHeli.tail.rotation.x += dt * (myHeli.on ? 34 : 0);
+  myHeli.beam.visible = false;
+  if (myHeli.on && G.vehicle !== myHeli) { // nobody flying: land gently, then switch off
+    const g = myHeli.group.position, fl = floorBelow(new V3(g.x, g.y + city.position.y + 0.2, g.z)) - city.position.y;
+    g.y = Math.max(fl, g.y - dt * 5); myHeli.group.rotation.x *= 0.95; if (g.y <= fl + 0.01) myHeli.on = false;
+  }
+  if (G.vehicle === myHeli) { myHeliSound -= dt; if (myHeliSound <= 0) { myHeliSound = 0.1; noise(0.06, 0.08, 320, 90, 'lowpass'); } }
+}
+
+// ---------- Rooftop races ----------
+const race = { rings: [], startRing: null };
+const raceRingGeo = new THREE.TorusGeometry(2.1, 0.28, 8, 28), raceBeamGeo = new THREE.CylinderGeometry(0.6, 0.6, 60, 8, 1, true);
+function makeRaceRing(pos, col) {
+  const g = new THREE.Group(); g.position.copy(pos);
+  const ring = new THREE.Mesh(raceRingGeo, new THREE.MeshBasicMaterial({ color: col })); g.add(ring);
+  const beam = new THREE.Mesh(raceBeamGeo, new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.18, depthWrite: false })); beam.position.y = 30; g.add(beam);
+  g.userData = { ring, beam }; city.add(g); return g;
+}
+function buildRace() {
+  const start = cityPt(0.95, CITY_EDGE + 3.2, 1.8);
+  race.startRing = makeRaceRing(start, 0x26c26b);
+  const flag = labelSprite('🏁 ' + t('raceHud')); flag.position.y = 3.4; race.startRing.add(flag); race.startFlag = flag;
+  const cands = cityBlocks.filter(b => b.userData.h - 2 >= 14 && b.userData.h - 2 <= 44 && b.userData.r < 120).map(b => ({ b, d: ((0.95 - b.userData.a) % (2 * PI) + 2 * PI) % (2 * PI) })).sort((x, y) => x.d - y.d);
+  let lastD = -1;
+  for (const c of cands) { if (race.rings.length >= 6) break; if (c.d < 0.12 || c.d - lastD < 0.1) continue; lastD = c.d; const u = c.b.userData; race.rings.push(makeRaceRing(cityPt(u.a, u.r, u.h - 2 + 2.2), 0xffffff)); }
+  for (const r of race.rings) r.visible = false;
+}
+function raceUpdate(dt) {
+  const tm = performance.now() / 1000;
+  for (const r of [race.startRing].concat(race.rings)) if (r) r.userData.ring.rotation.y = tm * 1.5;
+  if (!race.startRing) return;
+  const cy = city.position.y, on = funOn() && player.alive;
+  race.startRing.visible = MAP && MAP.liquid !== 'void';
+  const R = G.race;
+  if (!on) return;
+  if (!R) {
+    const s = race.startRing.position; if (player.pos.distanceTo(new V3(s.x, s.y + cy, s.z)) < 2.4) {
+      G.race = { i: 0, t: 0 }; showMsg('🏁 ' + t('raceGo'), 2); [523, 659, 784].forEach((f, i) => tone(f, 0.16, 'square', 0.06, null, i * 0.12));
+      race.rings.forEach((r, i) => { r.visible = true; r.userData.ring.material.color.setHex(i === 0 ? 0xffd23a : 0xffffff); r.userData.beam.material.color.setHex(i === 0 ? 0xffd23a : 0xffffff); });
+    }
+    return;
+  }
+  R.t += dt;
+  const nr = race.rings[R.i]; if (!nr) return;
+  const p = nr.position;
+  if (player.pos.clone().add(new V3(0, 1.2, 0)).distanceTo(new V3(p.x, p.y + cy, p.z)) < 2.8) {
+    nr.visible = false; R.i++; tone(880 + R.i * 60, 0.12, 'triangle', 0.08); popFx(player.pos.clone().add(new V3(0, 2, 0)));
+    if (R.i >= race.rings.length) {
+      const tt = R.t.toFixed(1), best = save.raceBest; const isBest = !best || R.t < best; if (isBest) { save.raceBest = +R.t.toFixed(1); persist(); }
+      showMsg(`🏁 ${t('raceDone')} ${tt}s<small>${t('raceBest')}: ${save.raceBest}s${isBest ? ' ⭐' : ''}</small>`, 3, true);
+      addCoins(30, true); addXp(40); fireworks(3); sfx.wave(); G.race = null;
+      if (NET.game) sendChat(`🏁 ${t('raceDone')} ${tt}s`);
+    } else { const n2 = race.rings[R.i]; n2.userData.ring.material.color.setHex(0xffd23a); n2.userData.beam.material.color.setHex(0xffd23a); }
+  }
+  if (R.t > 180) { G.race = null; race.rings.forEach(r => r.visible = false); }
+}
+
+// ---------- Ziplines between tall buildings ----------
+const ziplines = [];
+function buildZiplines() {
+  const tall = cityBlocks.filter(b => b.userData.h - 2 > 34).sort((x, y) => y.userData.h - x.userData.h), used = new Set();
+  for (const A of tall) {
+    if (ziplines.length >= 4 || used.has(A)) continue;
+    const ua = A.userData; let pick = null;
+    for (const B of cityBlocks) { if (B === A || used.has(B)) continue; const ub = B.userData, d = Math.hypot(A.position.x - B.position.x, A.position.z - B.position.z), dh = ua.h - ub.h; if (d > 22 && d < 48 && dh > 6 && dh < 34) { pick = B; break; } }
+    if (!pick) continue; used.add(A); used.add(pick);
+    const ub = pick.userData, dir = new V3(pick.position.x - A.position.x, 0, pick.position.z - A.position.z).normalize();
+    const s = new V3(A.position.x + dir.x * 2, ua.h - 2 + 3.4, A.position.z + dir.z * 2), e = new V3(pick.position.x - dir.x * 2, ub.h - 2 + 3.4, pick.position.z - dir.z * 2);
+    const len = s.distanceTo(e), cable = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, len, 6), mat(0x26262e));
+    cable.position.copy(s).lerp(e, 0.5); cable.quaternion.setFromUnitVectors(new V3(0, 1, 0), e.clone().sub(s).normalize()); city.add(cable);
+    for (const [p, top] of [[s, ua.h - 2], [e, ub.h - 2]]) { const pole = mesh(box(0.3, p.y - top + 0.4, 0.3), mat(0xffd23a), p.x, (p.y + top) / 2, p.z); city.add(pole); }
+    const handle = new THREE.Group(); handle.add(mesh(box(0.12, 0.9, 0.12), mat(0x3a3f4a), 0, -0.45, 0)); handle.add(mesh(box(1.2, 0.16, 0.16), mat(0xe8363d), 0, -0.9, 0)); handle.position.copy(s); city.add(handle);
+    ziplines.push({ s, e, len, handle, top: ua.h - 2, endTop: ub.h - 2 });
+  }
+}
+function ziplineCheck() {
+  if (G.pathRide || G.vehicle || !player.alive) return;
+  const cy = city.position.y;
+  for (const z of ziplines) {
+    if (Math.hypot(player.pos.x - z.s.x, player.pos.z - z.s.z) < 2 && Math.abs(player.pos.y - (z.top + cy)) < 2.5) {
+      G.pathRide = { kind: 'zip', u: 0, v: 6, vmax: 22, acc: 9, len: z.len, zip: z, at: (u) => z.s.clone().lerp(z.e, u).add(new V3(0, cy - 3.05, 0)), end: () => {
+        const d = z.e.clone().sub(z.s).setY(0).normalize(); player.pos.set(z.e.x + d.x * 0.5, z.endTop + cy + 0.4, z.e.z + d.z * 0.5); player.vel.set(d.x * 3, 2, d.z * 3); player.onGround = false;
+        setTimeout(() => z.handle.position.copy(z.s), 1500);
+      } };
+      tone(700, 1.2, 'sawtooth', 0.025, 1100); return;
+    }
+  }
+}
+function pathRideStep(dt) {
+  const R = G.pathRide; if (!R) return false;
+  if (!player.alive) { G.pathRide = null; return false; }
+  R.v = Math.min(R.vmax, R.v + R.acc * dt); R.u += R.v * dt / R.len;
+  const done = R.u >= 1; R.u = Math.min(1, R.u);
+  const p = R.at(R.u), q = R.at(Math.min(1, R.u + 0.01));
+  player.pos.copy(p); player.vel.set(0, 0, 0); player.onGround = false;
+  if (q.distanceTo(p) > 0.001) player.yaw = Math.atan2(q.x - p.x, q.z - p.z);
+  if (R.kind === 'zip') { R.zip.handle.position.copy(R.zip.s).lerp(R.zip.e, R.u); player.armL.rotation.x = player.armR.rotation.x = -3; }
+  if (R.kind === 'slide' && Math.random() < 0.5) particle(wakeMat, p.clone(), new V3(rand(-2, 2), 2, rand(-2, 2)), 0.25, 0.5, 8);
+  if (done) { G.pathRide = null; R.end(); }
+  return true;
+}
+
+function buildFun() {
+  if (wheel.cabins.length) return;
+  buildWheel(); buildRocketPad(); buildSlide(); buildMyVehicles(); buildRace(); buildZiplines();
+}
+function buildFunSolids() {
+  const cy = city.position.y;
+  for (const cb of wheel.cabins) cb.solid = addSolid(0, 0, WHEEL_A, 1.2, 1.2, cy - 0.2, cy + 0.3, { ride: true });
+  const pp = cityPt(ROCKET_A, ROCKET_R); addSolid(pp.x, pp.z, ROCKET_A, 2.2, 2.2, cy - 0.2, cy + 0.4, {});
+  const tc = cityPt(SLIDE_A, SLIDE_R); addSolid(tc.x, tc.z, SLIDE_A, 2.8, 2.8, cy - 3, cy + SLIDE_TOWER_H + 0.5, { roof: true });
+  // zig-zag ledges up the front of the slide tower
+  for (let y = 2.1, j = 0; y < SLIDE_TOWER_H; y += 2.1, j++) { const side = j % 2 ? 1.3 : -1.3, p = ringLocal(SLIDE_A, SLIDE_R, -3.3, 0, side); pkBlock(p.x, p.z, SLIDE_A, 0.75, 1.1, cy + y, 0.3, ledgeMat); }
+}
+function updateFun(dt) {
+  updateWheel(dt); updateRocket(dt); updateChute(); updateBoatsAndBalloons(dt); updateMyVehicles(dt); raceUpdate(dt);
+  if (funOn()) { slideStartCheck(); ziplineCheck(); }
+}
+
 function crowdCheer(n) {
   n = n || 1; cheerT = Math.max(cheerT, 2 + n * 0.7);
   for (let i = 0; i < 10 + n * 6; i++) noise(0.05, 0.05 + Math.random() * 0.04, 2600, 1200, 'bandpass', i * 0.09 + Math.random() * 0.05); // clapping
@@ -3268,7 +3643,7 @@ const CITY_N = 90; // 90 skyscrapers
 for (let i = 0; i < CITY_N; i++) {
   const a = (i / CITY_N) * PI * 2 + srand() * 0.06, w = 7 + srand() * 9, d = 7 + srand() * 9, h = 16 + srand() * srand() * 70;
   let r = CITY_EDGE + 15 + w / 2 + srand() * 50;
-  if (Math.abs(((a - HALL_A + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI) < 0.2) r += 45; // room for City Hall
+  for (const [ra, rh] of RESERVED) if (Math.abs(((a - ra + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI) < rh) r += 45; // room for City Hall and the rides
   for (const pl of pillars) if (Math.hypot(Math.cos(a) * r - pl.position.x, Math.sin(a) * r - pl.position.z) < 6 + Math.max(w, d) / 2) r += 14;
   const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), cityDay[i % CITY_COLS.length]);
   b.position.set(Math.cos(a) * r, h / 2 - 3, Math.sin(a) * r); b.rotation.y = -a; b.userData.ci = i % CITY_COLS.length; Object.assign(b.userData, { a, r, w, d, h }); city.add(b); cityBlocks.push(b);
@@ -3276,7 +3651,7 @@ for (let i = 0; i < CITY_N; i++) {
   if (srand() < 0.45) { b.add(mesh(box(0.3, 6, 0.3), roofMat, 0, h / 2 + 4, 0)); b.add(mesh(box(0.7, 0.7, 0.7), blinkMat2, 0, h / 2 + 7.2, 0)); }
 }
 function setCity() {
-  buildCrowd(); buildMayor(); buildCars(); refreshCityLabels();
+  buildCrowd(); buildMayor(); buildCars(); buildFun(); refreshCityLabels();
   const night = NIGHT_MAPS.has(MAP.id) || !!MAP.stars;
   for (const b of cityBlocks) b.material = (night ? cityNight : cityDay)[b.userData.ci];
   city.position.y = MAP.liquid === 'void' ? -42 : 0; // floating maps: the city is far below
@@ -3300,6 +3675,7 @@ function pkBlock(x, z, a, hw, hd, top, th, m, extra) {
 function buildParkour() {
   SOLIDS.length = 0; while (parkourRoot.children.length) parkourRoot.remove(parkourRoot.children[0]);
   addSolid(cityHall.position.x, cityHall.position.z, HALL_A, 6.5, 9.5, city.position.y - 3, city.position.y + 10.8, { roof: true });
+  buildFunSolids();
   for (const sg of trackSegs) addSolid(Math.cos(sg.a) * RAIL_R, Math.sin(sg.a) * RAIL_R, sg.a, 1.5, sg.L / 2, city.position.y + RAIL_Y - 0.6, city.position.y + RAIL_Y, { track: true });
   for (const car of cars) { car.solid = addSolid(0, 0, 0, car.hw, car.hl, city.position.y + 0.4, city.position.y + car.top, { car }); car.solid.rad = car.hl + 1; }
   for (const b of cityBlocks) { // every skyscraper (with its roof) is solid
@@ -3391,7 +3767,7 @@ function setAmbient() {
   ambGeo.attributes.position.needsUpdate = true;
 }
 function updateDetail(dt) {
-  updateCrowd(dt); updateCars(dt); updateMayor(dt);
+  updateCrowd(dt); updateCars(dt); updateMayor(dt); updateFun(dt);
   const tm = performance.now() / 1000, liquidSpeed = MAP && MAP.liquid === 'lava' ? 0.015 : 0.006;
   if (water.material.map) { water.material.map.offset.x += dt * liquidSpeed; water.material.map.offset.y += dt * liquidSpeed * 0.6; }
   if (waves.material.map) { waves.material.map.offset.x -= dt * 0.01; waves.material.map.offset.y += dt * 0.004; }
