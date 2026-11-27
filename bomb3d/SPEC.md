@@ -2,6 +2,17 @@
 
 Designed by the kid (two pencil sketches + Q&A), built with Claude.
 
+## Backstory — "The Story of Boomtopia"
+A 6-page picture book (menu → **Story**; brand-new players see it once before the tutorial):
+1. Long ago, Boomtopia was a happy land of floating islands where kids with bacon hair played every day.
+2. Then the **Bomb King** woke up inside the volcano — grumpy, fuse always lit, and he hated fun.
+3. He made bombs rain from the sky, wave after wave, to blow up the islands.
+4. The kids found a trick: bombs only explode when the timer runs out — pass them like a hot potato!
+   Hold one too long and your face goes black, and you're out.
+5. The islands fought back: healing grounds began to glow, brave pets joined the team, and the shop sold capes and RPGs.
+6. Now it's your turn: survive all 5,000 levels, beat the Bomb King every 5th level, and bring the fun back to Boomtopia!
+The boss is the Bomb King ("BOMB KING!" appears when he arrives).
+
 ## The world (sketch 1)
 - A round **hub** in the middle where "me & my friends" start.
 - **8 islands** around the hub, each joined to it by a **striped bridge**.
@@ -70,7 +81,7 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
   - Mega (red, huge blast) — level 3+
   - Cluster (purple, splits into 4 in the air) — level 5+
   - Sticky (green, drifts toward people while falling) — level 7+
-- **Boss bomb:** every 5th level ends with a giant boss bomb flying over the islands and
+- **Boss bomb (the Bomb King):** every 5th level ends with a giant boss bomb flying over the islands and
   dropping bombs. Grab bombs and throw them at it (throws auto-aim at the boss) to win.
 - **Power-ups** on the islands: Shield (no damage), Speed boots, Double jump, Heal.
 - **Coins:** spin on the islands (14 per level, 9 more each wave), plus bonuses for passing, popping and throwing bombs,
