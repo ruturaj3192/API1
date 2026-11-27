@@ -14,11 +14,13 @@ A 6-page picture book (menu → **Story**; brand-new players see it once before 
 The boss is the Bomb King ("BOMB KING!" appears when he arrives).
 
 ## The mission: bring everyone back to Boomtopia
-- The Bomb King trapped Boomtopia's **1,000 people** (kids **and grownups**) in bubbles and scattered them across the islands.
-- Every level hides **3 trapped people** on the far islands (glowing bubbles with a "Help!" sign). Touch a bubble to pop it:
-  the person flies home to the city, and you get coins and XP. Each **boss holds 5 more**, freed when you beat it.
-- The menu's **Mission** card shows how many of the 1,000 you've brought back; the HUD shows "People: 1 / 3" for the level.
-- Rescuing all 1,000: "You saved Boomtopia!", fireworks and a big coin reward. Achievements: Rescuer (10), Hero (100), Savior of Boomtopia (1,000).
+- The Bomb King trapped Boomtopia's **10,000 people** (kids **and grownups**) in bubbles and scattered them across the islands.
+- Every level hides **6 trapped bubbles** on the far islands (glowing bubbles with a "Help!" sign), and **2 more** appear after every wave.
+  About 1 in 3 is a big **family bubble** (2 grownups + 1–2 kids) that frees 3–4 people at once. Touch a bubble to pop it:
+  everyone inside flies home to the city, and you get coins and XP. Each **boss holds 10 more**, freed when you beat it.
+- The menu's **Mission** card shows how many of the 10,000 you've brought back; the HUD shows "People: 4 / 11" for the level.
+- Rescuing all 10,000: "You saved Boomtopia!", fireworks and a big coin reward. Achievements: Rescuer (10), Hero (100),
+  Super Hero (1,000), Savior of Boomtopia (10,000).
 - The story's pages 3 and 6 now tell this mission.
 
 ## The world (sketch 1)
