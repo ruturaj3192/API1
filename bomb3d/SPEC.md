@@ -66,6 +66,12 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Power-ups** on the islands: Shield (no damage), Speed boots, Double jump, Heal.
 - **Coins:** spin on the islands, plus bonuses for each wave and level and for throwing bombs.
 - **Shop:** spend coins on hats and shirt/hair colours.
+- **Flying capes** (in the Shop): jump, then **hold Jump** in the air.
+  - Glider Cape — 300: glide down slowly
+  - Hero Cape — 1,000: better glide, double jump, faster in the air
+  - Super Cape — 2,500: fly upward for 3 s (refills on the ground), double jump
+  - Rainbow Cape — 6,000: fly for 8 s, fastest in the air
+  The cape flaps on your back; a "Fly" energy bar shows in the HUD for capes that fly (up to a height limit).
 - **RPGs** (in the Shop, expensive!): shoot bombs away. Press **F** or right-click (phone: **Fire** button).
   A rocket flies at the nearest bomb in front of you and pops it harmlessly in confetti (+1 coin); rockets hit the boss too.
   - Rusty RPG — 500 coins: reload 3 s, aims when fired
