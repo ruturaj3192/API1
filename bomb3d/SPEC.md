@@ -219,6 +219,16 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   (grass and flowers, snow piles, glowing embers, gumdrops and sprinkles, toy-brick studs, shells and starfish, mushrooms, crystals, rocks…).
 - Floating particles: snowflakes, rising embers, fireflies, pollen or blowing dust, depending on the map.
 
+## Skins (18 to unlock)
+Whole new looks, unlocked by playing (not bought). The Shop's **Skins** section shows each one with a 🔒, its challenge
+and a progress bar; unlocked skins have a Wear button ("Classic" = your normal shop look). Unlocking one pops up
+"New skin unlocked!". Other players see your skin in multiplayer.
+- Ninja (survive 20 waves) · Firefighter (rescue 50 people) · Astronaut (blast off 3 times) · Robot (smash 5 robots)
+- Pirate (beat 10 levels) · Lava Knight (beat 5 bosses) · Ice Prince (pass 100 bombs) · Basketball Star (score 5 bomb baskets)
+- Racer (finish 3 rooftop races) · Zombie (get a black face 25 times) · Mayor Jr. (rescue 300 people) · Golden Hero (XP level 25)
+- Rainbow (pick up 1,000 coins) · Dino (own 10 pets) · Superhero (rescue 1,000 people) · Bomb Kid (pop 100 bombs with RPGs)
+- Ghost (survive 200 waves) · Savior of Boomtopia (rescue all 10,000 people)
+
 ## Fun park and city life
 **Rides**
 - **Ferris wheel** (on the city land): 8 colorful cabins with lights. Walk into the bottom cabin and ride all the way around.
