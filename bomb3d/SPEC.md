@@ -269,6 +269,10 @@ trapped-people bubble and pop it. Their rescues count for your mission (people, 
 **The world**
 - **Day and night:** a whole day takes about 4 minutes. At night the sky darkens, stars come out, city windows light up and
   the helicopters' searchlights switch on.
+- **Bedtime:** when night falls on a day map: "🌙 It's getting late...", then the screen fades to black ("Goodnight, hero!"
+  with a lullaby, then "Zzz..."). The game pauses (single player). A phone rings: "🎩 Wake up, hero! The Mayor is calling you!",
+  then it's morning ("Good morning, hero!"), you get a few coins and the Mayor says "Good morning, hero!" in his bubble.
+  (Night maps like Space or Graveyard stay night and have no bedtime.)
 - **Weather** changes every minute or so: sunny, rain, thunderstorms (lightning flashes and thunder) or snow.
 - **Festival day (every Saturday):** party balloons rise over the city, fireworks, the crowd cheers, and **double XP**.
 
