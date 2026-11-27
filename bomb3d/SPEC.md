@@ -336,6 +336,18 @@ trapped-people bubble and pop it. Their rescues count for your mission (people, 
   **trampolines** that launch you high), then zig-zag **ledges** up the wall to the roof. You can jump up through blocks from below.
 - Each new roof you reach in a level: "Rooftop!" with its height, plus coins and XP.
 
+## The 10,000x cooler pack
+- **Cinematic intro:** every level starts with the camera swooping down from the sky around you.
+- **Comic-book explosions:** BOOM! KAPOW! BLAM! WHAM! words pop out of explosions near you.
+- **Speed lines** stream around the screen when you go really fast (turbo, car, sled, slide, zipline, rocket).
+- **Hero titles and auras** by XP level: 💎 Hero (10+, blue sparkles), 🌟 Legend (25+, gold), 🌈 Mythic (50+, rainbow).
+- **Level up:** a pillar of light and a ring of gold sparks.
+- **Combo announcer:** NICE! (3) · AWESOME! (5) · UNSTOPPABLE! (8) · LEGENDARY! (12), with flashing colors.
+- **Wave start** drum hit and golden screen pulse; **boss arrival**: striped ⚠️ WARNING ⚠️ banner, lightning and shaking.
+- **Victory:** slow motion, fireworks and confetti cannons from both sides of the screen.
+- **Golden bombs** (rare, shiny): when they blow they make a shower of coins.
+- **Night skies:** shooting stars, and glowing aurora ribbons on night maps. **A rainbow** appears after the rain.
+
 ## Characters
 - You and your friends are blocky characters with **bacon hair**.
 - **Third-person camera** behind you.
