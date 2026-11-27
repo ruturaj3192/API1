@@ -1278,7 +1278,7 @@ function damageBoss(p, th) {
     const bp = boss.pos.clone(); scene.remove(boss.group); boss.bodyMat.dispose(); boss = null; $('#bossBar').hidden = true;
     for (let k = 0; k < 5; k++) setTimeout(() => explosionFx(bp.clone().add(new V3(rand(-3, 3), rand(-2, 2), rand(-3, 3))), 5), k * 140);
     for (const ob of bombs.slice()) if (ob.state === 'falling' || (ob.state === 'thrown' && !ob.byPlayer)) removeBomb(ob);
-    addCoins(30, true); addXp(100); showMsg('+30', 1.4); for (const c of chars) if (c.remote && c.human) giveCoins(c, 30);
+    addCoins(30, true); addXp(100); showMsg('+' + 30 * COIN_MULT, 1.4); for (const c of chars) if (c.remote && c.human) giveCoins(c, 30);
   }
 }
 
@@ -1497,7 +1497,7 @@ function startLevel(L, opts) {
     const b = makeChar({ name, look: { shirt: BUDDY_LOOKS[i % 7], hair: 0x8b4a2b, stripe: 0xd98a5f, pants: BUDDY_PANTS[i % 4], hat: BUDDY_HATS[i % 7] } });
     const tl = near[Math.min(near.length - 1, 4 + i * 3)]; b.pos.set(tl.x, 0, tl.z); b.yaw = Math.atan2(spawn.x - tl.x, spawn.z - tl.z); b.key = 'b:' + i; b.buddy = true;
   });
-  if (!guest && !tut) { for (let i = 0; i < 8; i++) spawnPickup('coin'); spawnPowerups(2); }
+  if (!guest && !tut) { for (let i = 0; i < 14; i++) spawnPickup('coin'); spawnPowerups(2); }
   if (tut) { G.phase = 'tutorial'; G.waves = 1; }
   G.mode = 'play';
   $('#menu').hidden = true; $('#result').hidden = true; $('#pause').hidden = true; $('#hud').hidden = false; layer.hidden = false;
@@ -1533,14 +1533,14 @@ function spawnWaveBomb() {
 function waveDone() {
   if (G.wave >= G.waves) { levelComplete(); return; }
   G.phase = 'break'; G.phaseT = 4.5;
-  addCoins(5, true); if (player && player.alive) addXp(20); sfx.wave(); showMsg(t('waveDone') + '<small>+5</small>', 2, true);
+  addCoins(5, true); if (player && player.alive) addXp(20); sfx.wave(); showMsg(t('waveDone') + '<small>+' + 5 * COIN_MULT + '</small>', 2, true);
   rebuildTiles();
   for (const c of chars) {
     if (c.alive) { if (c.human) c.hp = Math.min(c.maxHp, c.hp + Math.max(20, 0.15 * c.maxHp)); }
     else if (!c.isPlayer || isMP()) { c.alive = true; c.hp = c.maxHp; c.group.visible = true; c.koT = 0; if (c.soot > 0) cleanFace(c); if (!c.remote) c.pos.copy(respawnSpot()); c.vel.set(0, 0, 0); }
   }
   spawnPowerups(1 + (Math.random() < 0.5 ? 1 : 0));
-  for (let i = 0; i < 5; i++) spawnPickup('coin');
+  for (let i = 0; i < 9; i++) spawnPickup('coin');
 }
 function levelComplete() {
   G.phase = 'done'; G.res = 1; addCoins(20, true); addXp(50 + Math.min(G.level, 100)); sfx.win(); vibrate([60, 60, 60]);
@@ -1582,7 +1582,9 @@ function setPause(v) { if (G.mode !== 'play' || G.phase === 'done') return; G.pa
 function togglePause() { setPause(!G.paused); }
 $('#btnResume').onclick = () => { sfx.click(); setPause(false); };
 $('#btnPauseMenu').onclick = () => { sfx.click(); if (isGuest()) leaveGame(); toMenu(); };
-function addCoins(n, pop) {
+const COIN_MULT = 4; // coins are 4x easier to get
+function addCoins(n, pop, raw) {
+  if (!raw) n *= COIN_MULT;
   save.coins += n; G.earned += n;
   if (pop) { const el = document.createElement('div'); el.className = 'coinpop'; el.textContent = '+' + n; $('#hud').appendChild(el); setTimeout(() => el.remove(), 1000); }
 }
@@ -1639,7 +1641,7 @@ function lookFrom(a) {
   const sh = shopItem('shirt', String(a[0])), ha = shopItem('hair', String(a[1])), hat = SHOP.hat.some(h => h.id === a[2]) ? a[2] : 'none';
   return { shirt: sh.c, hair: ha.c, stripe: ha.s, pants: 0x2d3a64, hat };
 }
-function giveCoins(c, n, pop) { if (!c) return; if (c === player) addCoins(n, pop); else if (c.human) c.coinsEarned = (c.coinsEarned || 0) + n; }
+function giveCoins(c, n, pop) { if (!c) return; if (c === player) addCoins(n, pop); else if (c.human) c.coinsEarned = (c.coinsEarned || 0) + n * COIN_MULT; }
 function lobbyPresence() {
   if (!NET.room) return;
   const p = { nick: cleanNick(save.nick), look: myLook(), g: NET.code || null, h: isHost() ? 1 : 0 };
@@ -1752,7 +1754,7 @@ function applySnap(s) {
   const w = num(s.w);
   if (w > G.wave) showMsg(s.bo ? t('boss') : t('wave') + ' ' + w, 1.4);
   G.wave = w;
-  if (s.ph === 'break' && G.phase !== 'break') { showMsg(t('waveDone') + '<small>+5</small>', 2, true); sfx.wave(); addCoins(5, true); if (player && player.alive) addXp(20); }
+  if (s.ph === 'break' && G.phase !== 'break') { showMsg(t('waveDone') + '<small>+' + 5 * COIN_MULT + '</small>', 2, true); sfx.wave(); addCoins(5, true); if (player && player.alive) addXp(20); }
   G.phase = String(s.ph);
   if (s.rb !== NET.rbSeen) { if (NET.rbSeen !== -1) rebuildTiles(); NET.rbSeen = s.rb; }
   const ex = Array.isArray(s.ex) ? s.ex.filter(Array.isArray) : [];
@@ -1798,7 +1800,7 @@ function applyOwn(e) {
   if ((fl & 1) && !p.alive) { p.alive = true; p.koT = 0; p.group.visible = true; p.pos.copy(respawnSpot()); p.vel.set(0, 0, 0); if (p.soot > 0) cleanFace(p); }
   const pw = { shield: num(e[9]) / 10, speed: num(e[10]) / 10, dbl: num(e[11]) / 10 };
   for (const k in pw) { if (pw[k] > 0.5 && p.power[k] <= 0.05) { sfx.power(); showMsg(t(k) + '!', 1.2); } p.power[k] = pw[k]; }
-  const co = num(e[12]); if (co > NET.coinsSeen) { addCoins(co - NET.coinsSeen, true); addXp((co - NET.coinsSeen) * 2); sfx.coin(); NET.coinsSeen = co; }
+  const co = num(e[12]); if (co > NET.coinsSeen) { addCoins(co - NET.coinsSeen, true, true); addXp(Math.ceil((co - NET.coinsSeen) / COIN_MULT) * 2); sfx.coin(); NET.coinsSeen = co; }
 }
 function syncBombs(list) {
   const seen = new Set();
@@ -2144,7 +2146,7 @@ function addXp(n) {
     save.xp -= xpNeed(save.xpLvl); save.xpLvl++;
     const reward = 10 * save.xpLvl; addCoins(reward, G.mode === 'play');
     if (G.mode === 'play') {
-      showMsg(t('levelUp') + '<small>' + esc(t('xpLevel')) + ' ' + save.xpLvl + ' · +' + reward + '</small>', 2.4, true);
+      showMsg(t('levelUp') + '<small>' + esc(t('xpLevel')) + ' ' + save.xpLvl + ' · +' + reward * COIN_MULT + '</small>', 2.4, true);
       [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => tone(f, 0.18, 'triangle', 0.13, null, i * 0.08)); vibrate([40, 40, 80]);
       if (player) for (let k = 0; k < 3; k++) setTimeout(() => player && popFx(player.pos.clone().add(new V3(rand(-1.5, 1.5), 3 + rand(0, 1.5), rand(-1.5, 1.5)))), k * 160);
     }

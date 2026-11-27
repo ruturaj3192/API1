@@ -64,7 +64,8 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Boss bomb:** every 5th level ends with a giant boss bomb flying over the islands and
   dropping bombs. Grab bombs and throw them at it (throws auto-aim at the boss) to win.
 - **Power-ups** on the islands: Shield (no damage), Speed boots, Double jump, Heal.
-- **Coins:** spin on the islands, plus bonuses for each wave and level and for throwing bombs.
+- **Coins:** spin on the islands (14 per level, 9 more each wave), plus bonuses for passing, popping and throwing bombs,
+  each wave, each level, bosses and XP level-ups. **Every coin reward is worth 4×**, so saving up for the shop is quick.
 - **Shop:** spend coins on hats and shirt/hair colours.
 - **Flying capes** (in the Shop): jump, then **hold Jump** — every cape flies for as long as you hold it (up to the sky limit).
   - Glider Cape — 300: fly, glide down slowly
