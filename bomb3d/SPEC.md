@@ -61,6 +61,8 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Power-ups** on the islands: Shield (no damage), Speed boots, Double jump, Heal.
 - **Coins:** spin on the islands, plus bonuses for each wave and level and for throwing bombs.
 - **Shop:** spend coins on hats and shirt/hair colours.
+- **Health upgrades** (top of the Shop): 8 upgrades of +25 max health each, from 100 up to 300.
+  Prices: 30, 60, 100, 150, 220, 300, 400, 500 coins. Hearts show how many you've bought; the health bar shows e.g. 175 / 175.
 
 ## Multiplayer
 - Menu → **Mode → Multiplayer** → **Create game** gives a 4-letter code. Friends tap Multiplayer, type the code and press **Join**.
