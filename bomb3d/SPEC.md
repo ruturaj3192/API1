@@ -72,6 +72,11 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - How it works: the host's game runs everything and shares it live through the claude.ai room;
   each friend's game only moves its own character. If the host leaves, the game ends.
 
+## Username Maker
+- A **Username** card in the menu: type your own name (up to 16 letters) or press **Make me one!**,
+  which spins through funny names (like *TurboPickle42*) made only from kid-friendly bomb-themed words.
+- Your username floats above your character and is what friends see in multiplayer.
+
 ## Characters
 - You and your friends are blocky characters with **bacon hair**.
 - **Third-person camera** behind you.
