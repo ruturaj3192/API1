@@ -192,6 +192,10 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
 ## Map details and the city
 - Every map sits just off the coast of **the city of Boomtopia**: a ring of skyscrapers with windows, rooftop antennas and
   blinking lights (lit windows on night maps; far below on floating maps).
+- The city stands **on land, never in the water**: a stone quay around the sea, a ring road with yellow lines,
+  sidewalks and street lamps. You can walk on the city land (the skyscrapers and pillars are on it, not in the sea).
+- **The cheering crowd:** people of Boomtopia stand on the sidewalk by the road. Every time you rescue someone (1, 2, 3, 4
+  people or a boss's 10), they jump, clap and cheer, with clapping sounds and confetti. More people saved = longer cheering.
 - Textured ground blocks, flowing water/lava/slime with foam, and themed little details on every map
   (grass and flowers, snow piles, glowing embers, gumdrops and sprinkles, toy-brick studs, shells and starfish, mushrooms, crystals, rocks…).
 - Floating particles: snowflakes, rising embers, fireflies, pollen or blowing dust, depending on the map.
