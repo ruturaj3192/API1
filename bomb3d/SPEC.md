@@ -36,9 +36,11 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Hot potato!** Go near a bomb that has landed and you **grab it automatically**. A countdown
   (starting at 7 seconds) shows above it. **Touch someone else to pass it** (you get +1 coin);
   passing doesn't reset the timer, but whoever gets it always has at least 2 seconds. If the timer runs out while you hold it,
-  **it explodes in your face** (extra damage). You can also press E to throw it away.
+  **it explodes in your face**. You can also press E to throw it away.
+- **Black face = you're out!** Whoever is holding the bomb when it explodes is knocked out at once.
+  In single player that's game over; buddies (and players in multiplayer) come back next wave.
 - When a bomb explodes in someone's hands, **their whole head turns sooty black** (white eyes and smile)
-  and smokes for about 6 seconds. If it's you, the camera swings round for a moment to show your face.
+  and smokes, and stays black while they're out. If it's you, the camera swings round for a moment to show your face.
 - Buddies play hot potato too: a buddy with a bomb **chases the nearest person** (you too!)
   to pass it, and the others run away from them.
 - **Bomb types** (unlock as levels go up):
@@ -51,6 +53,16 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Power-ups** on the islands: Shield (no damage), Speed boots, Double jump, Heal.
 - **Coins:** spin on the islands, plus bonuses for each wave and level and for throwing bombs.
 - **Shop:** spend coins on hats and shirt/hair colours.
+
+## Multiplayer
+- Menu → **Mode → Multiplayer** → **Create game** gives a 4-letter code. Friends tap Multiplayer, type the code and press **Join**.
+  "Check who's in the server" lists everyone who has the game open right now, with a **Join** button.
+- The host picks the level and map, then presses **Start**: everyone plays the same level together, hot potato included.
+  Pass the bomb to your real friends!
+- Players who are out come back next wave. The level is lost only when every player is out.
+- Friends need the game's link shared with them (Share menu) and must open it on claude.ai while signed in.
+- How it works: the host's game runs everything and shares it live through the claude.ai room;
+  each friend's game only moves its own character. If the host leaves, the game ends.
 
 ## Characters
 - You and your friends are blocky characters with **bacon hair**.
@@ -68,13 +80,11 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Levels** 1–5,000 in pages (all unlocked) and a **Maps** picker.
 - **Volume** slider and **Vibration** on/off.
 - **Languages:** English, Español, Français, Deutsch, Português, हिन्दी, 中文, 日本語.
-- **Mode:** Single player (now); Multiplayer is shown as "coming soon".
+- **Mode:** Single player or Multiplayer (create a game or join with a code).
 - **Check who's in the server**, **Add friends** and **Make a friend** (name your buddies, up to 7).
 - **Settings**, **Shop**.
 - Progress, coins, items and settings are saved in the browser.
 
-## Not yet (later ideas)
-- Real online multiplayer with friends on their own computers (needs a game server).
 
 ## Tech
 - One file: `bomb3d/index.html`, using Three.js (r128 from cdnjs). No build step.
