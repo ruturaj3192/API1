@@ -684,6 +684,85 @@ function cloudLayout(x, z) {
   }
   return null;
 }
+function volcanoLayout(x, z) {
+  const r = Math.hypot(x, z);
+  if (r <= 7) return { k: 'hub' };
+  if (r < 16) return { k: 'land', e: r > 14.4 };
+  const diag = Math.abs(Math.abs(x) - Math.abs(z)) < 2.4;
+  if (r < 19.5) return diag ? { k: 'bridge', e: stripe(r) } : null; // lava moat, crossed on the diagonals
+  if (r > 37) return null;
+  if (Math.abs(x) < 2.6 || Math.abs(z) < 2.6) return null; // lava rivers
+  return { k: 'land', e: r > 35.4 || r < 21 };
+}
+const MUSH = [];
+for (let k = 0; k < 6; k++) { const a = k * PI / 3 + 0.3; MUSH.push({ x: Math.cos(a) * 22, z: Math.sin(a) * 22, r: 6.5, br: true }); const b = a + PI / 6; MUSH.push({ x: Math.cos(b) * 32, z: Math.sin(b) * 32, r: 5.5 }); }
+function mushroomLayout(x, z) {
+  if (Math.hypot(x, z) <= 7) return { k: 'hub' };
+  for (const m of MUSH) { const d = Math.hypot(x - m.x, z - m.z); if (d <= m.r) return { k: 'land', e: d > m.r - 1.3 }; }
+  for (const m of MUSH) if (m.br && segDist(x, z, 0, 0, m.x, m.z) < 1.5) return { k: 'bridge', e: stripe(Math.hypot(x, z)) };
+  return null;
+}
+const PIRATE_ISL = [[26, 16], [-26, 16], [26, -18], [-26, -18], [0, 34]];
+function pirateLayout(x, z) {
+  const ax = Math.abs(x), az = Math.abs(z);
+  if (ax <= 6 && az <= 15) return { k: 'hub' }; // the ship's deck
+  if (ax <= 3 && z < 0 && az <= 19) return { k: 'hub' }; // the bow
+  for (const [cx, cz] of PIRATE_ISL) { const b = blob(x, z, cx, cz, 7.5, cx + cz); if (b) return b; }
+  for (const [sx, sz, cx, cz] of [[6, 10, 26, 16], [-6, 10, -26, 16], [6, -10, 26, -18], [-6, -10, -26, -18], [0, 15, 0, 34]]) if (segDist(x, z, sx, sz, cx, cz) < 1.6) return { k: 'bridge', e: stripe(x + z) };
+  return null;
+}
+function crystalLayout(x, z) {
+  if (Math.hypot(x, z) <= 8) return { k: 'hub' };
+  for (let k = 0; k < 5; k++) {
+    const a = k * 2 * PI / 5 - PI / 2, ex = Math.cos(a) * 34, ez = Math.sin(a) * 34;
+    const b = blob(x, z, ex, ez, 6.5, k); if (b) return b;
+    const d = segDist(x, z, 0, 0, ex, ez); if (d < 3.3) return { k: 'land', e: d > 2.2 };
+  }
+  return null;
+}
+const TOY_C = [0xff4d4d, 0x4db8ff, 0xffe14d, 0x4dd96b, 0xff9f1c, 0x9b6bff];
+function toyLayout(x, z) {
+  if (Math.abs(x) > 34 || Math.abs(z) > 34) return null;
+  if (Math.abs(x) <= 6 && Math.abs(z) <= 6) return { k: 'hub' };
+  if (Math.abs(x) <= 1.5 || Math.abs(z) <= 1.5) return { k: 'bridge', e: stripe(x + z) }; // the two roads
+  const bx = Math.floor((x + 36) / 12), bz = Math.floor((z + 36) / 12);
+  if ((x + 36) - bx * 12 < 1.5 || (z + 36) - bz * 12 < 1.5) return null; // little water gaps between toy bricks
+  return { k: 'land', c: TOY_C[(bx * 2 + bz * 3) % 6] };
+}
+function beachLayout(x, z) {
+  const r = Math.hypot(x, z), dl = Math.hypot(x - 17, z);
+  if (r <= 7) return { k: 'hub' };
+  if (r > 36) return null;
+  if (Math.abs(z) < 1.5 && x > 5 && x < 30) return { k: 'bridge', e: stripe(x) }; // the pier
+  if (dl < 12) return null; // the lagoon
+  if (dl < 13.5 || r > 33.5) return { k: 'land', e: true };
+  return { k: 'land', c: r < 14 ? 0x5ccf5a : null };
+}
+const CRATERS = [[14, 10, 4], [-16, 12, 5], [20, -14, 5.5], [-12, -20, 4.5], [0, 26, 5], [28, 6, 3.5], [-28, -4, 4], [8, -30, 4], [-24, 24, 4.5], [30, 24, 3.5]];
+function moonLayout(x, z) {
+  const r = Math.hypot(x, z);
+  if (r <= 7) return { k: 'hub' };
+  if (r > 38) return null;
+  for (const [cx, cz, cr] of CRATERS) { const d = Math.hypot(x - cx, z - cz); if (d < cr) return null; if (d < cr + 1.6) return { k: 'land', e: true }; }
+  return { k: 'land', e: r > 36.4 };
+}
+const HOLES = [[12, 4, 3], [-10, 10, 3.5], [4, -14, 4], [-18, -8, 3], [22, -18, 3.5], [-6, 24, 4], [24, 14, 3], [-26, 18, 2.5], [14, 28, 3], [-22, -24, 3.5], [0, -30, 3], [30, -2, 2.5]];
+function cheeseLayout(x, z) {
+  const r = Math.hypot(x, z), rr = wobbleR(35, Math.atan2(z, x), 4);
+  if (r <= 7) return { k: 'hub' };
+  if (r > rr) return null;
+  for (const [cx, cz, cr] of HOLES) if (Math.hypot(x - cx, z - cz) < cr) return null;
+  return { k: 'land', e: r > rr - 1.6 };
+}
+function dojoLayout(x, z) {
+  const ax = Math.abs(x), az = Math.abs(z);
+  if (ax > 34 || az > 34) return null;
+  if (ax <= 6 && az <= 6) return { k: 'hub' };
+  const i = Math.round(x / T), j = Math.round(z / T), mi = ((i % 6) + 6) % 6, mj = ((j % 6) + 6) % 6;
+  if (mi === 0 || mj === 0) return { k: 'bridge', e: (i + j) & 1 }; // wooden walkways
+  if (mi >= 2 && mi <= 4 && mj >= 2 && mj <= 4) return { k: 'land', e: mi !== 3 || mj !== 3 }; // little platforms
+  return null;
+}
 const MAPS = [
   { id: 'islands', name: 'Bomb Islands', sky: 0x8fd8ff, water: 0x2aa3e8, decor: 'tree', rate: 13, layout: ringLayout({ n: 8, dist: 30, rad: 8.2, hub: 7.6, bw: 2.3 }),
     pal: { hub: [0xa39dc9, 0x9189bd], hubBase: 0x6a648f, land: [0x5ccf5a, 0x52c552, 0x66d866], edge: 0xf2d58a, landBase: 0x9a6a3f, edgeBase: 0xc9a865, bridge: [0xdb9c60, 0xa86b3c], bridgeBase: 0x6e4424 } },
@@ -706,7 +785,25 @@ const MAPS = [
   { id: 'grave', name: 'Spooky Graveyard', note: 'Watch out for open graves!', sky: 0x1c1838, liquid: 'slime', water: 0x4fd16a, light: 0.45, stars: true, moon: true, decor: 'tomb', rate: 8, layout: graveLayout,
     pal: { hub: [0x6b6878, 0x5d5a6a], hubBase: 0x3a3846, land: [0x4a6b3a, 0x42613a, 0x557a42], edge: 0x3b3346, landBase: 0x3a2e2a, edgeBase: 0x2e2533, bridge: [0x7d7a8a, 0x6d6a7a], bridgeBase: 0x45424f } },
   { id: 'clouds', name: 'Cloud Kingdom', note: 'Floaty jumps! Don\'t fall off!', sky: 0x6ec6ff, liquid: 'void', grav: 0.8, pillars: false, decor: 'tower', rate: 14, layout: cloudLayout,
-    pal: { hub: [0xfff6d6, 0xffeeb8], hubBase: 0xe6c870, land: [0xffffff, 0xf7f9ff, 0xeef3ff], edge: 0xe2e8ff, landBase: 0xc9d3f2, edgeBase: 0xb8c4ec, bridge: [0xffd23a, 0xffe58a], bridgeBase: 0xc9a12a } }
+    pal: { hub: [0xfff6d6, 0xffeeb8], hubBase: 0xe6c870, land: [0xffffff, 0xf7f9ff, 0xeef3ff], edge: 0xe2e8ff, landBase: 0xc9d3f2, edgeBase: 0xb8c4ec, bridge: [0xffd23a, 0xffe58a], bridgeBase: 0xc9a12a } },
+  { id: 'volcano', name: 'Volcano Island', note: 'Lava rivers!', sky: 0x5a2a22, fog: 0x6a2e20, liquid: 'lava', water: 0xff5a14, light: 0.55, decor: 'rock', rate: 9, layout: volcanoLayout,
+    pal: { hub: [0x6b5f58, 0x5e534d], hubBase: 0x3a302c, land: [0x4a3f3a, 0x55483f, 0x3f3633], edge: 0x8a3b26, landBase: 0x2a2220, edgeBase: 0x5a2418, bridge: [0x3b3740, 0xff8a3a], bridgeBase: 0x241f26 } },
+  { id: 'mushroom', name: 'Mushroom Forest', note: 'Jump between the mushrooms!', sky: 0x6b4fa0, fog: 0x5a4590, water: 0x3a6fb0, light: 0.55, stars: true, decor: 'mushroom', rate: 6, layout: mushroomLayout,
+    pal: { hub: [0xf0e6d2, 0xe2d6bd], hubBase: 0xb8a68a, land: [0xe8363d, 0xd62f36, 0xf04a50], edge: 0xffffff, landBase: 0xf4ead5, edgeBase: 0xe8dcc0, bridge: [0x5e8f2f, 0x4c7a25], bridgeBase: 0x3a5a1c } },
+  { id: 'pirate', name: 'Pirate Cove', note: 'Ahoy! Walk the plank!', sky: 0x8fd8ff, water: 0x1478c8, decor: 'palm', rate: 5, layout: pirateLayout,
+    pal: { hub: [0x9b6b35, 0x8a5d2c], hubBase: 0x5a3a1e, land: [0xf2d58a, 0xeccb7c, 0x5ccf5a], edge: 0xf6dc98, landBase: 0xc9a865, edgeBase: 0xc9a865, bridge: [0xa86b3c, 0xdb9c60], bridgeBase: 0x6e4424 } },
+  { id: 'crystal', name: 'Crystal Caves', note: "Don't fall into the dark!", sky: 0x140a2a, liquid: 'void', light: 0.6, stars: true, pillars: false, clouds: false, sunVis: false, decor: 'crystal', rate: 7, layout: crystalLayout,
+    pal: { hub: [0x5a4a8a, 0x4c3d7a], hubBase: 0x2a2045, land: [0x7b5cff, 0x6a4ae8, 0x8d70ff], edge: 0x5cf2ff, landBase: 0x3a2a6a, edgeBase: 0x2a8aa0, bridge: [0x5cf2ff, 0x3aa7c9], bridgeBase: 0x2a3a4a } },
+  { id: 'toy', name: 'Toy Town', sky: 0xbfe6ff, water: 0x4db8ff, decor: 'toy', rate: 9, layout: toyLayout,
+    pal: { hub: [0xffffff, 0xeeeeee], hubBase: 0xc9c9d6, land: [0xff4d4d], edge: 0xffffff, landBase: 0xd9d9e6, edgeBase: 0xd9d9e6, bridge: [0x55555f, 0xffffff], bridgeBase: 0x3b3b46 } },
+  { id: 'beach', name: 'Beach Party', sky: 0x9fe6ff, water: 0x29d0d0, decor: 'palm', rate: 8, layout: beachLayout,
+    pal: { hub: [0xfff3c4, 0xffe9a8], hubBase: 0xd9b46a, land: [0xf6dc98, 0xf2d58a, 0xfae3a8], edge: 0xffffff, landBase: 0xc9a865, edgeBase: 0xd9d2c0, bridge: [0xa86b3c, 0xdb9c60], bridgeBase: 0x6e4424 } },
+  { id: 'moon', name: 'Moon Base', note: 'Super low gravity!', sky: 0x05051a, liquid: 'void', grav: 0.4, light: 0.7, stars: true, pillars: false, clouds: false, sunVis: false, layout: moonLayout,
+    pal: { hub: [0xb8bcc8, 0xa8acb8], hubBase: 0x6a6e7a, land: [0x9a9ea8, 0x8e929c, 0xa6aab4], edge: 0x6a6e7a, landBase: 0x55595f, edgeBase: 0x44484e, bridge: [0xffd23a, 0x26262e], bridgeBase: 0x26262e } },
+  { id: 'cheese', name: 'Cheese Land', sky: 0xffe9b0, water: 0xf6f2e6, layout: cheeseLayout,
+    pal: { hub: [0xffd23a, 0xf5c518], hubBase: 0xd9a515, land: [0xffd84a, 0xffcf2e, 0xffe066], edge: 0xe8b400, landBase: 0xe0b020, edgeBase: 0xc89a10, bridge: [0xe8b400, 0xffd84a], bridgeBase: 0xc89a10 } },
+  { id: 'dojo', name: 'Ninja Dojo', note: 'Hop across the little platforms!', sky: 0xffc9a8, fog: 0xffb894, water: 0x2f8f7a, decor: 'lantern', rate: 1, layout: dojoLayout,
+    pal: { hub: [0xc98a4b, 0xb07338], hubBase: 0x5a3a1e, land: [0xd9a56a, 0xc99558, 0xe0b07a], edge: 0x8a2b2b, landBase: 0x5a3a1e, edgeBase: 0x5a1e1e, bridge: [0x8a2b2b, 0x26262e], bridgeBase: 0x3a1a1a } }
 ];
 const cylCache = {};
 const cyl = (r, h) => cylCache[r + '_' + h] || (cylCache[r + '_' + h] = new THREE.CylinderGeometry(r, r, h, 14));
@@ -723,6 +820,10 @@ function buildDecor(type, tl) {
   else if (type === 'jungle') { add(mesh(box(0.6, 3.2, 0.6), mat(0x6b4423), 0, 1.6, 0)); add(mesh(box(2.8, 1, 2.8), mat(0x1f8a3a), 0, 3.4, 0)); add(mesh(box(1.7, 0.8, 1.7), mat(0x2aa548), 0, 4.2, 0)); add(mesh(box(0.12, 1.5, 0.12), mat(0x2aa548), 1.2, 2.3, 0.9)); add(mesh(box(0.12, 1.1, 0.12), mat(0x2aa548), -1.1, 2.5, -0.8)); }
   else if (type === 'barrel') { add(new THREE.Mesh(cyl(0.45, 0.9), mat(0x8b5a2b))).position.y = 0.45; add(new THREE.Mesh(cyl(0.47, 0.1), mat(0x3b3b46))).position.y = 0.2; add(new THREE.Mesh(cyl(0.47, 0.1), mat(0x3b3b46))).position.y = 0.7; }
   else if (type === 'tomb') { add(mesh(box(1, 1.3, 0.35), mat(0x8a8798), 0, 0.65, 0)); add(mesh(box(0.75, 0.22, 0.35), mat(0x8a8798), 0, 1.4, 0)); add(mesh(box(0.5, 0.08, 0.05), mat(0x3a3846), 0, 0.9, 0.19)); add(mesh(box(0.08, 0.45, 0.05), mat(0x3a3846), 0, 0.85, 0.19)); }
+  else if (type === 'mushroom') { add(mesh(box(0.5, 1.2, 0.5), mat(0xf4ead5), 0, 0.6, 0)); const cc = [0xe8363d, 0x9b6bff, 0x2f7cf6][h % 3]; add(mesh(box(1.7, 0.6, 1.7), mat(cc), 0, 1.45, 0)); add(mesh(box(1.1, 0.3, 1.1), mat(cc), 0, 1.85, 0)); for (const [x, z] of [[-0.45, 0.3], [0.4, -0.35], [0.1, 0.55]]) add(mesh(box(0.25, 0.08, 0.25), mat(0xffffff), x, 1.78, z)); }
+  else if (type === 'palm') { for (let i = 0; i < 4; i++) add(mesh(box(0.36, 0.85, 0.36), mat(0x9b6b35), i * 0.14, 0.45 + i * 0.8, 0)); for (let k = 0; k < 4; k++) { const l = add(mesh(box(1.7, 0.12, 0.45), mat(0x2fb84e), 0.42 + Math.cos(k * PI / 2) * 0.75, 3.35, Math.sin(k * PI / 2) * 0.75)); l.rotation.y = -k * PI / 2; l.rotation.z = -0.25; } add(mesh(box(0.25, 0.25, 0.25), mat(0x6b4423), 0.35, 3.1, 0.2)); add(mesh(box(0.25, 0.25, 0.25), mat(0x6b4423), 0.6, 3.1, -0.15)); }
+  else if (type === 'toy') { let y = 0; for (let i = 0; i < 3; i++) { const sz = 0.9 - i * 0.18; add(mesh(box(sz, sz, sz), mat(TOY_C[(h + i * 2) % 6]), (i % 2) * 0.12, y + sz / 2, 0)); y += sz; } }
+  else if (type === 'lantern') { add(mesh(box(0.15, 1.6, 0.15), mat(0x26262e), 0, 0.8, 0)); add(mesh(box(0.6, 0.7, 0.6), mat(0xe8363d), 0, 1.9, 0)); add(mesh(box(0.45, 0.45, 0.62), glow(0xffd23a), 0, 1.9, 0)); add(mesh(box(0.75, 0.12, 0.75), mat(0x26262e), 0, 2.3, 0)); }
   else if (type === 'tower') { add(mesh(box(1, 2.4, 1), mat(0xffffff), 0, 1.2, 0)); const c = add(new THREE.Mesh(new THREE.ConeGeometry(0.85, 1.1, 4), mat(0xffd23a))); c.position.y = 2.95; c.rotation.y = PI / 4; add(mesh(box(0.3, 0.5, 0.05), mat(0x6ec6ff), 0, 1.5, 0.51)); }
   g.position.set(tl.x, 0, tl.z); g.rotation.y = (h % 8) * PI / 4; return g;
 }

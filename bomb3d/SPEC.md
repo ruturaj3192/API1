@@ -18,7 +18,7 @@ Designed by the kid (two pencil sketches + Q&A), built with Claude.
   8. Grab a coin and a shield  9. "You're ready!" → Let's play!
 - The controls shown match the device: keys on a computer, joystick and buttons on a phone. Every step can be skipped.
 
-## Maps (11)
+## Maps (20)
 Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Bomb Islands**: the original hub with 8 islands and striped bridges.
 - **Frosty Peaks**: 6 snowy islands. **Slippery ice!**
@@ -31,6 +31,15 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Raft Party**: lots of little rafts. **Jump from raft to raft.**
 - **Spooky Graveyard**: night time, tombstones, open graves (holes) and green slime.
 - **Cloud Kingdom**: cloud islands with golden bridges and little towers. **Floaty jumps.**
+- **Volcano Island**: rings of rock split by **lava rivers**, with bridges across the lava moat.
+- **Mushroom Forest**: giant mushroom caps at dusk — jump from mushroom to mushroom.
+- **Pirate Cove**: a big pirate-ship deck with gangplanks to palm-tree islands.
+- **Crystal Caves**: a glowing purple star floating in the dark — don't fall off!
+- **Toy Town**: colourful toy-brick blocks with little gaps and two roads.
+- **Beach Party**: a sandy beach with a lagoon, a pier and palm trees.
+- **Moon Base**: grey moon ground with craters and **super low gravity**.
+- **Cheese Land**: a giant holey cheese in a lake of milk.
+- **Ninja Dojo**: wooden walkways and little platforms with red lanterns.
 
 ## Healing ground
 - Every map has **3 healing pads**, far away near the edges of the map: glowing aqua ground with a light beam and a spinning green **+** above it.
