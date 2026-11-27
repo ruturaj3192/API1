@@ -1,0 +1,11 @@
+{
+  "appId": "com.example.bomb3dsimulator",
+  "appName": "Bomb 3D Simulator",
+  "webDir": "www",
+  "backgroundColor": "#ff7a1a",
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": false,
+    "allowsLinkPreview": false
+  }
+}
