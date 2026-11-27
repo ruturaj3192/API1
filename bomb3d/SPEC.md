@@ -245,6 +245,10 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   (up to 90). The menu's Mission card shows 🏅 medals and 🏠 houses.
 - **Talking people:** rescued people stroll along the sidewalk and say funny things in speech bubbles when you walk past.
 
+**Bacon-hair buddies help rescue:** when no bomb is near them, your buddies (Buddy, Zoe, Max…) run to the nearest
+trapped-people bubble and pop it. Their rescues count for your mission (people, coins, XP, medals, houses); they say
+"I saved 3!" and cheer. They also smash the Bomb King's robots. Bubbles they can't reach (across water) are left for you.
+
 **Bomb fun**
 - **Bomb storm** (sometimes, level 3+): the sky turns red, bombs come twice as fast for 30 seconds, coins are doubled.
 - **The Bomb King's robots** (level 4+, single player): flying robots grab a trapped-people bubble and try to carry it
