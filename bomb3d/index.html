@@ -381,6 +381,15 @@ const sfx = {
   power() { [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.14, 'triangle', 0.12, null, i * 0.07)); },
   hurt() { tone(240, 0.25, 'sawtooth', 0.1, 80); },
   splash() { noise(0.5, 0.35, 3000, 300, 'bandpass'); },
+  whoosh() { // soft rising-then-falling air sweep, used when you fall off
+    if (!actx || save.volume <= 0) return;
+    const t0 = actx.currentTime, d = 0.75;
+    const src = actx.createBufferSource(); src.buffer = noiseBuf;
+    const f = actx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.4;
+    f.frequency.setValueAtTime(350, t0); f.frequency.exponentialRampToValueAtTime(1500, t0 + d * 0.4); f.frequency.exponentialRampToValueAtTime(220, t0 + d);
+    const g = actx.createGain(); g.gain.setValueAtTime(0.001, t0); g.gain.exponentialRampToValueAtTime(0.45, t0 + d * 0.35); g.gain.exponentialRampToValueAtTime(0.001, t0 + d);
+    src.connect(f); f.connect(g); g.connect(master); src.start(t0); src.stop(t0 + d + 0.05);
+  },
   grab() { tone(500, 0.08, 'square', 0.07, 800); },
   throwIt() { noise(0.25, 0.25, 600, 3000, 'bandpass'); },
   thud(dist) { const v = Math.max(0.02, 0.18 - dist / 300); tone(95, 0.12, 'sine', v, 50); },
@@ -842,12 +851,12 @@ function charTimers(c, dt) {
     if (c.soot <= 0) cleanFace(c);
   }
 }
-function hurt(c, amount) {
+function hurt(c, amount, quiet) {
   if (G.tut && c.isPlayer) return; // practice round: you can't get hurt
   if (!c.alive || G.phase === 'done') return;
   if (c.power.shield > 0) { if (c.isPlayer) sfx.shield(); return; }
   c.hp = Math.max(0, c.hp - amount);
-  if (c.isPlayer) { const h = $('#hurt'); h.style.opacity = 1; setTimeout(() => h.style.opacity = 0, 180); vibrate(120); sfx.hurt(); }
+  if (c.isPlayer) { const h = $('#hurt'); h.style.opacity = 1; setTimeout(() => h.style.opacity = 0, 180); vibrate(120); if (!quiet) sfx.hurt(); }
   if (c.hp <= 0) knockOut(c);
 }
 function knockOut(c) {
@@ -857,11 +866,11 @@ function knockOut(c) {
   else if (c.isPlayer) gameOver();
 }
 function fellInWater(c) {
-  if (isGuest()) { if (c.isPlayer) { splashFx(c.pos, true); sfx.splash(); showMsg(t(MAP.liquid === 'lava' ? 'hot' : MAP.liquid === 'void' ? 'whoosh' : 'splash'), 1); if (c.alive) netAct('fell'); c.pos.copy(respawnSpot()); c.vel.set(0, 0, 0); } return; }
-  splashFx(c.pos, true); if (c.isPlayer) { sfx.splash(); showMsg(t(MAP.liquid === 'lava' ? 'hot' : MAP.liquid === 'void' ? 'whoosh' : 'splash'), 1); }
+  if (isGuest()) { if (c.isPlayer) { splashFx(c.pos, true); sfx.whoosh(); NET.fellAt = performance.now(); showMsg(t(MAP.liquid === 'lava' ? 'hot' : MAP.liquid === 'void' ? 'whoosh' : 'splash'), 1); if (c.alive) netAct('fell'); c.pos.copy(respawnSpot()); c.vel.set(0, 0, 0); } return; }
+  splashFx(c.pos, true); if (c.isPlayer) { sfx.whoosh(); showMsg(t(MAP.liquid === 'lava' ? 'hot' : MAP.liquid === 'void' ? 'whoosh' : 'splash'), 1); }
   if (c.holding) { removeBomb(c.holding); c.holding = null; }
   if (!c.alive) { c.group.visible = false; c.pos.y = -50; c.vel.set(0, 0, 0); return; }
-  hurt(c, MAP.liquid === 'lava' ? 35 : 20);
+  hurt(c, MAP.liquid === 'lava' ? 35 : 20, true);
   if (c.alive) { c.pos.copy(respawnSpot()); c.vel.set(0, 0, 0); }
   else { c.group.visible = false; c.pos.y = -50; c.vel.set(0, 0, 0); }
 }
@@ -1534,7 +1543,7 @@ function hostSync(dt) {
     for (const a of acts) {
       const seq = num(a[0]); if (seq <= c.lastAct) continue; c.lastAct = seq;
       if (a[1] === 'throw' && c.alive && c.holding) throwBomb(c, num(a[2]));
-      else if (a[1] === 'fell' && c.alive) { if (c.holding) removeBomb(c.holding); hurt(c, MAP.liquid === 'lava' ? 35 : 20); }
+      else if (a[1] === 'fell' && c.alive) { if (c.holding) removeBomb(c.holding); hurt(c, MAP.liquid === 'lava' ? 35 : 20, true); }
     }
   }
   for (const [k, c] of NET.remote) if (!inRoom.has(k)) {
@@ -1607,7 +1616,7 @@ function syncChars(list, bn) {
 }
 function applyOwn(e) {
   const p = player, hp = num(e[5], 100), fl = num(e[6]);
-  if (hp < p.hp - 0.5) { const h = $('#hurt'); h.style.opacity = 1; setTimeout(() => h.style.opacity = 0, 180); vibrate(120); sfx.hurt(); }
+  if (hp < p.hp - 0.5) { const h = $('#hurt'); h.style.opacity = 1; setTimeout(() => h.style.opacity = 0, 180); vibrate(120); if (!(performance.now() - (NET.fellAt || 0) < 2000)) sfx.hurt(); }
   p.hp = hp;
   const sf = !!(fl & 2); if (sf && !p.sootFlag) sootFace(p); p.sootFlag = sf;
   if (!(fl & 1) && p.alive) { p.alive = false; p.koT = 0; if (p.holding) p.holding = null; showMsg(t('mpOut'), 2.5); sfx.lose(); }
