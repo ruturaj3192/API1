@@ -1,0 +1,146 @@
+<title>Bomb 3D Simulator Trailer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Luckiest+Guy&display=swap">
+<style>
+/* Layout: a TV "screen" playing the trailer up top, then the pitch, then a strip of what's inside. One committed look: Boomtopia at night. */
+:root {
+  --ink: #120f33;         /* night sky / page */
+  --ink-2: #1e1a4d;       /* raised panels */
+  --fuse: #ff7a1a;        /* bomb-logo orange */
+  --spark: #ffd23a;       /* fuse spark yellow */
+  --sea: #33c2ff;         /* Boomtopia sea */
+  --paper: #fff8ec;       /* text */
+  --muted: #b9b3e6;
+  --display: 'Luckiest Guy', 'Arial Black', Impact, sans-serif;
+  --body: 'Fredoka', 'Trebuchet MS', system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--ink);
+  background-image: radial-gradient(rgba(255,255,255,.07) 1.2px, transparent 1.4px);
+  background-size: 18px 18px;
+  color: var(--paper); font-family: var(--body); font-size: 17px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 34px; }
+a:focus-visible, button:focus-visible { outline: 4px solid var(--spark); outline-offset: 3px; }
+
+/* the TV screen */
+.tv { position: relative; border: 6px solid #000; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; background: #000;
+  box-shadow: 0 0 0 4px var(--fuse), 0 14px 0 4px #000, 0 30px 60px rgba(0,0,0,.5); }
+.scene { position: absolute; inset: 0; opacity: 0; transition: opacity .5s ease; }
+.scene.on { opacity: 1; }
+.scene img { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: 50% 50%; }
+.scene.on img { animation: kb 3.4s ease-out forwards; }
+.scene:nth-child(even).on img { animation-name: kb2; }
+@keyframes kb { from { transform: scale(1.02) translate(0,0); } to { transform: scale(1.14) translate(-2%, -1%); } }
+@keyframes kb2 { from { transform: scale(1.14) translate(2%, 1%); } to { transform: scale(1.03) translate(0, 0); } }
+.cap { position: absolute; left: 0; right: 0; bottom: 7%; display: grid; justify-items: center; gap: .3em; padding: 0 5%; text-align: center; pointer-events: none; }
+.cap b { font-family: var(--display); font-weight: 400; font-size: clamp(1.4rem, 5.4vw, 3.6rem); line-height: 1.02; letter-spacing: .01em;
+  color: var(--spark); -webkit-text-stroke: clamp(4px, .5vw, 7px) #000; paint-order: stroke fill; text-shadow: 0 .09em 0 #000; text-wrap: balance; }
+.cap small { font-family: var(--display); font-size: clamp(.85rem, 2.4vw, 1.5rem); color: #fff; -webkit-text-stroke: 4px #000; paint-order: stroke fill; letter-spacing: .02em; }
+.scene.on .cap b { animation: slam .45s cubic-bezier(.2, 1.6, .4, 1) both; }
+.scene.on .cap small { animation: slam .45s .15s cubic-bezier(.2, 1.6, .4, 1) both; }
+@keyframes slam { from { transform: scale(2.2) rotate(-6deg); opacity: 0; } to { transform: scale(1) rotate(-2deg); opacity: 1; } }
+.endcard { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 2%; opacity: 0; transition: opacity .5s;
+  background: radial-gradient(circle at 50% 45%, #ff9a3d 0, var(--fuse) 45%, #c94a00 100%); }
+.endcard.on { opacity: 1; }
+.endcard img { width: 34%; max-width: 280px; filter: drop-shadow(0 10px 0 rgba(0,0,0,.35)); }
+.endcard.on img { animation: slam .6s cubic-bezier(.2, 1.6, .4, 1) both; }
+.endcard p { margin: 0; font-family: var(--display); font-size: clamp(1rem, 3.2vw, 2.2rem); color: #fff; -webkit-text-stroke: 5px #000; paint-order: stroke fill; }
+.tvbar { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; pointer-events: none; }
+.live { font-family: var(--display); font-size: clamp(.7rem, 1.6vw, .95rem); background: #e8363d; color: #fff; padding: .25em .6em .1em; border: 3px solid #000; border-radius: 8px; letter-spacing: .06em; }
+.ctrl { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: -18px; }
+.dots { display: flex; gap: 7px; flex-wrap: wrap; }
+.dots button { width: 14px; height: 14px; border-radius: 50%; border: 3px solid #000; background: var(--ink-2); padding: 0; cursor: pointer; }
+.dots button.on { background: var(--spark); transform: scale(1.25); }
+.pp { font-family: var(--display); font-size: 1rem; letter-spacing: .04em; background: var(--ink-2); color: var(--paper); border: 3px solid #000; border-radius: 999px; padding: .45em 1em .3em; cursor: pointer; box-shadow: 0 4px 0 #000; }
+
+/* the pitch */
+.pitch { display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; }
+.pitch img { width: 150px; max-width: 30vw; transform: rotate(-6deg); filter: drop-shadow(0 8px 0 #000); }
+.pitch h1 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(2.2rem, 7vw, 4.6rem); line-height: .95; color: var(--fuse); -webkit-text-stroke: 6px #000; paint-order: stroke fill; text-shadow: 0 6px 0 #000; text-wrap: balance; }
+.pitch p { margin: .6em 0 0; font-size: 1.15rem; max-width: 60ch; color: var(--paper); }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+.play { font-family: var(--display); font-size: clamp(1.4rem, 4vw, 2rem); letter-spacing: .03em; color: #000; background: var(--spark); border: 4px solid #000; border-radius: 18px;
+  padding: .45em 1.2em .25em; text-decoration: none; box-shadow: 0 8px 0 #000; display: inline-block; transition: transform .1s; }
+.play:hover { transform: translateY(-3px) rotate(-1deg); }
+.play:active { transform: translateY(4px); box-shadow: 0 4px 0 #000; }
+.free { font-weight: 700; color: var(--muted); }
+@media (max-width: 560px) { .pitch { grid-template-columns: 1fr; justify-items: center; text-align: center; } .cta { justify-content: center; } }
+
+/* what's inside */
+.inside h2 { margin: 0 0 14px; font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 4.5vw, 2.6rem); color: var(--sea); -webkit-text-stroke: 5px #000; paint-order: stroke fill; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: var(--ink-2); border: 4px solid #000; border-radius: 18px; overflow: hidden; box-shadow: 0 6px 0 #000; display: grid; grid-template-rows: auto 1fr; }
+.card:nth-child(3n+1) { transform: rotate(-1deg); } .card:nth-child(3n) { transform: rotate(1deg); }
+.card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 4px solid #000; }
+.card div { padding: 10px 14px 14px; min-width: 0; }
+.card h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.3rem; letter-spacing: .02em; color: var(--spark); }
+.card p { margin: .2em 0 0; font-size: .98rem; color: var(--paper); }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.stats span { font-family: var(--display); font-size: 1.05rem; letter-spacing: .03em; background: var(--fuse); color: #000; border: 3px solid #000; border-radius: 999px; padding: .4em .9em .25em; box-shadow: 0 4px 0 #000; }
+.foot { text-align: center; color: var(--muted); font-size: .95rem; }
+@media (prefers-reduced-motion: reduce) { .scene.on img, .scene.on .cap b, .scene.on .cap small, .endcard.on img { animation: none; } .card { transform: none !important; } }
+</style>
+
+<div class="wrap">
+  <section aria-label="Trailer">
+    <div class="tv" id="tv">
+      <div class="scene on"><img src="intro.jpg" alt="The floating islands of Boomtopia, ringed by a city"><div class="cap"><b>Welcome to Boomtopia</b><small>a city of floating islands</small></div></div>
+      <div class="scene"><img src="potato.jpg" alt="A ninja-skin player holding a ticking bomb next to a buddy"><div class="cap"><b>Bombs fall from the sky…</b><small>grab it and PASS IT!</small></div></div>
+      <div class="scene"><img src="boom.jpg" alt="A huge explosion with a POW! comic word"><div class="cap"><b>…or KA-BOOM!</b><small>hot potato, with bombs</small></div></div>
+      <div class="scene"><img src="crowd.jpg" alt="The crowd and the Mayor cheering by City Hall"><div class="cap"><b>Rescue 10,000 people</b><small>and the whole city cheers</small></div></div>
+      <div class="scene"><img src="roof.jpg" alt="Standing on a skyscraper roof above a Ferris wheel, a helicopter and a hot-air balloon"><div class="cap"><b>Climb. Fly. Explore.</b><small>parkour on every rooftop</small></div></div>
+      <div class="scene"><img src="train.jpg" alt="Riding on top of a steam train around the city"><div class="cap"><b>Ride trains, cars &amp; helicopters</b><small>or drive your own!</small></div></div>
+      <div class="scene"><img src="underwater.jpg" alt="Diving in the sunken city under the sea"><div class="cap"><b>Dive into the sunken city</b><small>treasure is waiting</small></div></div>
+      <div class="scene"><img src="skins.jpg" alt="A lineup of unlockable skins: ninja, pirate, robot, astronaut and more"><div class="cap"><b>Unlock 18 skins</b><small>ninja · robot · dino · ghost…</small></div></div>
+      <div class="scene"><img src="castle.jpg" alt="The Bomb King's floating castle"><div class="cap"><b>Face the Bomb King!</b><small>at his floating castle</small></div></div>
+      <div class="endcard" id="endcard"><img src="logo.svg" alt="Bomb 3D Simulator logo"><p>Play now · Free!</p></div>
+      <div class="tvbar"><span class="live">● NEW GAME</span></div>
+    </div>
+  </section>
+  <div class="ctrl"><div class="dots" id="dots" role="group" aria-label="Trailer scenes"></div><button class="pp" id="pp" type="button">Pause</button></div>
+
+  <section class="pitch">
+    <img src="logo.svg" alt="">
+    <div>
+      <h1>Bomb 3D Simulator</h1>
+      <p>Bombs rain down on Boomtopia. Grab one, pass it to a friend before the timer hits zero, and save the city's people from the Bomb King. Then go explore: climb skyscrapers, ride trains and helicopters, dive under the sea and blast off in a rocket.</p>
+      <div class="cta"><a class="play" href="https://claude.ai/artifact/V8epdzLJiuMeKYVMJdunnc" target="_blank" rel="noopener">▶ Play now</a><span class="free">Free · Mac, iPad &amp; phones · 8 languages</span></div>
+    </div>
+  </section>
+
+  <div class="stats" aria-label="Game facts"><span>5,000 levels</span><span>21 maps</span><span>8 bosses</span><span>50 pets</span><span>18 skins</span><span>Multiplayer</span></div>
+
+  <section class="inside">
+    <h2>What's inside</h2>
+    <div class="grid">
+      <article class="card"><img src="potato.jpg" alt=""><div><h3>Hot potato bombs</h3><p>Grab a bomb, pass it fast. If it blows in your hands, your face goes black and you're out!</p></div></article>
+      <article class="card"><img src="crowd.jpg" alt=""><div><h3>Save Boomtopia</h3><p>Pop the bubbles to free 10,000 trapped people. The Mayor gives you medals and the city rebuilds.</p></div></article>
+      <article class="card"><img src="roof.jpg" alt=""><div><h3>A whole city</h3><p>Parkour, ziplines, a Ferris wheel, a water slide, a rocket pad, a subway and a snowy mountain.</p></div></article>
+      <article class="card"><img src="train.jpg" alt=""><div><h3>Ride everything</h3><p>Surf on cars and trains, fly your own helicopter, and drive your own sports car.</p></div></article>
+      <article class="card"><img src="underwater.jpg" alt=""><div><h3>Under the sea</h3><p>Put on a diving suit and find treasure in the sunken city.</p></div></article>
+      <article class="card"><img src="castle.jpg" alt=""><div><h3>Epic bosses</h3><p>Ice King, Lava Lord, Robo Bomber… and the Bomb King at his castle every 25th level.</p></div></article>
+    </div>
+  </section>
+  <p class="foot">Made by a young game designer and Claude. Bomb 3D Simulator: grab it, pass it, save the city!</p>
+</div>
+
+<script>
+(() => {
+  const tv = document.getElementById('tv'), scenes = [...tv.querySelectorAll('.scene')], end = document.getElementById('endcard'), dotsEl = document.getElementById('dots'), pp = document.getElementById('pp');
+  const slides = scenes.concat([end]); const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0, playing = true, timer = null;
+  slides.forEach((s, k) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Scene ' + (k + 1)); b.onclick = () => { go(k); restart(); }; dotsEl.appendChild(b); });
+  const dots = [...dotsEl.children];
+  function go(k) { slides[i].classList.remove('on'); i = (k + slides.length) % slides.length; const s = slides[i]; s.classList.remove('on'); void s.offsetWidth; s.classList.add('on'); dots.forEach((d, n) => d.classList.toggle('on', n === i)); }
+  function tick() { go(i + 1); }
+  function restart() { clearInterval(timer); if (playing) timer = setInterval(tick, i === slides.length - 1 ? 4200 : (reduce ? 5000 : 3200)); }
+  pp.onclick = () => { playing = !playing; pp.textContent = playing ? 'Pause' : 'Play'; restart(); };
+  go(0); restart();
+})();
+</script>

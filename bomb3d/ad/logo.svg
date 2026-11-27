@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="400" height="400">
+  <title>Bomb 3D Simulator</title>
+  <defs>
+    <radialGradient id="lgBody" cx="36%" cy="32%" r="72%">
+      <stop offset="0" stop-color="#55556a"/>
+      <stop offset=".5" stop-color="#23232f"/>
+      <stop offset="1" stop-color="#0c0c13"/>
+    </radialGradient>
+    <clipPath id="lgClip"><rect x="3" y="3" width="194" height="194" rx="34"/></clipPath>
+  </defs>
+  <rect x="3" y="3" width="194" height="194" rx="34" fill="#ff7a1a"/>
+  <g clip-path="url(#lgClip)" fill="#ff9a3d">
+    <path d="M100 108 L100 -60 L145 -52 Z"/><path d="M100 108 L190 -20 L230 15 Z"/><path d="M100 108 L260 80 L262 125 Z"/>
+    <path d="M100 108 L245 195 L215 230 Z"/><path d="M100 108 L150 270 L105 275 Z"/><path d="M100 108 L35 265 L0 240 Z"/>
+    <path d="M100 108 L-50 185 L-60 140 Z"/><path d="M100 108 L-60 65 L-45 25 Z"/><path d="M100 108 L-10 -30 L30 -55 Z"/>
+  </g>
+  <rect x="3" y="3" width="194" height="194" rx="34" fill="none" stroke="#1b1840" stroke-width="6"/>
+  <g class="lg-spark" transform="translate(172 36) scale(1.15)">
+    <path d="M0-17 L5-6 L17-8 L8 1 L15 12 L3 7 L-2 18 L-4 6 L-16 9 L-8 0 L-15-10 L-3-6 Z" fill="#ffe14d" stroke="#1b1840" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M0-8 L3-3 L8-4 L4 1 L7 6 L1 3 L-1 8 L-2 3 L-7 4 L-3 0 L-7-5 L-1-3 Z" fill="#ffffff"/>
+  </g>
+  <path d="M144 60 C 150 44, 162 54, 168 42" fill="none" stroke="#1b1840" stroke-width="9" stroke-linecap="round"/>
+  <path d="M144 60 C 150 44, 162 54, 168 42" fill="none" stroke="#b08850" stroke-width="4.5" stroke-linecap="round"/>
+  <rect x="126" y="56" width="26" height="16" rx="3" transform="rotate(40 139 64)" fill="#8a8a9c" stroke="#1b1840" stroke-width="4"/>
+  <circle cx="100" cy="108" r="54" fill="url(#lgBody)" stroke="#1b1840" stroke-width="5"/>
+  <path d="M50 127 Q100 147 150 127 L147 141 Q100 161 53 141 Z" fill="#ffc928" stroke="#1b1840" stroke-width="3.5" stroke-linejoin="round"/>
+  <text x="100" y="149" text-anchor="middle" font-family="'Luckiest Guy', 'Arial Black', Impact, sans-serif" font-size="13" fill="#1b1840" letter-spacing="1">3D</text>
+  <ellipse cx="66" cy="76" rx="10" ry="6" transform="rotate(-40 66 76)" fill="#ffffff" opacity=".85"/>
+  <ellipse cx="86" cy="99" rx="10" ry="13" fill="#ffffff" stroke="#1b1840" stroke-width="3"/>
+  <ellipse cx="116" cy="99" rx="10" ry="13" fill="#ffffff" stroke="#1b1840" stroke-width="3"/>
+  <circle cx="90" cy="95" r="5" fill="#1b1840"/>
+  <circle cx="120" cy="95" r="5" fill="#1b1840"/>
+  <path d="M72 82 L 94 87" stroke="#1b1840" stroke-width="5" stroke-linecap="round"/>
+  <path d="M130 82 L 108 87" stroke="#1b1840" stroke-width="5" stroke-linecap="round"/>
+  <path d="M86 115 Q 100 125 116 115" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+  <text x="86" y="50" text-anchor="middle" font-family="'Luckiest Guy', 'Arial Black', Impact, sans-serif" font-size="42" letter-spacing="1" fill="#ffe14d" stroke="#1b1840" stroke-width="7" stroke-linejoin="round" paint-order="stroke">BOMB</text>
+  <text x="100" y="189" text-anchor="middle" font-family="'Luckiest Guy', 'Arial Black', Impact, sans-serif" font-size="27" letter-spacing="1" fill="#ffffff" stroke="#1b1840" stroke-width="6" stroke-linejoin="round" paint-order="stroke">SIMULATOR</text>
+</svg>
