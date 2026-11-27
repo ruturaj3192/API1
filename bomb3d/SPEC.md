@@ -109,6 +109,10 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
   "Check who's in the server" lists everyone who has the game open right now, with a **Join** button.
 - The host picks the level and map, then presses **Start**: everyone plays the same level together, hot potato included.
   Pass the bomb to your real friends!
+- **Chat** (multiplayer): quick-chat buttons ("Hi!", "Pass it to me!", "Run!", "Help!", "Nice!", "Good game!", "Follow me!", "Haha!")
+  or type your own message (80 letters max). Open it with the chat button, **Enter** or **T** in a game, or use the chat box in the
+  Multiplayer menu while waiting. Messages show in a chat list and as a speech bubble over the player's head.
+  A simple filter hides rude words and website links (it can't catch everything — only share the game with friends you know).
 - Players who are out come back next wave. The level is lost only when every player is out.
 - Friends need the game's link shared with them (Share menu) and must open it on claude.ai while signed in.
 - How it works: the host's game runs everything and shares it live through the claude.ai room;
