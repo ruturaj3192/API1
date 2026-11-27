@@ -13,6 +13,14 @@ A 6-page picture book (menu → **Story**; brand-new players see it once before 
 6. Now it's your turn: survive all 5,000 levels, beat the Bomb King every 5th level, and bring the fun back to Boomtopia!
 The boss is the Bomb King ("BOMB KING!" appears when he arrives).
 
+## The mission: bring everyone back to Boomtopia
+- The Bomb King trapped Boomtopia's **1,000 people** (kids **and grownups**) in bubbles and scattered them across the islands.
+- Every level hides **3 trapped people** on the far islands (glowing bubbles with a "Help!" sign). Touch a bubble to pop it:
+  the person flies home to the city, and you get coins and XP. Each **boss holds 5 more**, freed when you beat it.
+- The menu's **Mission** card shows how many of the 1,000 you've brought back; the HUD shows "People: 1 / 3" for the level.
+- Rescuing all 1,000: "You saved Boomtopia!", fireworks and a big coin reward. Achievements: Rescuer (10), Hero (100), Savior of Boomtopia (1,000).
+- The story's pages 3 and 6 now tell this mission.
+
 ## The world (sketch 1)
 - A round **hub** in the middle where "me & my friends" start.
 - **8 islands** around the hub, each joined to it by a **striped bridge**.
@@ -173,6 +181,13 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
 ## Music
 - Chiptune music made in code: a menu song, a different song for each of the 20 maps, and a faster boss-fight song.
   Turn it on/off in Settings → Music (it also follows the Volume slider).
+
+## Map details and the city
+- Every map sits just off the coast of **the city of Boomtopia**: a ring of skyscrapers with windows, rooftop antennas and
+  blinking lights (lit windows on night maps; far below on floating maps).
+- Textured ground blocks, flowing water/lava/slime with foam, and themed little details on every map
+  (grass and flowers, snow piles, glowing embers, gumdrops and sprinkles, toy-brick studs, shells and starfish, mushrooms, crystals, rocks…).
+- Floating particles: snowflakes, rising embers, fireflies, pollen or blowing dust, depending on the map.
 
 ## Cool pack
 - **Fancy graphics** (Settings; on for computers, off for phones): glow (bloom) on lava, crystals, fire and explosions, and real shadows.
