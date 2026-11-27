@@ -184,6 +184,14 @@ input[type=range]{accent-color:var(--fuse);width:min(100%,220px);height:28px;}
 @media (max-width:520px){.tut{top:calc(150px + env(safe-area-inset-top,0px));}.tut-text{font-size:1rem;}}
 body.touch .prompt{bottom:calc(180px + env(safe-area-inset-bottom,0px));}
 .help{position:absolute;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);color:#fff;font-weight:600;text-shadow:0 2px 0 var(--ink);text-align:center;width:min(92vw,720px);transition:opacity 1s;}
+.xp{display:flex;align-items:center;gap:6px;width:min(240px,46vw);}
+.xp-lvl{flex:none;min-width:30px;height:30px;padding:3px 4px 0;border-radius:999px;background:var(--gold);border:3px solid var(--ink);display:grid;place-items:center;font-family:var(--display);font-size:1rem;box-sizing:border-box;}
+.xp-track{position:relative;flex:1;height:16px;border:3px solid var(--ink);border-radius:999px;background:#3b2f4f;overflow:hidden;}
+.xp-fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(180deg,#9fd8ff,#2a7fe0);transition:width .3s;}
+.xp-track span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:700;font-size:.68rem;text-shadow:0 1px 0 var(--ink);font-variant-numeric:tabular-nums;}
+.menu-xp{width:100%;}
+.menu-xp .xp-track{height:20px;}
+.xppop{position:absolute;left:max(70px,calc(env(safe-area-inset-left,0px) + 70px));top:calc(100px + env(safe-area-inset-top,0px));font-family:var(--display);color:#9fd8ff;font-size:1.2rem;text-shadow:0 3px 0 var(--ink);animation:rise 1s ease-out forwards;pointer-events:none;}
 .coinpop{position:absolute;right:max(70px,calc(env(safe-area-inset-right,0px) + 70px));top:calc(60px + env(safe-area-inset-top,0px));font-family:var(--display);color:var(--gold);font-size:1.6rem;text-shadow:0 3px 0 var(--ink);animation:rise 1s ease-out forwards;}
 @keyframes rise{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-36px)}}
 #hurt{position:fixed;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(255,30,60,.65));opacity:0;transition:opacity .35s;}
@@ -271,6 +279,7 @@ body.touch .prompt{bottom:calc(180px + env(safe-area-inset-bottom,0px));}
     <div class="hud-left">
       <div class="pill" id="hLevel">Level 1 · Wave 1/3</div>
       <div class="hp" id="hp"><div class="hp-fill" id="hpFill"></div><span id="hpText">100</span></div>
+      <div class="xp" id="xpBar"><span class="xp-lvl" id="xpLvl">1</span><div class="xp-track"><div class="xp-fill" id="xpFill"></div><span id="xpText"></span></div></div>
       <div class="chips" id="chips"></div>
       <div class="rpg-hud" id="rpgHud" hidden><span id="rpgName"></span><div class="rpg-bar"><div id="rpgFill"></div></div></div>
     </div>
@@ -325,6 +334,7 @@ body.touch .prompt{bottom:calc(180px + env(safe-area-inset-bottom,0px));}
         <p class="un-hint" data-t="unHint">Type your own or let the game make one</p>
         <input id="unameIn" class="txt uname" maxlength="100" autocomplete="off" spellcheck="false" aria-label="Username">
         <div class="un-row"><button class="btn go" id="unameMake"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="#fff" stroke="currentColor" stroke-width="2.5"/><circle cx="8" cy="8" r="1.8" fill="currentColor"/><circle cx="16" cy="16" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="8" r="1.8" fill="currentColor"/><circle cx="8" cy="16" r="1.8" fill="currentColor"/></svg><span data-t="unMake">Make me one!</span></button><span class="un-saved" id="unameSaved" aria-live="polite"></span></div>
+        <div class="xp menu-xp"><span class="xp-lvl" id="mXpLvl">1</span><div class="xp-track"><div class="xp-fill" id="mXpFill"></div><span id="mXpText"></span></div></div>
       </section>
       <section class="card">
         <h2 data-t="settings">Settings</h2>
@@ -397,16 +407,16 @@ const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 /* =================== LANGUAGES =================== */
-const KEYS = 'start levels moreSoon volume vibration languages mode single multi soon server addFriends makeFriend settings shop exit wave level grab throw jump paused resume menu gameOver tryAgain levelDone next waveDone boss bye play friendName add buy equip equipped hats shirts hair withYou you shield speed dbl heal splash ready close help survivors on off pressE friends passIt maps hot whoosh mpCreate mpJoin mpCode mpName mpWait mpLeave mpPlayers mpHost mpShare mpHostLeft mpOnline mpInGame mpOff mpOut tutorial tMove tLook tJump tBomb tPass tThrow tOut tPower tDone tSkip tNext tPlay hJoy hDrag hDragT hJumpBtn hThrowBtn hE coach loading unTitle unMake unHint unSaved upHealth maxHealth upgrade maxed rpgs reload homing using fire rpgReady'.split(' ');
+const KEYS = 'start levels moreSoon volume vibration languages mode single multi soon server addFriends makeFriend settings shop exit wave level grab throw jump paused resume menu gameOver tryAgain levelDone next waveDone boss bye play friendName add buy equip equipped hats shirts hair withYou you shield speed dbl heal splash ready close help survivors on off pressE friends passIt maps hot whoosh mpCreate mpJoin mpCode mpName mpWait mpLeave mpPlayers mpHost mpShare mpHostLeft mpOnline mpInGame mpOff mpOut tutorial tMove tLook tJump tBomb tPass tThrow tOut tPower tDone tSkip tNext tPlay hJoy hDrag hDragT hJumpBtn hThrowBtn hE coach loading unTitle unMake unHint unSaved upHealth maxHealth upgrade maxed rpgs reload homing using fire rpgReady xp xpLevel levelUp'.split(' ');
 const LANGS = {
-  en: ['English', "Start|Levels|...and more soon|Volume|Vibration|Languages|Mode|Single player|Multiplayer|coming soon|Check who's in the server|Add friends|Make a friend|Settings|Shop|Exit|Wave|Level|Grab|Throw|Jump|Paused|Resume|Menu|You got blown up!|Try again|Level complete!|Next level|Wave complete!|BOSS BOMB!|Bye! Come back soon!|Play again|Friend's name|Add|Buy|Wear|Wearing|Hats|Shirts|Hair|with you|You|Shield|Speed|Double jump|Heal|Splash!|Get ready!|Close|WASD move · Space jump · Shift run · drag to look · E throw|Friends still standing|On|Off|Press E to grab!|Friends|Pass it!|Maps|Too hot!|Whoosh!|Create game|Join|Game code|Your name|Waiting for the host to start...|Leave game|Players|host|Friends can join when this game's link is shared with them (Share menu) and they open it.|The host left the game|Online now|in game|Open this game on claude.ai to play together|You're out! Back next wave|Tutorial|Walk around!|Look around!|Jump two times!|A bomb is falling! When it lands, walk into it to grab it.|Quick! Run into Coach to pass the bomb before the timer runs out.|Grab this bomb, then throw it far away!|Watch Coach: if the timer runs out while you hold a bomb, your face goes black and you're OUT!|Grab the coin and the shield!|You're ready! Survive all the waves to win. Good luck!|Skip tutorial|Got it!|Let's play!|Use the joystick|Drag with the mouse|Drag on the right side of the screen|Press Jump|Press Throw|Press E|Coach|Loading...|Username|Make me one!|Type your own or let the game make one|Saved!|Health upgrades|Max health|Upgrade|Fully upgraded!|RPGs|Reload|Homing|Using|Fire|RPG ready!"],
-  es: ['Español', "Jugar|Niveles|...y más pronto|Volumen|Vibración|Idiomas|Modo|Un jugador|Multijugador|muy pronto|Ver quién está en el servidor|Añadir amigos|Crear un amigo|Ajustes|Tienda|Salir|Oleada|Nivel|Agarrar|Lanzar|Saltar|Pausa|Seguir|Menú|¡Te explotaron!|Otra vez|¡Nivel completado!|Siguiente nivel|¡Oleada superada!|¡BOMBA JEFE!|¡Adiós! ¡Vuelve pronto!|Jugar otra vez|Nombre del amigo|Añadir|Comprar|Poner|Puesto|Gorros|Camisetas|Pelo|contigo|Tú|Escudo|Velocidad|Doble salto|Curar|¡Splash!|¡Prepárate!|Cerrar|WASD mover · Espacio saltar · Shift correr · arrastra para mirar · E lanzar|Amigos en pie|Sí|No|¡Pulsa E para agarrar!|Amigos|¡Pásala!|Mapas|¡Quema!|¡Fiuuu!|Crear partida|Unirse|Código de partida|Tu nombre|Esperando a que el anfitrión empiece...|Salir de la partida|Jugadores|anfitrión|Tus amigos pueden unirse si compartes el enlace de este juego con ellos (menú Compartir) y lo abren.|El anfitrión salió de la partida|En línea ahora|en partida|Abre este juego en claude.ai para jugar juntos|¡Estás fuera! Vuelves en la próxima oleada|Tutorial|¡Camina!|¡Mira alrededor!|¡Salta dos veces!|¡Cae una bomba! Cuando aterrice, camina hacia ella para agarrarla.|¡Rápido! Corre hacia el Entrenador para pasarle la bomba antes de que se acabe el tiempo.|¡Agarra esta bomba y lánzala lejos!|Mira al Entrenador: si el tiempo se acaba mientras tienes una bomba, ¡tu cara se pone negra y quedas FUERA!|¡Agarra la moneda y el escudo!|¡Estás listo! Sobrevive a todas las oleadas para ganar. ¡Suerte!|Saltar tutorial|¡Entendido!|¡A jugar!|Usa el joystick|Arrastra con el ratón|Arrastra en el lado derecho de la pantalla|Pulsa Saltar|Pulsa Lanzar|Pulsa E|Entrenador|Cargando...|Nombre de usuario|¡Hazme uno!|Escribe el tuyo o deja que el juego invente uno|¡Guardado!|Mejoras de vida|Vida máxima|Mejorar|¡Al máximo!|Lanzacohetes|Recarga|Teledirigido|Usando|Disparar|¡Lanzacohetes listo!"],
-  fr: ['Français', "Jouer|Niveaux|...et bientôt plus|Volume|Vibration|Langues|Mode|Solo|Multijoueur|bientôt|Voir qui est sur le serveur|Ajouter des amis|Créer un ami|Réglages|Boutique|Quitter|Vague|Niveau|Attraper|Lancer|Sauter|Pause|Reprendre|Menu|Tu as explosé !|Réessayer|Niveau terminé !|Niveau suivant|Vague terminée !|BOMBE BOSS !|Au revoir ! À bientôt !|Rejouer|Nom de l'ami|Ajouter|Acheter|Porter|Porté|Chapeaux|T-shirts|Cheveux|avec toi|Toi|Bouclier|Vitesse|Double saut|Soin|Plouf !|Prépare-toi !|Fermer|WASD bouger · Espace sauter · Shift courir · glisser pour regarder · E lancer|Amis encore debout|Oui|Non|Appuie sur E pour attraper !|Amis|Passe-la !|Cartes|Ça brûle !|Wouuuh !|Créer une partie|Rejoindre|Code de partie|Ton nom|On attend que l'hôte lance la partie...|Quitter la partie|Joueurs|hôte|Tes amis peuvent rejoindre si le lien du jeu est partagé avec eux (menu Partager) et qu'ils l'ouvrent.|L'hôte a quitté la partie|En ligne|en partie|Ouvre ce jeu sur claude.ai pour jouer ensemble|Tu es éliminé ! Retour à la prochaine vague|Tutoriel|Marche un peu !|Regarde autour de toi !|Saute deux fois !|Une bombe tombe ! Quand elle atterrit, marche dessus pour l'attraper.|Vite ! Cours vers le Coach pour lui passer la bombe avant la fin du compte à rebours.|Attrape cette bombe, puis lance-la loin !|Regarde le Coach : si le temps est écoulé pendant que tu tiens une bombe, ton visage devient noir et tu es ÉLIMINÉ !|Attrape la pièce et le bouclier !|Tu es prêt ! Survis à toutes les vagues pour gagner. Bonne chance !|Passer le tutoriel|Compris !|On joue !|Utilise le joystick|Fais glisser avec la souris|Fais glisser sur le côté droit de l'écran|Appuie sur Sauter|Appuie sur Lancer|Appuie sur E|Coach|Chargement...|Pseudo|Invente-m'en un !|Écris le tien ou laisse le jeu en inventer un|Enregistré !|Améliorations de vie|Vie max|Améliorer|Au maximum !|Lance-roquettes|Recharge|Tête chercheuse|Équipé|Tirer|Lance-roquettes prêt !"],
-  de: ['Deutsch', "Start|Level|...und bald mehr|Lautstärke|Vibration|Sprachen|Modus|Einzelspieler|Mehrspieler|bald|Wer ist auf dem Server?|Freunde hinzufügen|Freund erstellen|Einstellungen|Shop|Beenden|Welle|Level|Greifen|Werfen|Springen|Pause|Weiter|Menü|Du wurdest weggesprengt!|Nochmal|Level geschafft!|Nächstes Level|Welle geschafft!|BOSS-BOMBE!|Tschüss! Bis bald!|Nochmal spielen|Name des Freundes|Hinzufügen|Kaufen|Anziehen|Angezogen|Hüte|Shirts|Haare|bei dir|Du|Schild|Tempo|Doppelsprung|Heilen|Platsch!|Mach dich bereit!|Schließen|WASD laufen · Leertaste springen · Shift rennen · ziehen zum Umsehen · E werfen|Freunde noch dabei|An|Aus|Drück E zum Greifen!|Freunde|Gib sie weiter!|Karten|Zu heiß!|Wuuusch!|Spiel erstellen|Beitreten|Spielcode|Dein Name|Warte, bis der Host startet...|Spiel verlassen|Spieler|Host|Freunde können mitspielen, wenn der Link zu diesem Spiel mit ihnen geteilt wird (Teilen-Menü) und sie ihn öffnen.|Der Host hat das Spiel verlassen|Gerade online|im Spiel|Öffne dieses Spiel auf claude.ai, um zusammen zu spielen|Du bist raus! Nächste Welle bist du zurück|Tutorial|Lauf herum!|Schau dich um!|Spring zweimal!|Eine Bombe fällt! Wenn sie landet, lauf hin, um sie zu greifen.|Schnell! Lauf zum Trainer und gib ihm die Bombe, bevor die Zeit abläuft.|Greif diese Bombe und wirf sie weit weg!|Schau zum Trainer: Wenn die Zeit abläuft, während du eine Bombe hältst, wird dein Gesicht schwarz und du bist RAUS!|Schnapp dir die Münze und das Schild!|Du bist bereit! Überlebe alle Wellen, um zu gewinnen. Viel Glück!|Tutorial überspringen|Verstanden!|Los geht's!|Benutze den Joystick|Mit der Maus ziehen|Auf der rechten Bildschirmseite ziehen|Drück Springen|Drück Werfen|Drück E|Trainer|Lädt...|Benutzername|Mach mir einen!|Schreib deinen eigenen oder lass das Spiel einen erfinden|Gespeichert!|Lebens-Upgrades|Max. Leben|Verbessern|Voll aufgerüstet!|Raketenwerfer|Nachladen|Zielsuchend|Ausgerüstet|Feuer|Raketenwerfer bereit!"],
-  pt: ['Português', "Jogar|Níveis|...e mais em breve|Volume|Vibração|Idiomas|Modo|Um jogador|Multijogador|em breve|Ver quem está no servidor|Adicionar amigos|Criar um amigo|Configurações|Loja|Sair|Onda|Nível|Pegar|Arremessar|Pular|Pausado|Continuar|Menu|Você explodiu!|Tentar de novo|Nível completo!|Próximo nível|Onda completa!|BOMBA CHEFE!|Tchau! Volte logo!|Jogar de novo|Nome do amigo|Adicionar|Comprar|Usar|Usando|Chapéus|Camisetas|Cabelo|com você|Você|Escudo|Velocidade|Pulo duplo|Curar|Splash!|Prepare-se!|Fechar|WASD mover · Espaço pular · Shift correr · arraste para olhar · E arremessar|Amigos de pé|Sim|Não|Aperte E para pegar!|Amigos|Passa ela!|Mapas|Muito quente!|Fiuuu!|Criar jogo|Entrar|Código do jogo|Seu nome|Esperando o anfitrião começar...|Sair do jogo|Jogadores|anfitrião|Seus amigos podem entrar se o link deste jogo for compartilhado com eles (menu Compartilhar) e eles o abrirem.|O anfitrião saiu do jogo|Online agora|no jogo|Abra este jogo no claude.ai para jogar junto|Você está fora! Volta na próxima onda|Tutorial|Ande por aí!|Olhe em volta!|Pule duas vezes!|Uma bomba está caindo! Quando ela cair, ande até ela para pegá-la.|Rápido! Corra até o Treinador para passar a bomba antes que o tempo acabe.|Pegue esta bomba e arremesse bem longe!|Olhe o Treinador: se o tempo acabar enquanto você segura uma bomba, seu rosto fica preto e você está FORA!|Pegue a moeda e o escudo!|Você está pronto! Sobreviva a todas as ondas para vencer. Boa sorte!|Pular tutorial|Entendi!|Vamos jogar!|Use o joystick|Arraste com o mouse|Arraste no lado direito da tela|Aperte Pular|Aperte Arremessar|Aperte E|Treinador|Carregando...|Nome de usuário|Crie um pra mim!|Digite o seu ou deixe o jogo criar um|Salvo!|Melhorias de vida|Vida máxima|Melhorar|No máximo!|Lança-foguetes|Recarga|Teleguiado|Usando|Atirar|Lança-foguetes pronto!"],
-  hi: ['हिन्दी', "शुरू करो|लेवल|...और जल्द आएँगे|आवाज़|कंपन|भाषाएँ|मोड|अकेले खेलो|मल्टीप्लेयर|जल्द आ रहा है|देखो सर्वर में कौन है|दोस्त जोड़ो|दोस्त बनाओ|सेटिंग्स|दुकान|बाहर निकलो|लहर|लेवल|पकड़ो|फेंको|कूदो|रुका हुआ|जारी रखो|मेनू|तुम उड़ गए!|फिर से कोशिश करो|लेवल पूरा!|अगला लेवल|लहर पूरी!|बॉस बम!|बाय! जल्दी वापस आना!|फिर से खेलो|दोस्त का नाम|जोड़ो|खरीदो|पहनो|पहना है|टोपियाँ|शर्ट|बाल|तुम्हारे साथ|तुम|ढाल|तेज़ी|डबल जंप|इलाज|छपाक!|तैयार हो जाओ!|बंद करो|WASD चलो · Space कूदो · Shift दौड़ो · खींचकर देखो · E फेंको|खड़े दोस्त|चालू|बंद|पकड़ने के लिए E दबाओ!|दोस्त|आगे दो!|नक्शे|बहुत गरम!|सर्र्र!|गेम बनाओ|जुड़ो|गेम कोड|तुम्हारा नाम|होस्ट के शुरू करने का इंतज़ार...|गेम छोड़ो|खिलाड़ी|होस्ट|दोस्त तब जुड़ सकते हैं जब इस गेम का लिंक उनके साथ शेयर हो (Share मेनू) और वे उसे खोलें।|होस्ट गेम छोड़ गया|अभी ऑनलाइन|गेम में|साथ खेलने के लिए यह गेम claude.ai पर खोलो|तुम आउट हो! अगली लहर में वापस|ट्यूटोरियल|घूमो!|चारों ओर देखो!|दो बार कूदो!|बम गिर रहा है! जब वह ज़मीन पर गिरे, उसे पकड़ने के लिए उसके पास चलो।|जल्दी! टाइमर खत्म होने से पहले कोच के पास दौड़कर बम दे दो।|यह बम पकड़ो, फिर उसे दूर फेंको!|कोच को देखो: अगर बम पकड़े हुए टाइमर खत्म हो गया, तो तुम्हारा चेहरा काला हो जाएगा और तुम आउट!|सिक्का और ढाल पकड़ो!|तुम तैयार हो! जीतने के लिए सारी लहरों से बचो। शुभकामनाएँ!|ट्यूटोरियल छोड़ो|समझ गया!|चलो खेलें!|जॉयस्टिक इस्तेमाल करो|माउस से खींचो|स्क्रीन के दाईं ओर खींचो|कूदो दबाओ|फेंको दबाओ|E दबाओ|कोच|लोड हो रहा है...|यूज़रनेम|मेरे लिए एक बनाओ!|अपना खुद लिखो या गेम से एक बनवाओ|सेव हो गया!|हेल्थ अपग्रेड|अधिकतम हेल्थ|अपग्रेड करो|पूरा अपग्रेड!|रॉकेट लॉन्चर|रीलोड|निशाना ढूँढने वाला|इस्तेमाल में|फायर|रॉकेट तैयार!"],
-  zh: ['中文', "开始|关卡|……更多即将推出|音量|振动|语言|模式|单人游戏|多人游戏|即将推出|看看谁在服务器里|添加好友|创建好友|设置|商店|退出|波次|关卡|抓起|扔出|跳|已暂停|继续|菜单|你被炸飞了！|再试一次|过关！|下一关|这波完成！|炸弹老大！|再见！快回来！|再玩一次|好友名字|添加|购买|穿上|已穿上|帽子|衣服|头发|和你一起|你|护盾|加速|二段跳|治疗|扑通！|准备好！|关闭|WASD 移动 · 空格 跳 · Shift 跑 · 拖动看 · E 扔|还站着的朋友|开|关|按 E 抓起！|好友|快传出去！|地图|好烫！|嗖！|创建游戏|加入|游戏代码|你的名字|等待房主开始……|离开游戏|玩家|房主|把这个游戏的链接分享给朋友（分享菜单），他们打开后就能加入。|房主离开了游戏|现在在线|游戏中|在 claude.ai 上打开这个游戏才能一起玩|你出局了！下一波回来|教程|走一走！|看看四周！|跳两次！|有炸弹掉下来了！落地后走过去就能抓起它。|快！在倒计时结束前跑到教练身边把炸弹传给他。|抓起这个炸弹，然后把它扔远！|看教练：如果你拿着炸弹时倒计时结束，你的脸会变黑，你就出局了！|拿到金币和护盾！|你准备好了！撑过所有波次就能赢。祝你好运！|跳过教程|知道了！|开始玩！|用摇杆|用鼠标拖动|在屏幕右侧拖动|按「跳」|按「扔出」|按 E|教练|加载中……|用户名|帮我起一个！|自己输入，或者让游戏帮你起一个|已保存！|生命升级|最大生命|升级|已满级！|火箭筒|装填|追踪|使用中|发射|火箭筒就绪！"],
-  ja: ['日本語', "スタート|レベル|……もうすぐ追加|音量|振動|言語|モード|ひとりで遊ぶ|マルチプレイ|近日公開|サーバーにいる人を見る|フレンド追加|フレンドを作る|設定|ショップ|終了|ウェーブ|レベル|つかむ|投げる|ジャンプ|一時停止|つづける|メニュー|ふっとばされた！|もう一回|レベルクリア！|次のレベル|ウェーブクリア！|ボスばくだん！|バイバイ！またね！|もう一回遊ぶ|フレンドの名前|追加|買う|着る|着ている|ぼうし|シャツ|かみ|いっしょ|きみ|シールド|スピード|二段ジャンプ|回復|ザブン！|じゅんびして！|閉じる|WASD 移動 · スペース ジャンプ · Shift 走る · ドラッグで見る · E 投げる|残っているフレンド|オン|オフ|E でつかもう！|フレンド|わたして！|マップ|あつい！|ヒューン！|ゲームを作る|参加|ゲームコード|きみの名前|ホストのスタートを待っています……|ゲームをぬける|プレイヤー|ホスト|このゲームのリンクを友だちと共有（共有メニュー）して開いてもらうと参加できます。|ホストがゲームをぬけました|オンライン中|ゲーム中|いっしょに遊ぶには claude.ai でこのゲームを開いてね|アウト！次のウェーブで復活|チュートリアル|歩いてみよう！|まわりを見てみよう！|2回ジャンプしよう！|ばくだんが落ちてくる！着地したら歩いて近づくとつかめるよ。|急いで！タイマーが終わる前にコーチにさわってばくだんをわたそう。|このばくだんをつかんで、遠くに投げよう！|コーチを見て：ばくだんを持ったままタイマーが終わると、顔がまっ黒になってアウト！|コインとシールドをとろう！|じゅんびOK！全部のウェーブを生きのこれば勝ち。がんばって！|チュートリアルをとばす|わかった！|遊ぼう！|ジョイスティックを使おう|マウスでドラッグ|画面の右側をドラッグ|ジャンプをおす|投げるをおす|E をおす|コーチ|よみこみ中……|ユーザー名|作って！|自分で書くか、ゲームに作ってもらおう|保存したよ！|ライフアップグレード|さいだいライフ|アップグレード|MAXだよ！|ロケットランチャー|リロード|ホーミング|そうび中|発射|ロケット準備OK！"]
+  en: ['English', "Start|Levels|...and more soon|Volume|Vibration|Languages|Mode|Single player|Multiplayer|coming soon|Check who's in the server|Add friends|Make a friend|Settings|Shop|Exit|Wave|Level|Grab|Throw|Jump|Paused|Resume|Menu|You got blown up!|Try again|Level complete!|Next level|Wave complete!|BOSS BOMB!|Bye! Come back soon!|Play again|Friend's name|Add|Buy|Wear|Wearing|Hats|Shirts|Hair|with you|You|Shield|Speed|Double jump|Heal|Splash!|Get ready!|Close|WASD move · Space jump · Shift run · drag to look · E throw|Friends still standing|On|Off|Press E to grab!|Friends|Pass it!|Maps|Too hot!|Whoosh!|Create game|Join|Game code|Your name|Waiting for the host to start...|Leave game|Players|host|Friends can join when this game's link is shared with them (Share menu) and they open it.|The host left the game|Online now|in game|Open this game on claude.ai to play together|You're out! Back next wave|Tutorial|Walk around!|Look around!|Jump two times!|A bomb is falling! When it lands, walk into it to grab it.|Quick! Run into Coach to pass the bomb before the timer runs out.|Grab this bomb, then throw it far away!|Watch Coach: if the timer runs out while you hold a bomb, your face goes black and you're OUT!|Grab the coin and the shield!|You're ready! Survive all the waves to win. Good luck!|Skip tutorial|Got it!|Let's play!|Use the joystick|Drag with the mouse|Drag on the right side of the screen|Press Jump|Press Throw|Press E|Coach|Loading...|Username|Make me one!|Type your own or let the game make one|Saved!|Health upgrades|Max health|Upgrade|Fully upgraded!|RPGs|Reload|Homing|Using|Fire|RPG ready!|XP|XP level|LEVEL UP!"],
+  es: ['Español', "Jugar|Niveles|...y más pronto|Volumen|Vibración|Idiomas|Modo|Un jugador|Multijugador|muy pronto|Ver quién está en el servidor|Añadir amigos|Crear un amigo|Ajustes|Tienda|Salir|Oleada|Nivel|Agarrar|Lanzar|Saltar|Pausa|Seguir|Menú|¡Te explotaron!|Otra vez|¡Nivel completado!|Siguiente nivel|¡Oleada superada!|¡BOMBA JEFE!|¡Adiós! ¡Vuelve pronto!|Jugar otra vez|Nombre del amigo|Añadir|Comprar|Poner|Puesto|Gorros|Camisetas|Pelo|contigo|Tú|Escudo|Velocidad|Doble salto|Curar|¡Splash!|¡Prepárate!|Cerrar|WASD mover · Espacio saltar · Shift correr · arrastra para mirar · E lanzar|Amigos en pie|Sí|No|¡Pulsa E para agarrar!|Amigos|¡Pásala!|Mapas|¡Quema!|¡Fiuuu!|Crear partida|Unirse|Código de partida|Tu nombre|Esperando a que el anfitrión empiece...|Salir de la partida|Jugadores|anfitrión|Tus amigos pueden unirse si compartes el enlace de este juego con ellos (menú Compartir) y lo abren.|El anfitrión salió de la partida|En línea ahora|en partida|Abre este juego en claude.ai para jugar juntos|¡Estás fuera! Vuelves en la próxima oleada|Tutorial|¡Camina!|¡Mira alrededor!|¡Salta dos veces!|¡Cae una bomba! Cuando aterrice, camina hacia ella para agarrarla.|¡Rápido! Corre hacia el Entrenador para pasarle la bomba antes de que se acabe el tiempo.|¡Agarra esta bomba y lánzala lejos!|Mira al Entrenador: si el tiempo se acaba mientras tienes una bomba, ¡tu cara se pone negra y quedas FUERA!|¡Agarra la moneda y el escudo!|¡Estás listo! Sobrevive a todas las oleadas para ganar. ¡Suerte!|Saltar tutorial|¡Entendido!|¡A jugar!|Usa el joystick|Arrastra con el ratón|Arrastra en el lado derecho de la pantalla|Pulsa Saltar|Pulsa Lanzar|Pulsa E|Entrenador|Cargando...|Nombre de usuario|¡Hazme uno!|Escribe el tuyo o deja que el juego invente uno|¡Guardado!|Mejoras de vida|Vida máxima|Mejorar|¡Al máximo!|Lanzacohetes|Recarga|Teledirigido|Usando|Disparar|¡Lanzacohetes listo!|XP|Nivel de XP|¡SUBES DE NIVEL!"],
+  fr: ['Français', "Jouer|Niveaux|...et bientôt plus|Volume|Vibration|Langues|Mode|Solo|Multijoueur|bientôt|Voir qui est sur le serveur|Ajouter des amis|Créer un ami|Réglages|Boutique|Quitter|Vague|Niveau|Attraper|Lancer|Sauter|Pause|Reprendre|Menu|Tu as explosé !|Réessayer|Niveau terminé !|Niveau suivant|Vague terminée !|BOMBE BOSS !|Au revoir ! À bientôt !|Rejouer|Nom de l'ami|Ajouter|Acheter|Porter|Porté|Chapeaux|T-shirts|Cheveux|avec toi|Toi|Bouclier|Vitesse|Double saut|Soin|Plouf !|Prépare-toi !|Fermer|WASD bouger · Espace sauter · Shift courir · glisser pour regarder · E lancer|Amis encore debout|Oui|Non|Appuie sur E pour attraper !|Amis|Passe-la !|Cartes|Ça brûle !|Wouuuh !|Créer une partie|Rejoindre|Code de partie|Ton nom|On attend que l'hôte lance la partie...|Quitter la partie|Joueurs|hôte|Tes amis peuvent rejoindre si le lien du jeu est partagé avec eux (menu Partager) et qu'ils l'ouvrent.|L'hôte a quitté la partie|En ligne|en partie|Ouvre ce jeu sur claude.ai pour jouer ensemble|Tu es éliminé ! Retour à la prochaine vague|Tutoriel|Marche un peu !|Regarde autour de toi !|Saute deux fois !|Une bombe tombe ! Quand elle atterrit, marche dessus pour l'attraper.|Vite ! Cours vers le Coach pour lui passer la bombe avant la fin du compte à rebours.|Attrape cette bombe, puis lance-la loin !|Regarde le Coach : si le temps est écoulé pendant que tu tiens une bombe, ton visage devient noir et tu es ÉLIMINÉ !|Attrape la pièce et le bouclier !|Tu es prêt ! Survis à toutes les vagues pour gagner. Bonne chance !|Passer le tutoriel|Compris !|On joue !|Utilise le joystick|Fais glisser avec la souris|Fais glisser sur le côté droit de l'écran|Appuie sur Sauter|Appuie sur Lancer|Appuie sur E|Coach|Chargement...|Pseudo|Invente-m'en un !|Écris le tien ou laisse le jeu en inventer un|Enregistré !|Améliorations de vie|Vie max|Améliorer|Au maximum !|Lance-roquettes|Recharge|Tête chercheuse|Équipé|Tirer|Lance-roquettes prêt !|XP|Niveau XP|NIVEAU SUPÉRIEUR !"],
+  de: ['Deutsch', "Start|Level|...und bald mehr|Lautstärke|Vibration|Sprachen|Modus|Einzelspieler|Mehrspieler|bald|Wer ist auf dem Server?|Freunde hinzufügen|Freund erstellen|Einstellungen|Shop|Beenden|Welle|Level|Greifen|Werfen|Springen|Pause|Weiter|Menü|Du wurdest weggesprengt!|Nochmal|Level geschafft!|Nächstes Level|Welle geschafft!|BOSS-BOMBE!|Tschüss! Bis bald!|Nochmal spielen|Name des Freundes|Hinzufügen|Kaufen|Anziehen|Angezogen|Hüte|Shirts|Haare|bei dir|Du|Schild|Tempo|Doppelsprung|Heilen|Platsch!|Mach dich bereit!|Schließen|WASD laufen · Leertaste springen · Shift rennen · ziehen zum Umsehen · E werfen|Freunde noch dabei|An|Aus|Drück E zum Greifen!|Freunde|Gib sie weiter!|Karten|Zu heiß!|Wuuusch!|Spiel erstellen|Beitreten|Spielcode|Dein Name|Warte, bis der Host startet...|Spiel verlassen|Spieler|Host|Freunde können mitspielen, wenn der Link zu diesem Spiel mit ihnen geteilt wird (Teilen-Menü) und sie ihn öffnen.|Der Host hat das Spiel verlassen|Gerade online|im Spiel|Öffne dieses Spiel auf claude.ai, um zusammen zu spielen|Du bist raus! Nächste Welle bist du zurück|Tutorial|Lauf herum!|Schau dich um!|Spring zweimal!|Eine Bombe fällt! Wenn sie landet, lauf hin, um sie zu greifen.|Schnell! Lauf zum Trainer und gib ihm die Bombe, bevor die Zeit abläuft.|Greif diese Bombe und wirf sie weit weg!|Schau zum Trainer: Wenn die Zeit abläuft, während du eine Bombe hältst, wird dein Gesicht schwarz und du bist RAUS!|Schnapp dir die Münze und das Schild!|Du bist bereit! Überlebe alle Wellen, um zu gewinnen. Viel Glück!|Tutorial überspringen|Verstanden!|Los geht's!|Benutze den Joystick|Mit der Maus ziehen|Auf der rechten Bildschirmseite ziehen|Drück Springen|Drück Werfen|Drück E|Trainer|Lädt...|Benutzername|Mach mir einen!|Schreib deinen eigenen oder lass das Spiel einen erfinden|Gespeichert!|Lebens-Upgrades|Max. Leben|Verbessern|Voll aufgerüstet!|Raketenwerfer|Nachladen|Zielsuchend|Ausgerüstet|Feuer|Raketenwerfer bereit!|XP|XP-Stufe|STUFE AUFGESTIEGEN!"],
+  pt: ['Português', "Jogar|Níveis|...e mais em breve|Volume|Vibração|Idiomas|Modo|Um jogador|Multijogador|em breve|Ver quem está no servidor|Adicionar amigos|Criar um amigo|Configurações|Loja|Sair|Onda|Nível|Pegar|Arremessar|Pular|Pausado|Continuar|Menu|Você explodiu!|Tentar de novo|Nível completo!|Próximo nível|Onda completa!|BOMBA CHEFE!|Tchau! Volte logo!|Jogar de novo|Nome do amigo|Adicionar|Comprar|Usar|Usando|Chapéus|Camisetas|Cabelo|com você|Você|Escudo|Velocidade|Pulo duplo|Curar|Splash!|Prepare-se!|Fechar|WASD mover · Espaço pular · Shift correr · arraste para olhar · E arremessar|Amigos de pé|Sim|Não|Aperte E para pegar!|Amigos|Passa ela!|Mapas|Muito quente!|Fiuuu!|Criar jogo|Entrar|Código do jogo|Seu nome|Esperando o anfitrião começar...|Sair do jogo|Jogadores|anfitrião|Seus amigos podem entrar se o link deste jogo for compartilhado com eles (menu Compartilhar) e eles o abrirem.|O anfitrião saiu do jogo|Online agora|no jogo|Abra este jogo no claude.ai para jogar junto|Você está fora! Volta na próxima onda|Tutorial|Ande por aí!|Olhe em volta!|Pule duas vezes!|Uma bomba está caindo! Quando ela cair, ande até ela para pegá-la.|Rápido! Corra até o Treinador para passar a bomba antes que o tempo acabe.|Pegue esta bomba e arremesse bem longe!|Olhe o Treinador: se o tempo acabar enquanto você segura uma bomba, seu rosto fica preto e você está FORA!|Pegue a moeda e o escudo!|Você está pronto! Sobreviva a todas as ondas para vencer. Boa sorte!|Pular tutorial|Entendi!|Vamos jogar!|Use o joystick|Arraste com o mouse|Arraste no lado direito da tela|Aperte Pular|Aperte Arremessar|Aperte E|Treinador|Carregando...|Nome de usuário|Crie um pra mim!|Digite o seu ou deixe o jogo criar um|Salvo!|Melhorias de vida|Vida máxima|Melhorar|No máximo!|Lança-foguetes|Recarga|Teleguiado|Usando|Atirar|Lança-foguetes pronto!|XP|Nível de XP|SUBIU DE NÍVEL!"],
+  hi: ['हिन्दी', "शुरू करो|लेवल|...और जल्द आएँगे|आवाज़|कंपन|भाषाएँ|मोड|अकेले खेलो|मल्टीप्लेयर|जल्द आ रहा है|देखो सर्वर में कौन है|दोस्त जोड़ो|दोस्त बनाओ|सेटिंग्स|दुकान|बाहर निकलो|लहर|लेवल|पकड़ो|फेंको|कूदो|रुका हुआ|जारी रखो|मेनू|तुम उड़ गए!|फिर से कोशिश करो|लेवल पूरा!|अगला लेवल|लहर पूरी!|बॉस बम!|बाय! जल्दी वापस आना!|फिर से खेलो|दोस्त का नाम|जोड़ो|खरीदो|पहनो|पहना है|टोपियाँ|शर्ट|बाल|तुम्हारे साथ|तुम|ढाल|तेज़ी|डबल जंप|इलाज|छपाक!|तैयार हो जाओ!|बंद करो|WASD चलो · Space कूदो · Shift दौड़ो · खींचकर देखो · E फेंको|खड़े दोस्त|चालू|बंद|पकड़ने के लिए E दबाओ!|दोस्त|आगे दो!|नक्शे|बहुत गरम!|सर्र्र!|गेम बनाओ|जुड़ो|गेम कोड|तुम्हारा नाम|होस्ट के शुरू करने का इंतज़ार...|गेम छोड़ो|खिलाड़ी|होस्ट|दोस्त तब जुड़ सकते हैं जब इस गेम का लिंक उनके साथ शेयर हो (Share मेनू) और वे उसे खोलें।|होस्ट गेम छोड़ गया|अभी ऑनलाइन|गेम में|साथ खेलने के लिए यह गेम claude.ai पर खोलो|तुम आउट हो! अगली लहर में वापस|ट्यूटोरियल|घूमो!|चारों ओर देखो!|दो बार कूदो!|बम गिर रहा है! जब वह ज़मीन पर गिरे, उसे पकड़ने के लिए उसके पास चलो।|जल्दी! टाइमर खत्म होने से पहले कोच के पास दौड़कर बम दे दो।|यह बम पकड़ो, फिर उसे दूर फेंको!|कोच को देखो: अगर बम पकड़े हुए टाइमर खत्म हो गया, तो तुम्हारा चेहरा काला हो जाएगा और तुम आउट!|सिक्का और ढाल पकड़ो!|तुम तैयार हो! जीतने के लिए सारी लहरों से बचो। शुभकामनाएँ!|ट्यूटोरियल छोड़ो|समझ गया!|चलो खेलें!|जॉयस्टिक इस्तेमाल करो|माउस से खींचो|स्क्रीन के दाईं ओर खींचो|कूदो दबाओ|फेंको दबाओ|E दबाओ|कोच|लोड हो रहा है...|यूज़रनेम|मेरे लिए एक बनाओ!|अपना खुद लिखो या गेम से एक बनवाओ|सेव हो गया!|हेल्थ अपग्रेड|अधिकतम हेल्थ|अपग्रेड करो|पूरा अपग्रेड!|रॉकेट लॉन्चर|रीलोड|निशाना ढूँढने वाला|इस्तेमाल में|फायर|रॉकेट तैयार!|XP|XP लेवल|लेवल अप!"],
+  zh: ['中文', "开始|关卡|……更多即将推出|音量|振动|语言|模式|单人游戏|多人游戏|即将推出|看看谁在服务器里|添加好友|创建好友|设置|商店|退出|波次|关卡|抓起|扔出|跳|已暂停|继续|菜单|你被炸飞了！|再试一次|过关！|下一关|这波完成！|炸弹老大！|再见！快回来！|再玩一次|好友名字|添加|购买|穿上|已穿上|帽子|衣服|头发|和你一起|你|护盾|加速|二段跳|治疗|扑通！|准备好！|关闭|WASD 移动 · 空格 跳 · Shift 跑 · 拖动看 · E 扔|还站着的朋友|开|关|按 E 抓起！|好友|快传出去！|地图|好烫！|嗖！|创建游戏|加入|游戏代码|你的名字|等待房主开始……|离开游戏|玩家|房主|把这个游戏的链接分享给朋友（分享菜单），他们打开后就能加入。|房主离开了游戏|现在在线|游戏中|在 claude.ai 上打开这个游戏才能一起玩|你出局了！下一波回来|教程|走一走！|看看四周！|跳两次！|有炸弹掉下来了！落地后走过去就能抓起它。|快！在倒计时结束前跑到教练身边把炸弹传给他。|抓起这个炸弹，然后把它扔远！|看教练：如果你拿着炸弹时倒计时结束，你的脸会变黑，你就出局了！|拿到金币和护盾！|你准备好了！撑过所有波次就能赢。祝你好运！|跳过教程|知道了！|开始玩！|用摇杆|用鼠标拖动|在屏幕右侧拖动|按「跳」|按「扔出」|按 E|教练|加载中……|用户名|帮我起一个！|自己输入，或者让游戏帮你起一个|已保存！|生命升级|最大生命|升级|已满级！|火箭筒|装填|追踪|使用中|发射|火箭筒就绪！|经验|经验等级|升级啦！"],
+  ja: ['日本語', "スタート|レベル|……もうすぐ追加|音量|振動|言語|モード|ひとりで遊ぶ|マルチプレイ|近日公開|サーバーにいる人を見る|フレンド追加|フレンドを作る|設定|ショップ|終了|ウェーブ|レベル|つかむ|投げる|ジャンプ|一時停止|つづける|メニュー|ふっとばされた！|もう一回|レベルクリア！|次のレベル|ウェーブクリア！|ボスばくだん！|バイバイ！またね！|もう一回遊ぶ|フレンドの名前|追加|買う|着る|着ている|ぼうし|シャツ|かみ|いっしょ|きみ|シールド|スピード|二段ジャンプ|回復|ザブン！|じゅんびして！|閉じる|WASD 移動 · スペース ジャンプ · Shift 走る · ドラッグで見る · E 投げる|残っているフレンド|オン|オフ|E でつかもう！|フレンド|わたして！|マップ|あつい！|ヒューン！|ゲームを作る|参加|ゲームコード|きみの名前|ホストのスタートを待っています……|ゲームをぬける|プレイヤー|ホスト|このゲームのリンクを友だちと共有（共有メニュー）して開いてもらうと参加できます。|ホストがゲームをぬけました|オンライン中|ゲーム中|いっしょに遊ぶには claude.ai でこのゲームを開いてね|アウト！次のウェーブで復活|チュートリアル|歩いてみよう！|まわりを見てみよう！|2回ジャンプしよう！|ばくだんが落ちてくる！着地したら歩いて近づくとつかめるよ。|急いで！タイマーが終わる前にコーチにさわってばくだんをわたそう。|このばくだんをつかんで、遠くに投げよう！|コーチを見て：ばくだんを持ったままタイマーが終わると、顔がまっ黒になってアウト！|コインとシールドをとろう！|じゅんびOK！全部のウェーブを生きのこれば勝ち。がんばって！|チュートリアルをとばす|わかった！|遊ぼう！|ジョイスティックを使おう|マウスでドラッグ|画面の右側をドラッグ|ジャンプをおす|投げるをおす|E をおす|コーチ|よみこみ中……|ユーザー名|作って！|自分で書くか、ゲームに作ってもらおう|保存したよ！|ライフアップグレード|さいだいライフ|アップグレード|MAXだよ！|ロケットランチャー|リロード|ホーミング|そうび中|発射|ロケット準備OK！|XP|XPレベル|レベルアップ！"]
 };
 const DICT = {};
 for (const k in LANGS) { const parts = LANGS[k][1].split('|'); DICT[k] = {}; KEYS.forEach((key, i) => DICT[k][key] = parts[i] || DICT.en?.[key] || key); }
@@ -1092,7 +1102,7 @@ function explodeBomb(b) {
   }
   if (p.y < 3 && !G.tut) damageTiles(p.x, p.z, s.tiles);
   for (const o of bombs) if ((o.state === 'fuse') && o.pos.distanceTo(p) < s.blast * 0.75) o.fuse = Math.min(o.fuse, 0.15);
-  if (by) { const th = b.thrower; if (th === player) { if (player.pos.distanceTo(p) > 5) addCoins(1, true); } else giveCoins(th, 1); }
+  if (by) { const th = b.thrower; if (th === player) { if (player.pos.distanceTo(p) > 5) { addCoins(1, true); addXp(2); } } else giveCoins(th, 1); }
 }
 function playerAction() {
   const p = player; if (!p || !p.alive || G.phase === 'done' || G.paused || !p.holding) return;
@@ -1150,7 +1160,7 @@ function passBomb(from, to) {
   b.fuse = Math.max(b.fuse, 2); from.passCD = 1.0; to.passCD = 0.6;
   tone(880, 0.08, 'square', 0.07, 1320);
   if (to.isPlayer) { showMsg(t('passIt'), 1.2); vibrate(60); }
-  giveCoins(from, 1, true);
+  giveCoins(from, 1, true); if (from === player) addXp(5);
   if (G.tut && to.coach) G.tut.passed = true;
 }
 function updateHotPotato(dt) {
@@ -1222,13 +1232,13 @@ function hitBoss(b) {
 function damageBoss(p, th) {
   if (!boss) return;
   explosionFx(p, 3); netEx(p, 9);
-  boss.hp--; boss.flash = 0.35; sfx.bossHit(); vibrate(60); if (th === player) addCoins(3, true); else giveCoins(th, 3);
+  boss.hp--; boss.flash = 0.35; sfx.bossHit(); vibrate(60); if (th === player) { addCoins(3, true); addXp(15); } else giveCoins(th, 3);
   shake = Math.max(shake, REDUCED ? 0 : 0.6);
   if (boss.hp <= 0) {
     const bp = boss.pos.clone(); scene.remove(boss.group); boss.bodyMat.dispose(); boss = null; $('#bossBar').hidden = true;
     for (let k = 0; k < 5; k++) setTimeout(() => explosionFx(bp.clone().add(new V3(rand(-3, 3), rand(-2, 2), rand(-3, 3))), 5), k * 140);
     for (const ob of bombs.slice()) if (ob.state === 'falling' || (ob.state === 'thrown' && !ob.byPlayer)) removeBomb(ob);
-    addCoins(30, true); showMsg('+30', 1.4); for (const c of chars) if (c.remote && c.human) giveCoins(c, 30);
+    addCoins(30, true); addXp(100); showMsg('+30', 1.4); for (const c of chars) if (c.remote && c.human) giveCoins(c, 30);
   }
 }
 
@@ -1259,13 +1269,13 @@ function updatePickups(dt, visualOnly) {
     const taker = visualOnly ? null : chars.find(c => c.human && c.alive && Math.hypot(c.pos.x - o.position.x, c.pos.z - o.position.z) < 1.5 && Math.abs(c.pos.y + 1 - o.position.y) < 2.2);
     if (taker) {
       scene.remove(o); pickups.splice(i, 1);
-      if (p.kind === 'coin') { giveCoins(taker, 1); if (taker === player) sfx.coin(); particle(fxMats.gold, o.position, new V3(0, 6, 0), 0.3, 0.4); }
+      if (p.kind === 'coin') { giveCoins(taker, 1); if (taker === player) { sfx.coin(); addXp(1); } particle(fxMats.gold, o.position, new V3(0, 6, 0), 0.3, 0.4); }
       else applyPower(p.type, taker);
     }
   }
 }
 function applyPower(type, c) {
-  c = c || player; const me = c === player; if (me) sfx.power();
+  c = c || player; const me = c === player; if (me) { sfx.power(); addXp(5); }
   if (type === 'heal') { c.hp = Math.min(c.maxHp, c.hp + 35); if (me) showMsg('+35 ' + t('heal'), 1.2); return; }
   const dur = { shield: 8, speed: 10, dbl: 15 }[type]; c.power[type] = dur;
   if (me) showMsg(t(type) + '!', 1.2);
@@ -1480,7 +1490,7 @@ function spawnWaveBomb() {
 function waveDone() {
   if (G.wave >= G.waves) { levelComplete(); return; }
   G.phase = 'break'; G.phaseT = 4.5;
-  addCoins(5, true); sfx.wave(); showMsg(t('waveDone') + '<small>+5</small>', 2, true);
+  addCoins(5, true); if (player && player.alive) addXp(20); sfx.wave(); showMsg(t('waveDone') + '<small>+5</small>', 2, true);
   rebuildTiles();
   for (const c of chars) {
     if (c.alive) { if (c.human) c.hp = Math.min(c.maxHp, c.hp + 20); }
@@ -1490,7 +1500,7 @@ function waveDone() {
   for (let i = 0; i < 5; i++) spawnPickup('coin');
 }
 function levelComplete() {
-  G.phase = 'done'; G.res = 1; addCoins(20, true); sfx.win(); vibrate([60, 60, 60]);
+  G.phase = 'done'; G.res = 1; addCoins(20, true); addXp(50 + Math.min(G.level, 100)); sfx.win(); vibrate([60, 60, 60]);
   save.unlocked = Math.min(MAX_LEVEL, Math.max(save.unlocked, G.level + 1)); save.sel = Math.min(G.level + 1, MAX_LEVEL); persist();
   showMsg(t('levelDone'), 2.2);
   const standing = chars.filter(c => !c.isPlayer && c.alive).length, total = chars.length - 1;
@@ -1498,7 +1508,7 @@ function levelComplete() {
 }
 function gameOver() {
   if (G.phase === 'done') return;
-  G.phase = 'done'; G.res = 0; sfx.lose(); vibrate(300); persist();
+  G.phase = 'done'; G.res = 0; addXp(10); sfx.lose(); vibrate(300); persist();
   showMsg(t('gameOver'), 2.2);
   setTimeout(() => showResult(false), 1900);
 }
@@ -1548,6 +1558,7 @@ function updateHUD(dt) {
   setText($('#hLevel'), G.tut ? t('tutorial') : `${t('level')} ${G.level} · ${t('wave')} ${Math.max(1, G.wave)}/${G.waves}`);
   const hp = Math.ceil(player.hp), mx = player.maxHp || 100, pct = 100 * hp / mx; $('#hpFill').style.width = pct + '%'; setText($('#hpText'), hp + ' / ' + mx); $('#hp').classList.toggle('low', pct < 35);
   setText($('#hCoins'), String(save.coins));
+  drawXp('');
   let chips = '';
   for (const k of ['shield', 'speed', 'dbl']) if (player.power[k] > 0) chips += `<span class="chip ${k}">${t(k)} ${Math.ceil(player.power[k])}</span>`;
   const ch = $('#chips'); if (ch._v !== chips) { ch._v = chips; ch.innerHTML = chips; }
@@ -1697,7 +1708,7 @@ function applySnap(s) {
   const w = num(s.w);
   if (w > G.wave) showMsg(s.bo ? t('boss') : t('wave') + ' ' + w, 1.4);
   G.wave = w;
-  if (s.ph === 'break' && G.phase !== 'break') { showMsg(t('waveDone') + '<small>+5</small>', 2, true); sfx.wave(); addCoins(5, true); }
+  if (s.ph === 'break' && G.phase !== 'break') { showMsg(t('waveDone') + '<small>+5</small>', 2, true); sfx.wave(); addCoins(5, true); if (player && player.alive) addXp(20); }
   G.phase = String(s.ph);
   if (s.rb !== NET.rbSeen) { if (NET.rbSeen !== -1) rebuildTiles(); NET.rbSeen = s.rb; }
   const ex = Array.isArray(s.ex) ? s.ex.filter(Array.isArray) : [];
@@ -1743,7 +1754,7 @@ function applyOwn(e) {
   if ((fl & 1) && !p.alive) { p.alive = true; p.koT = 0; p.group.visible = true; p.pos.copy(respawnSpot()); p.vel.set(0, 0, 0); if (p.soot > 0) cleanFace(p); }
   const pw = { shield: num(e[9]) / 10, speed: num(e[10]) / 10, dbl: num(e[11]) / 10 };
   for (const k in pw) { if (pw[k] > 0.5 && p.power[k] <= 0.05) { sfx.power(); showMsg(t(k) + '!', 1.2); } p.power[k] = pw[k]; }
-  const co = num(e[12]); if (co > NET.coinsSeen) { addCoins(co - NET.coinsSeen, true); sfx.coin(); NET.coinsSeen = co; }
+  const co = num(e[12]); if (co > NET.coinsSeen) { addCoins(co - NET.coinsSeen, true); addXp((co - NET.coinsSeen) * 2); sfx.coin(); NET.coinsSeen = co; }
 }
 function syncBombs(list) {
   const seen = new Set();
@@ -1836,7 +1847,7 @@ function guestFrame(dt) {
   updateHUD(dt);
 }
 function guestResult(won) {
-  if (won) { addCoins(20, true); sfx.win(); } else sfx.lose();
+  if (won) { addCoins(20, true); addXp(50 + Math.min(G.level, 100)); sfx.win(); } else { addXp(10); sfx.lose(); }
   $('#resTitle').textContent = won ? t('levelDone') : t('gameOver');
   $('#resSub').textContent = `${t('level')} ${G.level} · ${t('mpWait')}`;
   const acts = $('#resActions'); acts.innerHTML = '';
@@ -1902,7 +1913,7 @@ function tutGo(i) {
   const prev = TUT[T_.step]; if (prev && prev.finish && i !== T_.step) prev.finish(T_.s);
   T_.step = i; T_.s = {}; T_.wait = 0;
   const st = TUT[i]; if (st && st.start) st.start(T_.s);
-  if (st && st.final) { save.tutDone = true; persist(); sfx.win(); }
+  if (st && st.final) { save.tutDone = true; persist(); sfx.win(); addXp(50); }
   renderTut();
 }
 function tutEnd() { const from = G.tut ? G.tut.from : 'menu'; save.tutDone = true; persist(); if (from === 'start') startLevel(Math.min(save.sel || 1, MAX_LEVEL)); else toMenu(); }
@@ -2007,7 +2018,7 @@ function popFx(p) { // harmless confetti puff
 }
 function popBomb(b, r) {
   const p = b.pos.clone(); removeBomb(b); popFx(p); netEx(p, 8);
-  if (r.owner === player) addCoins(1, true); else giveCoins(r.owner, 1);
+  if (r.owner === player) { addCoins(1, true); addXp(3); } else giveCoins(r.owner, 1);
   if (r.R.splash) for (const o of bombs.slice()) if (shootable(o) && o.pos.distanceTo(p) < r.R.splash) { const q = o.pos.clone(); removeBomb(o); popFx(q); netEx(q, 8); }
 }
 function clearRockets() { for (const r of rockets) scene.remove(r.mesh); rockets.length = 0; }
@@ -2029,6 +2040,36 @@ function updateRockets(dt) {
     if (!hit && r.pos.y < 0.2 && tileAt(r.pos.x, r.pos.z)) { hit = true; particle(fxMats.smoke, r.pos, new V3(0, 3, 0), 0.5, 0.5, -2); }
     if (hit || r.life <= 0 || r.pos.y < killY) { scene.remove(r.mesh); rockets.splice(i, 1); }
   }
+}
+
+/* =================== XP =================== */
+// XP for doing cool things; fill the bar to level up and get bonus coins.
+const xpNeed = (l) => 100 + (l - 1) * 50;
+let xpPopAt = 0, xpPopSum = 0;
+function addXp(n) {
+  if (!(n > 0)) return;
+  save.xpLvl = Math.max(1, save.xpLvl || 1); save.xp = (save.xp || 0) + n;
+  if (G.mode === 'play') {
+    const now = performance.now(); xpPopSum += n;
+    if (now - xpPopAt > 350) { xpPopAt = now; const el = document.createElement('div'); el.className = 'xppop'; el.textContent = '+' + xpPopSum + ' ' + t('xp'); $('#hud').appendChild(el); setTimeout(() => el.remove(), 1000); xpPopSum = 0; }
+  }
+  while (save.xp >= xpNeed(save.xpLvl)) {
+    save.xp -= xpNeed(save.xpLvl); save.xpLvl++;
+    const reward = 10 * save.xpLvl; addCoins(reward, G.mode === 'play');
+    if (G.mode === 'play') {
+      showMsg(t('levelUp') + '<small>' + esc(t('xpLevel')) + ' ' + save.xpLvl + ' · +' + reward + '</small>', 2.4, true);
+      [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => tone(f, 0.18, 'triangle', 0.13, null, i * 0.08)); vibrate([40, 40, 80]);
+      if (player) for (let k = 0; k < 3; k++) setTimeout(() => player && popFx(player.pos.clone().add(new V3(rand(-1.5, 1.5), 3 + rand(0, 1.5), rand(-1.5, 1.5)))), k * 160);
+    }
+  }
+  persist();
+}
+function drawXp(pre) {
+  const l = Math.max(1, save.xpLvl || 1), x = save.xp || 0, need = xpNeed(l);
+  const lv = $('#' + (pre ? pre + 'XpLvl' : 'xpLvl')); if (!lv) return;
+  setText(lv, String(l)); lv.title = t('xpLevel') + ' ' + l;
+  $('#' + (pre ? pre + 'XpFill' : 'xpFill')).style.width = (100 * x / need) + '%';
+  setText($('#' + (pre ? pre + 'XpText' : 'xpText')), `${x} / ${need} ${t('xp')}`);
 }
 
 /* =================== MAIN LOOP =================== */
@@ -2108,6 +2149,7 @@ function renderMenu() {
   $('#vol').value = save.volume;
   $('#vib').setAttribute('aria-checked', String(save.vibration)); $('#vib').textContent = '';
   $('#menuCoins').textContent = save.coins;
+  drawXp('m');
   $('#menuHp').innerHTML = HEART(true) + ' ' + playerMaxHp();
   updateModeCard(); lobbyPresence();
 }

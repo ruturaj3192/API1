@@ -86,6 +86,13 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
   which spins through funny names (like *TurboPickle42*) made only from kid-friendly bomb-themed words.
 - Your username floats above your character and is what friends see in multiplayer.
 
+## XP
+- Earn XP: pass a bomb +5 · pop a bomb with an RPG +3 · thrown bomb explodes far away +2 · coin +1 · power-up +5 ·
+  survive a wave +20 · hit the boss +15 · beat the boss +100 · beat a level +50 (+1 per level number, up to +100) ·
+  lose a level +10 · finish the tutorial +50.
+- Fill the XP bar to **LEVEL UP** (XP level 1 → 2 needs 100 XP, then 50 more each level) and get 10 × your new XP level in coins.
+- XP bar with your XP level badge under the health bar, and in the Username card in the menu.
+
 ## Characters
 - You and your friends are blocky characters with **bacon hair**.
 - **Third-person camera** behind you.
