@@ -203,6 +203,12 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   4 coaches, a blue engine with 3) go round and round, puffing smoke, whistling "choo-choo" and chuffing when you're nearby.
   Stand on the track or jump on top of a train to ride it ("Train surfing!" + coins on the first ride each level).
   Standing on the track in front of a train gets you bumped off (no damage).
+- **The Mayor of Boomtopia (Mayor Boomsworth):** stands on a little stage with a microphone by the sea, in front of
+  **City Hall** (white columns, a golden dome and a waving flag; you can climb it and stand on its roof). He wears a top hat,
+  a red sash, a gold medal and a mustache. Walk up to him and he talks in a speech bubble ("Welcome, hero!" and your task).
+  Every time you rescue someone he jumps, claps and says "Thank you, hero!".
+- **Mayor's task (one per level, shown in the HUD):** Rescue 4 people · Ride on a car · Ride on a train · Climb to a rooftop
+  (taking turns by level). Finishing it: "The Mayor says: Thank you, hero!", coins, XP, fireworks and the crowd cheers.
 - **The cheering crowd:** people of Boomtopia stand on the sidewalk by the road. Every time you rescue someone (1, 2, 3, 4
   people or a boss's 10), they jump, clap and cheer, with clapping sounds and confetti. More people saved = longer cheering.
 - Textured ground blocks, flowing water/lava/slime with foam, and themed little details on every map
