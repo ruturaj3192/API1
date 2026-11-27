@@ -152,10 +152,16 @@ Menu → **Pet shop**. Buy pets (120 to 10,000 coins), then pick one to bring al
   Boss Slayer, Royal Pain (beat 10 bosses), Wave Rider, Unstoppable (beat 100 levels), Treasure Hunter, Zookeeper (25 pets),
   Sooty Face (10 black faces), Rising Star (XP level 10).
 
-## Bosses (3, taking turns every 5th level)
-- **Bomb King** (levels 5, 20, 35…): the original.
-- **Ice King** (levels 10, 25, 40…): icy blue; his bombs **freeze** you (half speed for 3 s, "Frozen!").
-- **Rocket Queen** (levels 15, 30, 45…): magenta with rocket boosters; throws bombs much faster, often two at once.
+## Bosses (8, taking turns every 5th level)
+- **Bomb King** (levels 5, 45, 85…): the original.
+- **Ice King** (10, 50…): icy blue; his bombs **freeze** you (half speed for 3 s).
+- **Rocket Queen** (15, 55…): magenta with rocket boosters; throws bombs much faster, often two at once.
+- **Lava Lord** (20, 60…): glowing red-hot with a flame crown; throws lots of huge mega bombs.
+- **Ghost Bomb** (25, 65…): see-through; fades away and **teleports**, throws sticky bombs that chase you.
+- **Robo Bomber** (30, 70…): shiny metal with red robot eyes; drops cluster bombs that split into 4.
+- **Thunder Bomb** (35, 75…): purple with a lightning crown; **lightning strikes** — super-fast bombs with a flash of lightning.
+- **Bomb Emperor** (40, 80…): huge, with a gold crown, jewels and belt; uses everyone's attacks and has extra health (up to 21 hits).
+Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
 
 ## Emotes
 - In a game: press **1–4** or the smiley button: **Wave, Dance, Spin, Cheer**. Friends see your emotes in multiplayer;
