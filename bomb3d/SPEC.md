@@ -61,6 +61,13 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Power-ups** on the islands: Shield (no damage), Speed boots, Double jump, Heal.
 - **Coins:** spin on the islands, plus bonuses for each wave and level and for throwing bombs.
 - **Shop:** spend coins on hats and shirt/hair colours.
+- **RPGs** (in the Shop, expensive!): shoot bombs away. Press **F** or right-click (phone: **Fire** button).
+  A rocket flies at the nearest bomb in front of you and pops it harmlessly in confetti (+1 coin); rockets hit the boss too.
+  - Rusty RPG — 500 coins: reload 3 s, aims when fired
+  - Turbo RPG — 1,200: reload 1.8 s, homing
+  - Mega RPG — 2,500: reload 1 s, strong homing, pops every bomb near the one it hits
+  - Golden RPG — 5,000: reload 0.5 s, fires 3 rockets at once, strongest homing
+  You always use your best RPG; it shows on your shoulder and its reload bar is in the HUD.
 - **Health upgrades** (top of the Shop): 8 upgrades of +25 max health each, from 100 up to 300.
   Prices: 30, 60, 100, 150, 220, 300, 400, 500 coins. Hearts show how many you've bought; the health bar shows e.g. 175 / 175.
 
