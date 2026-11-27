@@ -759,7 +759,9 @@ function buildMap(id) {
   scene.add(topMesh); scene.add(baseMesh);
   healTiles.length = 0;
   { const picks = [];
-    const cand = tiles.filter(tl => tl.kind === 'island' && !tl.sand && Math.hypot(tl.x, tl.z) > 9).sort((a, b) => a.h - b.h);
+    // far away from where you start: only the outer part of the map
+    const land = tiles.filter(tl => tl.kind === 'island' && !tl.sand), far = Math.max(0, ...land.map(tl => Math.hypot(tl.x, tl.z)));
+    const cand = land.filter(tl => Math.hypot(tl.x, tl.z) >= far * 0.78).sort((a, b) => a.h - b.h);
     for (const c of cand) { if (picks.length >= 3) break; if (picks.every(p => Math.hypot(p.x - c.x, p.z - c.z) > 14)) picks.push(c); }
     for (const c of picks) {
       for (const tl of tiles) if (Math.hypot(tl.x - c.x, tl.z - c.z) < 2.2 && tl.kind !== 'hub') { tl.heal = true; tl.top = 0x33ffd1; healTiles.push(tl); }

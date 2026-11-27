@@ -33,7 +33,7 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Cloud Kingdom**: cloud islands with golden bridges and little towers. **Floaty jumps.**
 
 ## Healing ground
-- Every map has **3 healing pads**: glowing aqua ground with a light beam and a spinning green **+** above it.
+- Every map has **3 healing pads**, far away near the edges of the map: glowing aqua ground with a light beam and a spinning green **+** above it.
 - Stand on one to heal about **10 health per second** (green sparkles; your health bar glows). Buddies and multiplayer friends heal too.
 - Bombs can break the pads like any ground; they rebuild between waves. "Healing ground!" shows the first time you step on one in a level.
 
