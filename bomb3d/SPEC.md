@@ -142,6 +142,32 @@ Menu → **Pet shop**. Buy pets (120 to 10,000 coins), then pick one to bring al
 - Fill the XP bar to **LEVEL UP** (XP level 1 → 2 needs 100 XP, then 50 more each level) and get 10 × your new XP level in coins.
 - XP bar with your XP level badge under the health bar, and in the Username card in the menu.
 
+## Daily rewards
+- A 7-day calendar pops up once a day (or menu → More fun → Daily reward): 100, 150, 200, 300, 400, 600 coins,
+  then a **mystery gift** on day 7 (a free pet, 1,500 coins or 500 XP). Missing a day starts again at day 1.
+
+## Achievements (17)
+- Menu → More fun → Achievements. Each has a progress bar and pays coins (100–3,000) when unlocked, with a gold
+  "Achievement unlocked!" pop-up. Examples: Hot Hands (pass 10 bombs), Potato Legend (pass 1,000), Rocket Rain (pop 250),
+  Boss Slayer, Royal Pain (beat 10 bosses), Wave Rider, Unstoppable (beat 100 levels), Treasure Hunter, Zookeeper (25 pets),
+  Sooty Face (10 black faces), Rising Star (XP level 10).
+
+## Bosses (3, taking turns every 5th level)
+- **Bomb King** (levels 5, 20, 35…): the original.
+- **Ice King** (levels 10, 25, 40…): icy blue; his bombs **freeze** you (half speed for 3 s, "Frozen!").
+- **Rocket Queen** (levels 15, 30, 45…): magenta with rocket boosters; throws bombs much faster, often two at once.
+
+## Emotes
+- In a game: press **1–4** or the smiley button: **Wave, Dance, Spin, Cheer**. Friends see your emotes in multiplayer;
+  buddies cheer when a wave ends.
+
+## Leaderboard
+- Menu → More fun → Leaderboard: everyone who has the game open right now, ranked by XP level (then levels beaten).
+
+## Music
+- Chiptune music made in code: a menu song, a different song for each of the 20 maps, and a faster boss-fight song.
+  Turn it on/off in Settings → Music (it also follows the Volume slider).
+
 ## Characters
 - You and your friends are blocky characters with **bacon hair**.
 - **Third-person camera** behind you.
