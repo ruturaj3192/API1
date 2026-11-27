@@ -102,7 +102,7 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Coins:** spin on the islands (14 per level, 9 more each wave), plus bonuses for passing, popping and throwing bombs,
   each wave, each level, bosses and XP level-ups. **Every coin reward is worth 4×**, so saving up for the shop is quick.
 - **Shop:** spend coins on hats and shirt/hair colours.
-- **Flying capes** (in the Shop): jump, then **hold Jump** — every cape flies for as long as you hold it (up to the sky limit).
+- **Flying capes** (in the Shop): jump, then **hold Jump** — every cape flies for as long as you hold it, with **no height limit**.
   - Glider Cape — 300: fly, glide down slowly
   - Hero Cape — 1,000: climbs faster, double jump, faster in the air
   - Super Cape — 2,500: climbs faster still, double jump
@@ -204,6 +204,14 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
 - **COMBO**: pass, pop or hit the boss again within 3 seconds for COMBO x2, x3… with bonus coins and XP.
 - **Fireworks** for beating a level, beating a boss and levelling up.
 - Dust puffs when landing or running fast, a sparkly trail when flying with a cape, and a camera that widens when you run or fly.
+
+## Parkour on the buildings
+- The city's skyscrapers are **solid**: land on the roofs, and the walls stop you.
+- **Wall-jump:** touching a wall in the air, press Jump to kick up again. Tap it again and again to climb a building
+  all the way to the roof. Hanging on a wall makes you **slide down slowly**.
+- **Four parkour trails** lead from the islands out over the water to the city: colorful floating blocks (some are pink
+  **trampolines** that launch you high), then zig-zag **ledges** up the wall to the roof. You can jump up through blocks from below.
+- Each new roof you reach in a level: "Rooftop!" with its height, plus coins and XP.
 
 ## Characters
 - You and your friends are blocky characters with **bacon hair**.
