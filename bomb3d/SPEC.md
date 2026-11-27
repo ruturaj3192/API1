@@ -194,6 +194,9 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   blinking lights (lit windows on night maps; far below on floating maps).
 - The city stands **on land, never in the water**: a stone quay around the sea, a ring road with yellow lines,
   sidewalks and street lamps. You can walk on the city land (the skyscrapers and pillars are on it, not in the sea).
+- **Cars on the road:** cars, taxis, buses, a police car with flashing lights and an ice-cream truck drive around the ring
+  road in two lanes going opposite ways, with spinning wheels and headlights. Stand in the road and a car honks and bumps
+  you out of the way (no damage).
 - **The cheering crowd:** people of Boomtopia stand on the sidewalk by the road. Every time you rescue someone (1, 2, 3, 4
   people or a boss's 10), they jump, clap and cheer, with clapping sounds and confetti. More people saved = longer cheering.
 - Textured ground blocks, flowing water/lava/slime with foam, and themed little details on every map

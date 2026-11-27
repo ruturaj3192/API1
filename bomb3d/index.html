@@ -3007,6 +3007,65 @@ function buildCrowd() {
     ch.group.scale.multiplyScalar(1.35); ch.base = ch.group.scale.x; ch.ph = Math.random() * 10; city.add(ch.group); crowd.push(ch);
   }
 }
+// cars driving around the ring road: two lanes going opposite ways. They honk and bump you if you stand in the road!
+const cars = [];
+const wheelGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.3, 12); wheelGeo.rotateZ(PI / 2);
+const glassMat = new THREE.MeshLambertMaterial({ color: 0x9fd8ff }), lightMat = new THREE.MeshBasicMaterial({ color: 0xfff6c8 }), tailMat = new THREE.MeshBasicMaterial({ color: 0xff3040 });
+function buildCar(kind) {
+  const g = new THREE.Group(), wheels = [];
+  const body = { car: [0xe8363d, 0x2f7cf6, 0x26c26b, 0xffffff, 0x7b5cff, 0xff8a1a][(Math.random() * 6) | 0], taxi: 0xffc62a, bus: 0xff5a3c, ice: 0xfff0f6, police: 0xffffff }[kind];
+  const L = kind === 'bus' ? 7 : kind === 'ice' ? 4.6 : 3.8, W = kind === 'bus' ? 2.2 : 1.9, H = kind === 'bus' ? 2.4 : 0.9;
+  g.add(mesh(box(W, H, L), mat(body), 0, 0.45 + H / 2, 0));
+  if (kind === 'bus') {
+    for (let i = 0; i < 4; i++) for (const sx of [-1, 1]) g.add(mesh(box(0.05, 0.8, 1.2), glassMat, sx * (W / 2 + 0.01), 2.1, -2.4 + i * 1.6));
+    g.add(mesh(box(W - 0.3, 0.9, 0.05), glassMat, 0, 2, L / 2 + 0.01));
+  } else if (kind === 'ice') {
+    g.add(mesh(box(W, 1.4, 2.8), mat(0xfff0f6), 0, 2.05, -0.8)); g.add(mesh(box(W + 0.02, 0.3, 2.8), mat(0xff7ab8), 0, 1.6, -0.8));
+    g.add(mesh(box(1.4, 0.7, 0.05), glassMat, 0, 1.6, 1.0)); const cone = new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.9, 8), mat(0xe0a060)); cone.rotation.x = PI; cone.position.set(0, 3.3, -0.8); g.add(cone); g.add(mesh(new THREE.SphereGeometry(0.42, 10, 8), mat(0xff9ccf), 0, 3.85, -0.8));
+  } else {
+    g.add(mesh(box(W - 0.2, 0.75, L * 0.5), mat(body), 0, 0.9 + H / 2 + 0.3, -0.2));
+    g.add(mesh(box(W - 0.15, 0.55, 0.05), glassMat, 0, 1.75, -0.2 + L * 0.25 + 0.01)); for (const sx of [-1, 1]) g.add(mesh(box(0.05, 0.5, L * 0.42), glassMat, sx * (W / 2 - 0.08), 1.75, -0.2));
+    if (kind === 'taxi') { g.add(mesh(box(0.8, 0.3, 0.4), mat(0x26262e), 0, 2.25, -0.2)); g.add(mesh(box(W + 0.02, 0.18, L * 0.9), mat(0x26262e), 0, 0.95, 0)); }
+    if (kind === 'police') { g.add(mesh(box(W + 0.02, 0.35, L * 0.4), mat(0x1b2a6b), 0, 0.95, 0)); const lr = mesh(box(0.35, 0.25, 0.3), new THREE.MeshBasicMaterial({ color: 0xff2030 }), -0.25, 2.27, -0.2), lb = mesh(box(0.35, 0.25, 0.3), new THREE.MeshBasicMaterial({ color: 0x2060ff }), 0.25, 2.27, -0.2); g.add(lr, lb); g.userData.siren = [lr, lb]; }
+  }
+  for (const sx of [-1, 1]) { g.add(mesh(box(0.4, 0.25, 0.05), lightMat, sx * (W / 2 - 0.35), 0.85, L / 2 + 0.01)); g.add(mesh(box(0.4, 0.22, 0.05), tailMat, sx * (W / 2 - 0.35), 0.85, -L / 2 - 0.01)); }
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) { const w = mesh(wheelGeo, mat(0x1f1f24), sx * (W / 2 - 0.1), 0.42, sz * (L / 2 - 0.8)); g.add(w); wheels.push(w); }
+  g.scale.setScalar(1.1);
+  return { group: g, wheels, len: L * 1.1 };
+}
+function buildCars() {
+  if (cars.length) return;
+  const kinds = ['car', 'car', 'taxi', 'car', 'bus', 'police', 'car', 'ice', 'taxi', 'car', 'car', 'bus', 'car', 'taxi'];
+  const n = isTouch ? 10 : 14;
+  for (let i = 0; i < n; i++) {
+    const c = buildCar(kinds[i % kinds.length]), lane = i % 2; // lane 0 = inner (one way), lane 1 = outer (the other way)
+    c.lane = lane; c.r = CITY_EDGE + (lane ? 10.2 : 6.8); c.dir = lane ? -1 : 1; c.speed = 9 + (lane ? 2 : 0);
+    c.a = (i / n) * PI * 2 + Math.random() * 0.1; city.add(c.group); cars.push(c);
+  }
+}
+let honkT = 0;
+function updateCars(dt) {
+  if (!cars.length) return;
+  honkT = Math.max(0, honkT - dt); const tm = performance.now() / 1000, land = MAP && MAP.liquid !== 'void';
+  for (const c of cars) {
+    c.a += c.dir * c.speed / c.r * dt;
+    const x = Math.cos(c.a) * c.r, z = Math.sin(c.a) * c.r;
+    c.group.position.set(x, 0, z); c.group.rotation.y = Math.atan2(-Math.sin(c.a) * c.dir, Math.cos(c.a) * c.dir);
+    for (const w of c.wheels) w.rotation.x += c.speed * dt / 0.42;
+    if (c.group.userData.siren) { const on = Math.sin(tm * 12) > 0; c.group.userData.siren[0].visible = on; c.group.userData.siren[1].visible = !on; }
+    // bump characters standing in the road (no damage, just a honk and a little boing)
+    if (!land) continue;
+    for (const ch of chars) {
+      if (!ch.alive || ch.pos.y > 2.2) continue;
+      const dx = ch.pos.x - x, dz = ch.pos.z - z, tx = -Math.sin(c.a) * c.dir, tz = Math.cos(c.a) * c.dir;
+      const along = dx * tx + dz * tz, side = dx * tz - dz * tx;
+      if (Math.abs(along) < c.len / 2 + 0.5 && Math.abs(side) < 1.6) {
+        const away = Math.sign(side) || 1; ch.vel.x = tz * away * 9 + tx * 6; ch.vel.z = -tx * away * 9 + tz * 6; ch.vel.y = 9; ch.onGround = false;
+        if (ch.isPlayer && honkT <= 0) { honkT = 0.8; tone(392, 0.18, 'square', 0.07); tone(330, 0.22, 'square', 0.07, null, 0.2); }
+      }
+    }
+  }
+}
 function crowdCheer(n) {
   n = n || 1; cheerT = Math.max(cheerT, 2 + n * 0.7);
   for (let i = 0; i < 10 + n * 6; i++) noise(0.05, 0.05 + Math.random() * 0.04, 2600, 1200, 'bandpass', i * 0.09 + Math.random() * 0.05); // clapping
@@ -3037,7 +3096,7 @@ for (let i = 0; i < (isTouch ? 44 : 70); i++) {
   if (srand() < 0.45) { b.add(mesh(box(0.3, 6, 0.3), roofMat, 0, h / 2 + 4, 0)); b.add(mesh(box(0.7, 0.7, 0.7), blinkMat2, 0, h / 2 + 7.2, 0)); }
 }
 function setCity() {
-  buildCrowd();
+  buildCrowd(); buildCars();
   const night = NIGHT_MAPS.has(MAP.id) || !!MAP.stars;
   for (const b of cityBlocks) b.material = (night ? cityNight : cityDay)[b.userData.ci];
   city.position.y = MAP.liquid === 'void' ? -42 : 0; // floating maps: the city is far below
@@ -3149,7 +3208,7 @@ function setAmbient() {
   ambGeo.attributes.position.needsUpdate = true;
 }
 function updateDetail(dt) {
-  updateCrowd(dt);
+  updateCrowd(dt); updateCars(dt);
   const tm = performance.now() / 1000, liquidSpeed = MAP && MAP.liquid === 'lava' ? 0.015 : 0.006;
   if (water.material.map) { water.material.map.offset.x += dt * liquidSpeed; water.material.map.offset.y += dt * liquidSpeed * 0.6; }
   if (waves.material.map) { waves.material.map.offset.x -= dt * 0.01; waves.material.map.offset.y += dt * 0.004; }
