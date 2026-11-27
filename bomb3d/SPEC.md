@@ -10,6 +10,14 @@ Designed by the kid (two pencil sketches + Q&A), built with Claude.
   Fall into the water = splash, lose 20 health, respawn on the hub.
 - Islands rebuild between waves.
 
+## Tutorial (for new players)
+- A brand-new player who presses **Start** plays the tutorial first. Anyone can replay it with the **Tutorial** button in the menu.
+- It's a practice round on the hub with **Coach**: you can't get hurt, the ground doesn't break, and each step moves on once you've done it:
+  1. Walk around  2. Look around  3. Jump two times  4. Grab a falling bomb  5. Run into Coach to pass it
+  6. Grab a bomb and throw it far away  7. Watch Coach get a black face and be out (press "Got it!")
+  8. Grab a coin and a shield  9. "You're ready!" → Let's play!
+- The controls shown match the device: keys on a computer, joystick and buttons on a phone. Every step can be skipped.
+
 ## Maps (11)
 Pick one in the menu's **Maps** box. Every level is played on the map you pick.
 - **Bomb Islands**: the original hub with 8 islands and striped bridges.
