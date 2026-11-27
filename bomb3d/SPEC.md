@@ -10,6 +10,25 @@ Designed by the kid (two pencil sketches + Q&A), built with Claude.
   Fall into the water = splash, lose 20 health, respawn on the hub.
 - Islands rebuild between waves.
 
+## Maps (11)
+Pick one in the menu's **Maps** box. Every level is played on the map you pick.
+- **Bomb Islands**: the original hub with 8 islands and striped bridges.
+- **Frosty Peaks**: 6 snowy islands. **Slippery ice!**
+- **Lava Lake**: a ring bridge round 4 rock islands over lava. Falling in hurts more (35).
+- **Candy Donut**: a sprinkle-donut ring, candy-cane bridges, lollipops, a chocolate lake.
+- **Desert Oasis**: a giant sand cross with oasis pools and cactuses.
+- **Space Station**: 9 metal platforms with laser walkways. **Low gravity**; fall off and you drop into space.
+- **Jungle Spiral**: a long spiral path with vine bridges cutting across.
+- **Rainbow Ring**: a rainbow ring around the hub with rainbow bridges.
+- **Raft Party**: lots of little rafts. **Jump from raft to raft.**
+- **Spooky Graveyard**: night time, tombstones, open graves (holes) and green slime.
+- **Cloud Kingdom**: cloud islands with golden bridges and little towers. **Floaty jumps.**
+
+## Levels (5,000)
+- Levels 1–5,000, in pages of 20 in the menu (« ‹ › » buttons). Beat a level to unlock the next one.
+- It gets harder up to level 50 (more bombs, faster, more of the special bombs), then stays that hard.
+- Every 5th level is a boss level. The boss needs at most 14 hits.
+
 ## How to play
 - **Goal:** survive **all the waves** of a level. Level 1 has 3 waves; later levels have more (up to 8).
 - **Health bar:** 100 health. Bombs hurt. 0 health = game over (try again).
@@ -46,7 +65,7 @@ Designed by the kid (two pencil sketches + Q&A), built with Claude.
 
 ## Menu (sketch 2)
 - Title **Bomb 3D Simulator**, big **Start** button, **Exit** button.
-- **Levels** 1–15 (unlock one by one) "...and more soon".
+- **Levels** 1–5,000 in pages (unlock one by one) and a **Maps** picker.
 - **Volume** slider and **Vibration** on/off.
 - **Languages:** English, Español, Français, Deutsch, Português, हिन्दी, 中文, 日本語.
 - **Mode:** Single player (now); Multiplayer is shown as "coming soon".
