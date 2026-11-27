@@ -199,6 +199,10 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   you out of the way (no damage).
 - **Stand on the cars:** jump onto any car, taxi, bus, police car or ice-cream truck and ride it around the city.
   First ride each level: "Car surfing!" and a few coins. Riders on top don't get bumped.
+- **Trains:** an elevated railway on tall columns runs above the middle of the ring road. Two steam trains (a red engine with
+  4 coaches, a blue engine with 3) go round and round, puffing smoke, whistling "choo-choo" and chuffing when you're nearby.
+  Stand on the track or jump on top of a train to ride it ("Train surfing!" + coins on the first ride each level).
+  Standing on the track in front of a train gets you bumped off (no damage).
 - **The cheering crowd:** people of Boomtopia stand on the sidewalk by the road. Every time you rescue someone (1, 2, 3, 4
   people or a boss's 10), they jump, clap and cheer, with clapping sounds and confetti. More people saved = longer cheering.
 - Textured ground blocks, flowing water/lava/slime with foam, and themed little details on every map
