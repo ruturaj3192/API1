@@ -203,6 +203,10 @@ Each boss has its own fight music. Throw bombs (or shoot RPGs) at them to win.
   4 coaches, a blue engine with 3) go round and round, puffing smoke, whistling "choo-choo" and chuffing when you're nearby.
   Stand on the track or jump on top of a train to ride it ("Train surfing!" + coins on the first ride each level).
   Standing on the track in front of a train gets you bumped off (no damage).
+- **Helicopters:** a red rescue helicopter and a blue news helicopter fly round above the edge of the city (opposite
+  ways, gently bobbing), with spinning main and tail rotors, a "thup-thup" sound when near, and searchlights on night maps.
+  Fly up with a cape and land on top to ride ("Helicopter ride!" + coins on the first ride each level). Riders move up and
+  down with the helicopter, and the blades spin above their heads.
 - **The Mayor of Boomtopia (Mayor Boomsworth):** stands on a little stage with a microphone by the sea, in front of
   **City Hall** (white columns, a golden dome and a waving flag; you can climb it and stand on its roof). He wears a top hat,
   a red sash, a gold medal and a mustache. Walk up to him and he talks in a speech bubble ("Welcome, hero!" and your task).
