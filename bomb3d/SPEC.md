@@ -18,6 +18,8 @@ Designed by the kid (two pencil sketches + Q&A), built with Claude.
   (starting at 7 seconds) shows above it. **Touch someone else to pass it** (you get +1 coin);
   passing doesn't reset the timer, but whoever gets it always has at least 2 seconds. If the timer runs out while you hold it,
   **it explodes in your face** (extra damage). You can also press E to throw it away.
+- When a bomb explodes in someone's hands, **their whole head turns sooty black** (white eyes and smile)
+  and smokes for about 6 seconds. If it's you, the camera swings round for a moment to show your face.
 - Buddies play hot potato too: a buddy with a bomb **chases the nearest person** (you too!)
   to pass it, and the others run away from them.
 - **Bomb types** (unlock as levels go up):

@@ -554,10 +554,9 @@ function buildCharacter(look) {
   const armL = new THREE.Group(); armL.position.set(-0.75, 1.9, 0); armL.add(mesh(box(0.44, 0.4, 0.5), mat(look.shirt), 0, -0.2, 0)); armL.add(mesh(box(0.42, 0.58, 0.46), mat(skin), 0, -0.68, 0)); g.add(armL);
   const armR = new THREE.Group(); armR.position.set(0.75, 1.9, 0); armR.add(mesh(box(0.44, 0.4, 0.5), mat(look.shirt), 0, -0.2, 0)); armR.add(mesh(box(0.42, 0.58, 0.46), mat(skin), 0, -0.68, 0)); g.add(armR);
   const head = new THREE.Group(); head.position.y = 2.38; g.add(head);
-  head.add(mesh(box(0.82, 0.82, 0.82), mat(skin)));
-  const ink = mat(0x1a1a1a);
-  head.add(mesh(box(0.1, 0.17, 0.03), ink, -0.17, 0.06, 0.42)); head.add(mesh(box(0.1, 0.17, 0.03), ink, 0.17, 0.06, 0.42));
-  head.add(mesh(box(0.3, 0.06, 0.03), ink, 0, -0.17, 0.42)); head.add(mesh(box(0.06, 0.06, 0.03), ink, -0.17, -0.13, 0.42)); head.add(mesh(box(0.06, 0.06, 0.03), ink, 0.17, -0.13, 0.42));
+  const face = mesh(box(0.82, 0.82, 0.82), mat(skin)); head.add(face);
+  const ink = mat(0x1a1a1a), feats = [];
+  for (const [w, h, x, y] of [[0.1, 0.17, -0.17, 0.06], [0.1, 0.17, 0.17, 0.06], [0.3, 0.06, 0, -0.17], [0.06, 0.06, -0.17, -0.13], [0.06, 0.06, 0.17, -0.13]]) { const f = mesh(box(w, h, 0.03), ink, x, y, 0.42); head.add(f); feats.push(f); }
   // bacon hair
   const hc = mat(look.hair), hs = mat(look.stripe);
   head.add(mesh(box(0.9, 0.2, 0.9), hc, 0, 0.47, 0));
@@ -566,7 +565,7 @@ function buildCharacter(look) {
   for (let k = 0; k < 4; k++) { const s = mesh(box(0.98, 0.13, 0.22), k % 2 ? hs : hc, 0, 0.6 + (k % 2) * 0.05, -0.33 + k * 0.22); s.rotation.z = k % 2 ? 0.13 : -0.13; head.add(s); }
   const fr = mesh(box(0.92, 0.15, 0.15), hc, 0.03, 0.36, 0.41); fr.rotation.z = 0.1; head.add(fr);
   const hatSlot = new THREE.Group(); hatSlot.position.y = 0.68; head.add(hatSlot); addHat(hatSlot, look.hat);
-  return { group: g, legL, legR, armL, armR, head };
+  return { group: g, legL, legR, armL, armR, head, face, feats };
 }
 const nameTagCache = {};
 function nameTag(text) {
@@ -642,6 +641,14 @@ function animChar(c, dt) {
   c.shadow.visible = c.group.visible && !!tl && c.pos.y > -0.3;
   if (c.shadow.visible) { c.shadow.position.set(c.pos.x, 0.03, c.pos.z); const s = clamp(1 - c.pos.y / 14, 0.35, 1); c.shadow.scale.set(s, s, s); }
 }
+// Bomb went off in your hands: face turns sooty black for a few seconds (white eyes stay visible)
+const sootEyeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+function sootFace(c) {
+  if (!(c.soot > 0)) c.head.traverse(o => { if (o.isMesh && !c.feats.includes(o)) { o.userData.orig = o.material; o.material = mat(0x141414); } });
+  c.soot = 6; for (const f of c.feats) f.material = sootEyeMat;
+  for (let i = 0; i < 7; i++) particle(fxMats.smoke, c.pos.clone().add(new V3(0, 2.6, 0)), new V3(rand(-1.5, 1.5), rand(2, 4), rand(-1.5, 1.5)), rand(0.2, 0.38), rand(0.8, 1.3), -2);
+}
+function cleanFace(c) { c.soot = 0; c.head.traverse(o => { if (o.isMesh && o.userData.orig) { o.material = o.userData.orig; o.userData.orig = null; } }); for (const f of c.feats) f.material = mat(0x1a1a1a); }
 function hurt(c, amount) {
   if (!c.alive || G.phase === 'done') return;
   if (c.power.shield > 0) { if (c.isPlayer) sfx.shield(); return; }
@@ -770,6 +777,7 @@ function explodeBomb(b) {
     if (!c.alive) continue;
     const d = c.pos.clone().add(new V3(0, 1, 0)).distanceTo(p);
     if (d < s.blast + 0.6) {
+      if (c === face && c.power.shield <= 0) sootFace(c);
       hurt(c, c === face ? s.dmg + 10 : Math.round(s.dmg * (1 - 0.5 * d / (s.blast + 0.6))));
       const dir = new V3(c.pos.x - p.x, 0, c.pos.z - p.z); if (dir.lengthSq() < 0.01) dir.set(rand(-1, 1), 0, rand(-1, 1)); dir.normalize();
       const k = (1 - d / (s.blast + 0.6)) * 12 + 5; if (c.power.shield <= 0) { c.vel.x += dir.x * k; c.vel.z += dir.z * k; c.vel.y = Math.max(c.vel.y, 7); c.onGround = false; }
@@ -1000,8 +1008,11 @@ function updateCamera(dt) {
   if (!player) return;
   if (keys.KeyQ) cam.yaw += 2.2 * dt; if (keys.KeyR) cam.yaw -= 2.2 * dt;
   const tx = player.pos.x, ty = Math.max(player.pos.y, WATER_Y) + 2, tz = player.pos.z;
-  const cp = Math.cos(cam.pitch);
-  camera.position.set(tx + Math.sin(cam.yaw) * cp * cam.dist, ty + Math.sin(cam.pitch) * cam.dist, tz + Math.cos(cam.yaw) * cp * cam.dist);
+  // just after a bomb blows up in your hands: swing round to show your sooty face
+  const faceCam = player.soot > 4.6;
+  const yaw = faceCam ? player.yaw : cam.yaw, pitch = faceCam ? 0.22 : cam.pitch, dist = faceCam ? 6 : cam.dist;
+  const cp = Math.cos(pitch);
+  camera.position.set(tx + Math.sin(yaw) * cp * dist, ty + Math.sin(pitch) * dist, tz + Math.cos(yaw) * cp * dist);
   if (shake > 0) { camera.position.x += rand(-1, 1) * shake; camera.position.y += rand(-1, 1) * shake; shake = Math.max(0, shake - dt * 2.5); }
   camera.lookAt(tx, ty, tz);
 }
@@ -1225,6 +1236,11 @@ function frame(now) {
     playerInput(dt);
     for (const c of chars) {
       for (const k of ['shield', 'speed', 'dbl']) if (c.power[k] > 0) c.power[k] = Math.max(0, c.power[k] - dt);
+      if (c.soot > 0) {
+        c.soot -= dt;
+        if (c.group.visible && Math.random() < dt * 5) particle(fxMats.smoke, c.pos.clone().add(new V3(rand(-0.3, 0.3), 2.9, rand(-0.3, 0.3))), new V3(rand(-0.4, 0.4), rand(1.5, 2.5), rand(-0.4, 0.4)), rand(0.15, 0.25), 1, -1);
+        if (c.soot <= 0) cleanFace(c);
+      }
       if (!c.isPlayer) { if (c.alive) buddyThink(c, dt); else { if (c.koT > 1.3) { c.group.visible = false; c.shadow.visible = false; continue; } stepChar(c, dt, 0, 0, false, false); } }
       animChar(c, dt);
     }
