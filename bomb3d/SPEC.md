@@ -86,15 +86,17 @@ Pick one in the menu's **Maps** box. Every level is played on the map you pick.
   which spins through funny names (like *TurboPickle42*) made only from kid-friendly bomb-themed words.
 - Your username floats above your character and is what friends see in multiplayer.
 
-## Pet shop
-Menu → **Pet shop**. Buy pets, then pick one to bring (or "No pet"). Your pet follows you and helps:
-- Puppy — 150 coins: pulls nearby coins to you
-- Kitty — 300: heals you a little all the time
-- Parrot — 600 (flies): a red "!" and a squawk when a bomb is about to land near you
-- Turtle — 900: blocks one hit every 20 seconds (not a black face — that's still out!)
-- Dragon — 2,000 (flies): breathes a fireball at a nearby bomb every 6 seconds and pops it
-- Unicorn — 4,000: doubles your XP
-In multiplayer, guests' pets mostly just look cute (the parrot's warning and the unicorn's double XP still work).
+## Pet shop (50 pets, evolutions and ranks)
+Menu → **Pet shop**. Buy pets (120 to 10,000 coins), then pick one to bring along (or "No pet"). Your pet follows you and helps.
+- **Ranks** (by how special a pet is): Common < 500 · Uncommon < 1,000 · Rare < 2,000 · Epic < 4,000 · Legendary < 7,000 · Mythic 7,000+.
+  Shown as a coloured badge and card border, and on the in-game pet chip.
+- **Powers** (9 kinds): pulls coins to you · heals you · warns about bombs landing near you (red "!") · blocks hits now and then ·
+  breathes fire to pop bombs · extra XP · run faster · sometimes doubles coins · double jump. Pricier pets have stronger powers.
+- **Evolutions**: every pet has 3 stages — *Pet* → *Super Pet* → *Mega Pet*. The pet you bring earns pet XP (the same XP you earn);
+  150 XP lets it evolve to Super, 500 to Mega. Press **Evolve!** in the Pet shop. Evolved pets are bigger, get a gold collar
+  (Super) or a crown, glow and sparkles (Mega), and their power gets 40% / 80% stronger.
+- Pets are built from body types: four-legged animals, birds, turtles, dragons, horses (unicorn, pegasus), slimes, robots, fish and ghosts.
+- In multiplayer, guests' pets mostly just look cute (warnings and XP boosts still work).
 
 ## XP
 - Earn XP: pass a bomb +5 · pop a bomb with an RPG +3 · thrown bomb explodes far away +2 · coin +1 · power-up +5 ·
