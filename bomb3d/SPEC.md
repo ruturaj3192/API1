@@ -474,3 +474,11 @@ The 💣 **Bomb guide** (🎒 menu) shows all 10 levels (the ones you've met) an
 ## Tech
 - One file: `bomb3d/index.html`, using Three.js (r128 from cdnjs) plus its glow (bloom) add-ons (from jsDelivr). No build step.
 - Sounds are made in code (Web Audio), so there are no asset files.
+
+## Leaderboard
+- 🏆 button opens two tabs: **🌍 All-time** and **🟢 Online now** (the old room board).
+- All-time board is saved in the artifact's shared store (`scores/<player id>`). Each player can only write their own row; everyone who can open the game can read it.
+- Your row saves automatically after every level (win or lose) and when you open the board — only when something changed.
+- Sort chips: ⭐ XP level, 🏁 levels beaten, 🫧 people rescued, ⏱️ best Survival time. Top 3 get 🥇🥈🥉, your row is highlighted, trophies show as 🏆.
+- Friends need **Contributor** access to the shared game to appear; viewers can read the board but not join it.
+- In the offline app (no claude.ai), the All-time tab shows your own best scores with a note.
