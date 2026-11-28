@@ -336,6 +336,50 @@ trapped-people bubble and pop it. Their rescues count for your mission (people, 
   **trampolines** that launch you high), then zig-zag **ledges** up the wall to the roof. You can jump up through blocks from below.
 - Each new roof you reach in a level: "Rooftop!" with its height, plus coins and XP.
 
+## Big pack 4: soccer, karts, puzzles, dinos, sky city, pirates, quests and more
+**New ways to play** (menu → Game modes)
+- ⚽ **Bomb soccer:** 2 vs 2 in a stadium with a cheering crowd. Run into the giant bomb-ball to kick it; first to 3 goals
+  wins. If nobody scores in 40 s the ball explodes and it's kick-off again.
+- 🏎️ **Kart racing:** 3 laps of the city ring road against 3 karts. Drive through ? boxes for a 🚀 boost or a 🍌 banana
+  (Jump to use). Finish 1st to win.
+- 👑 **King of the hill:** stay in the middle of the map for the most time in 60 s while everyone bumps each other off.
+- 🧩 **Puzzle tower** (🧩 kiosk on the sidewalk): 3 rooms: step on all the pressure plates, push the crate onto the gold
+  square, then press the colored buttons in the order shown on the wall. Treasure at the top.
+
+**Creatures and friends**
+- 🦖 **Dinosaur island** (🦖 Dino boat kiosk): a jungle island with roaming dinos. Press E by the T-Rex to ride it; Jump to ROAR.
+- ⚔️ **Pet battles** (🎒 menu): pick one of your pets and fight a wild pet: Attack, Super (strong but can miss) or Heal.
+- 🤖 **Robot buddy builder** (🎒 menu): smashing Bomb King robots gives ⚙️ parts. 10 parts build a robot buddy (pick its
+  head and color) that hovers beside you and zaps a falling bomb near you every 10 s.
+
+**New places**
+- 🧊 **Ice cave** (🧊 kiosk): slippery ice, icicles, an ice slide, an ice dragon shooting freezing ice balls, and 3 frozen
+  treasure chests (stand next to the ice to melt it).
+- ☁️ **Sky city:** a giant beanstalk grows out of the sea. Jump up its leaves to the cloud city 120 high: castle houses and
+  a goose that gives you a golden egg.
+- 🏴‍☠️ **Pirate ship:** moored at the dock. E to sail around the sea, Jump fires the cannon at floating barrels, and sail up
+  to the 3 little treasure islands.
+- 🌋 **Inside the volcano** (🌋 Lava elevator kiosk): jump across rock platforms (some moving) over the lava to the
+  volcano's crystal heart. Falling in hurts and sends you back.
+
+**Big goals** (🎒 menu: the 🎒 button in game, or "More fun" on the menu)
+- 📜 **Quest log:** 5 chapters of 3 quests each (rescue people, ride a train, go to the moon, win a tournament, beat the
+  castle…). Claim a reward for each chapter; finishing all 5 shows the story's ending ("Boomtopia is saved!").
+- 🗺️ **Treasure maps:** 5 map pieces are hidden: on a tall rooftop, under the sea, on the moon, in the sky city and inside
+  the volcano. With all 5, a red X appears on the farthest island: walk onto it for the giant treasure.
+- 🏅 **Season pass:** all XP also fills the season pass: 50 free tiers of coins, robot parts, pet eggs and skins.
+- 📚 **Collection book:** pets, skins, fish and treasures you've found.
+
+**Fun extras**
+- 🎸 **Music studio:** an 8-row × 16-step beat maker (drums, bass, notes) with a speed slider; "Use as game music" plays
+  your song in the game.
+- 🎣 **Fishing:** at the end of the dock, E to cast, wait for the bite, then E to reel in. 12 catches from sardines to a
+  whale, a bomb fish or an old boot.
+- 🌱 **Garden farm:** 6 plots by your house. Walk on an empty plot to plant; after 3 minutes (real time) it becomes a
+  glowing magic plant that gives a power-up when you pick it.
+- 📺 **Boomtopia TV:** the game saves a snapshot of your best moments (bosses beaten, levels won, big rescues, golden
+  bombs, combos, the moon, treasures…). Watch them on the TV in your house or from the 🎒 menu.
+
 ## Big pack 3: modes, pets, worlds, city life, powers and makers
 **New ways to play** (menu → Game modes)
 - 🏆 **Tournament:** an 8-player bracket (you + 7 named players). Each match is 1-on-1 bomb tag; win the quarterfinal,
