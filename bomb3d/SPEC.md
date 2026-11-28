@@ -336,6 +336,14 @@ trapped-people bubble and pop it. Their rescues count for your mission (people, 
   **trampolines** that launch you high), then zig-zag **ledges** up the wall to the roof. You can jump up through blocks from below.
 - Each new roof you reach in a level: "Rooftop!" with its height, plus coins and XP.
 
+## Bomb levels (Lv 1-10)
+Every falling bomb has a level, shown by a colored band and a floating "Lv" badge (green Lv1 → lime → yellow → orange → red →
+pink → purple → blue → cyan → gold Lv10; Lv8+ sparkle). Each level up: about 7% bigger, 8% wider blast, 12% more damage,
+5% faster fall and a 3.5% shorter fuse. Higher game levels bring higher bomb levels (about Lv1 at level 1, Lv4-5 at
+level 20, Lv9-10 at level 50; Survival ramps up with time), with a rare bomb 2 levels higher. The first time a new bomb
+level appears: "⚠️ Level N bombs incoming!". Tougher bombs pay more coins and XP when you pass them or throw them away.
+The 💣 **Bomb guide** (🎒 menu) shows all 10 levels (the ones you've met) and every kind of bomb.
+
 ## Big pack 4: soccer, karts, puzzles, dinos, sky city, pirates, quests and more
 **New ways to play** (menu → Game modes)
 - ⚽ **Bomb soccer:** 2 vs 2 in a stadium with a cheering crowd. Run into the giant bomb-ball to kick it; first to 3 goals
